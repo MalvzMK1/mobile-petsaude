@@ -31,6 +31,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.senai.sp.jandira.petsaudeapp.components.AuthHeaderTitle
+import br.senai.sp.jandira.petsaudeapp.components.BottomMessage
 import br.senai.sp.jandira.petsaudeapp.ui.theme.PetSaudeAppTheme
 
 class MainActivity : ComponentActivity() {
@@ -52,39 +53,6 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun RegisterMessage() {
-	// TEST ONLY
-	val context = LocalContext.current
-
-	Box(
-		modifier = Modifier.fillMaxWidth().padding(top = 100.dp),
-		contentAlignment = Alignment.BottomCenter
-	) {
-		Row(
-			modifier = Modifier.fillMaxWidth(),
-			verticalAlignment = Alignment.CenterVertically,
-			horizontalArrangement = Arrangement.Center,
-		) {
-			Text(
-				text = "Ainda não tem uma conta? ",
-				fontSize = 14.sp,
-				fontWeight = FontWeight.Normal,
-				color = Color.Black
-			)
-			Text(
-				text = "Cadastre-se",
-				modifier = Modifier.clickable(onClick = {
-					Toast.makeText(context, "Deu certo!", Toast.LENGTH_SHORT).show()
-				}),
-				fontSize = 14.sp,
-				fontWeight = FontWeight.Bold,
-				color = Color.Black
-			)
-		}
-	}
-}
-
-@Composable
 fun Global() {
 	Column(
 		modifier = Modifier.fillMaxSize(),
@@ -92,7 +60,7 @@ fun Global() {
 	) {
 		LoginHeader()
 		LoginForm()
-		RegisterMessage()
+		BottomMessage()
 	}
 }
 
