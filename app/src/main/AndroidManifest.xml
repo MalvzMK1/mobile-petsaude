@@ -12,6 +12,16 @@
         android:theme="@style/Theme.PetSaudeApp"
         tools:targetApi="31">
         <activity
+            android:name=".Localization"
+            android:exported="false"
+            android:label="@string/title_activity_localization"
+            android:theme="@style/Theme.PetSaudeApp" />
+        <activity
+            android:name=".Register"
+            android:exported="false"
+            android:label="@string/title_activity_register"
+            android:theme="@style/Theme.PetSaudeApp" />
+        <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
