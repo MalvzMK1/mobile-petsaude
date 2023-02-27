@@ -35,7 +35,6 @@ class RegisterAddressActivity : ComponentActivity() {
 		super.onCreate(savedInstanceState)
 		setContent {
 			PetSaudeAppTheme {
-				// A surface container using the 'background' color from the theme
 				Surface(
 					modifier = Modifier
 						.fillMaxSize()
@@ -97,13 +96,15 @@ fun GlobalLocalization() {
 @Composable
 fun LocalizationHeader() {
 	Column(
-		modifier = Modifier.fillMaxWidth().padding(top = 32.dp),
+		modifier = Modifier
+			.fillMaxWidth()
+			.padding(top = 32.dp),
 		verticalArrangement = Arrangement.SpaceBetween,
 		horizontalAlignment = Alignment.CenterHorizontally
 	) {
 		AuthHeaderTitle(
-			title = "Podemos saber sua localização?",
-			subtitle = "Para a experiência na plataforma, informe-nos a sua localização!"
+			title = stringResource(id = R.string.can_we_know_address_register_header),
+			subtitle = stringResource(id = R.string.message_address_register_header)
 		)
 		Spacer(modifier = Modifier.height(32.dp))
 	}
@@ -111,6 +112,8 @@ fun LocalizationHeader() {
 
 @Composable
 fun LocalizationForm() {
+	val context = LocalContext.current
+
 	val customColors = TextFieldDefaults.textFieldColors(
 		textColor = MaterialTheme.colors.onBackground,
 		disabledTextColor = MaterialTheme.colors.onBackground,
@@ -165,7 +168,7 @@ fun LocalizationForm() {
 				cepState = it
 			},
 			modifier = Modifier.fillMaxWidth(),
-			label = { Text(text = "CEP") },
+			label = { Text(text = stringResource(id = R.string.zip_code_string_resource)) },
 			colors = customColors
 		)
 		Spacer(Modifier.height(16.dp))
@@ -175,7 +178,7 @@ fun LocalizationForm() {
 				cityState = it
 			},
 			modifier = Modifier.fillMaxWidth(),
-			label = { Text(text = "Cidade") },
+			label = { Text(text = stringResource(id = R.string.city_string_resource)) },
 			colors = customColors
 		)
 		Spacer(Modifier.height(16.dp))
@@ -185,7 +188,7 @@ fun LocalizationForm() {
 				stateState = it
 			},
 			modifier = Modifier.fillMaxWidth(),
-			label = { Text(text = "Estado") },
+			label = { Text(text = stringResource(id = R.string.state_string_resource)) },
 			colors = customColors
 		)
 		Spacer(Modifier.height(16.dp))
@@ -195,7 +198,7 @@ fun LocalizationForm() {
 				streetState = it
 			},
 			modifier = Modifier.fillMaxWidth(),
-			label = { Text(text = "Rua") },
+			label = { Text(text = stringResource(id = R.string.street_string_resource)) },
 			colors = customColors
 		)
 		Spacer(Modifier.height(16.dp))
@@ -205,7 +208,7 @@ fun LocalizationForm() {
 				neighborhoodState = it
 			},
 			modifier = Modifier.fillMaxWidth(),
-			label = { Text(text = "Bairro") },
+			label = { Text(text = stringResource(id = R.string.neighborhood_string_resource)) },
 			colors = customColors
 		)
 		Spacer(Modifier.height(16.dp))
@@ -215,7 +218,7 @@ fun LocalizationForm() {
 				numberState = it
 			},
 			modifier = Modifier.fillMaxWidth(),
-			label = { Text(text = "Número") },
+			label = { Text(text = stringResource(id = R.string.house_number_string_resource)) },
 			colors = customColors
 		)
 		Spacer(Modifier.height(16.dp))
@@ -225,7 +228,7 @@ fun LocalizationForm() {
 				complementState = it
 			},
 			modifier = Modifier.fillMaxWidth(),
-			label = { Text(text = "Complemento (se houver)") },
+			label = { Text(text = stringResource(id = R.string.complement_string_resource)) },
 			colors = customColors
 		)
 		Spacer(Modifier.height(32.dp))
@@ -238,14 +241,14 @@ fun LocalizationForm() {
 					// TODO: USER LOGIN
 				},
 				modifier = Modifier
-					.fillMaxWidth(0.45f)
-					.height(50.dp),
+					.fillMaxWidth(0.5f)
+					.defaultMinSize(minHeight = 50.dp),
 				shape = RoundedCornerShape(size = 5.dp),
 				colors = ButtonDefaults.buttonColors(MaterialTheme.colors.secondary)
 			) {
 				Text(
-					text = "Sou cliente",
-					fontSize = 20.sp,
+					text = stringResource(id = R.string.im_client_button_string),
+					fontSize = 18.sp,
 					fontWeight = FontWeight.Bold,
 					color = MaterialTheme.colors.onSecondary
 				)
@@ -253,18 +256,19 @@ fun LocalizationForm() {
 			Spacer(Modifier.width(4.dp))
 			Button(
 				onClick = {
-					// TODO: USER LOGIN
+					val openProfessionalRegisterActivity = Intent(context, ProfessionalRegisterActivity::class.java)
+					startActivity(context, openProfessionalRegisterActivity, null)
 				},
 				modifier = Modifier
-					.fillMaxWidth(0.45f)
-					.height(50.dp),
+					.fillMaxWidth()
+					.defaultMinSize(minHeight = 50.dp),
 				shape = RoundedCornerShape(size = 5.dp),
 				colors = ButtonDefaults.buttonColors(MaterialTheme.colors.secondary)
 			) {
 				Text(
-					text = "Sou profissional",
+					text = stringResource(id = R.string.im_professional_button_string),
 					color = MaterialTheme.colors.onSecondary,
-					fontSize = 20.sp,
+					fontSize = 18.sp,
 					fontWeight = FontWeight.Bold,
 					textAlign = TextAlign.Center
 				)

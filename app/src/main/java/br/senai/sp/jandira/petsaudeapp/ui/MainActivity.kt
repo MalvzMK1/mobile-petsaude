@@ -212,7 +212,7 @@ fun LoginForm() {
 				},
 				modifier = Modifier
 					.fillMaxWidth(),
-				label = { Text(text = stringResource(id = R.string.email)) },
+				label = { Text(text = stringResource(id = R.string.email_string_resource)) },
 				colors = customColors
 			)
 		}
@@ -231,7 +231,7 @@ fun LoginForm() {
 					visualTransformation = if (isPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
 					modifier = Modifier
 						.fillMaxWidth(),
-					label = { Text(text = stringResource(id = R.string.password)) },
+					label = { Text(text = stringResource(id = R.string.password_string_resource)) },
 					trailingIcon = {
 						val image = if (isPasswordVisible)
 							Icons.Filled.Visibility
@@ -277,7 +277,7 @@ fun LoginForm() {
 			colors = ButtonDefaults.buttonColors(MaterialTheme.colors.secondary)
 		) {
 			Text(
-				text = stringResource(id = R.string.login_submit_button_text),
+				text = stringResource(id = R.string.enter_string_resource),
 				fontSize = 24.sp,
 				fontWeight = FontWeight.Bold,
 				color = MaterialTheme.colors.onSecondary

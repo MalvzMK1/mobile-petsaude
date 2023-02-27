@@ -114,8 +114,8 @@ fun RegisterHeader() {
 			horizontalAlignment = Alignment.CenterHorizontally
 		) {
 			AuthHeaderTitle(
-				title = "É novo por aqui?",
-				subtitle = "Insira suas informações abaixo e cadastre-se!"
+				title = stringResource(id = R.string.are_you_new_signup_header),
+				subtitle = stringResource(id = R.string.message_signup_header)
 			)
 			Spacer(modifier = Modifier.height(32.dp))
 			Button(
@@ -146,7 +146,7 @@ fun RegisterHeader() {
 						.background(color = Color.LightGray)
 				)
 				Text(
-					text = "Ou use o e-mail",
+					text = stringResource(id = R.string.or_use_email),
 					modifier = Modifier.padding(start = 10.dp, end = 10.dp),
 					color = Color.LightGray,
 					fontSize = 14.sp,
@@ -216,6 +216,11 @@ fun RegisterForm() {
 	var isPasswordVisible by rememberSaveable {
 		mutableStateOf(false)
 	}
+	
+	var isConfirmPasswordVisible by rememberSaveable {
+		mutableStateOf(false)
+	}
+	
 
 	Column(
 		modifier = Modifier
@@ -228,7 +233,7 @@ fun RegisterForm() {
 				nameState = it
 			},
 			modifier = Modifier.fillMaxWidth(),
-			label = { Text(text = "Nome") },
+			label = { Text(text = stringResource(id = R.string.name_string_resource)) },
 			colors = customColors
 		)
 		Spacer(Modifier.height(16.dp))
@@ -238,7 +243,7 @@ fun RegisterForm() {
 				lastnameState = it
 			},
 			modifier = Modifier.fillMaxWidth(),
-			label = { Text(text = "Sobrenome") },
+			label = { Text(text = stringResource(id = R.string.last_name_string_resource)) },
 			colors = customColors
 		)
 		Spacer(Modifier.height(16.dp))
@@ -248,7 +253,7 @@ fun RegisterForm() {
 				emailState = it
 			},
 			modifier = Modifier.fillMaxWidth(),
-			label = { Text(text = "E-mail") },
+			label = { Text(text = stringResource(id = R.string.email_string_resource)) },
 			colors = customColors
 		)
 		Spacer(Modifier.height(16.dp))
@@ -260,13 +265,13 @@ fun RegisterForm() {
 			visualTransformation = if (isPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
 			modifier = Modifier
 				.fillMaxWidth(),
-			label = { Text(text = "Senha") },
+			label = { Text(text = stringResource(id = R.string.password_string_resource)) },
 			trailingIcon = {
 				val image = if (isPasswordVisible)
 					Icons.Filled.Visibility
 				else Icons.Filled.VisibilityOff
 
-				val description = if (isPasswordVisible) "Esconder Senha" else "Mostrar senha"
+				val description = if (isPasswordVisible) stringResource(id = R.string.hide_pass_alt) else stringResource(id = R.string.show_pass_alt)
 
 				IconButton(onClick = { isPasswordVisible = !isPasswordVisible }) {
 					Icon(
@@ -284,18 +289,18 @@ fun RegisterForm() {
 			onValueChange = {
 				checkPassState = it
 			},
-			visualTransformation = if (isPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+			visualTransformation = if (isConfirmPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
 			modifier = Modifier
 				.fillMaxWidth(),
-			label = { Text(text = "Confirme sua senha") },
+			label = { Text(text = stringResource(id = R.string.confirm_password_string_resource)) },
 			trailingIcon = {
-				val image = if (isPasswordVisible)
+				val image = if (isConfirmPasswordVisible)
 					Icons.Filled.Visibility
 				else Icons.Filled.VisibilityOff
 
-				val description = if (isPasswordVisible) "Esconder Senha" else "Mostrar senha"
+				val description = if (isConfirmPasswordVisible) stringResource(id = R.string.hide_pass_alt) else stringResource(id = R.string.show_pass_alt)
 
-				IconButton(onClick = { isPasswordVisible = !isPasswordVisible }) {
+				IconButton(onClick = { isConfirmPasswordVisible = !isConfirmPasswordVisible }) {
 					Icon(
 						imageVector = image,
 						contentDescription = description
@@ -312,7 +317,7 @@ fun RegisterForm() {
 				cellphoneNumberState = it
 			},
 			modifier = Modifier.fillMaxWidth(),
-			label = { Text(text = "Celular") },
+			label = { Text(text = stringResource(id = R.string.cellphone_number_string_resource)) },
 			colors = customColors
 		)
 		Spacer(Modifier.height(16.dp))
@@ -322,7 +327,7 @@ fun RegisterForm() {
 				phoneNumberState = it
 			},
 			modifier = Modifier.fillMaxWidth(),
-			label = { Text(text = "Telefone") },
+			label = { Text(text = stringResource(id = R.string.phone_number_string_resource)) },
 			colors = customColors
 		)
 		Spacer(Modifier.height(32.dp))
@@ -336,7 +341,7 @@ fun RegisterForm() {
 			colors = ButtonDefaults.buttonColors(MaterialTheme.colors.secondary)
 		) {
 			Text(
-				text = "Continuar",
+				text = stringResource(id = R.string.continue_string_resource),
 				fontSize = 24.sp,
 				fontWeight = FontWeight.Bold,
 				color = MaterialTheme.colors.onSecondary
