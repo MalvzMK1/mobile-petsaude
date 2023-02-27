@@ -6,6 +6,8 @@
     <string name="insert_infos_login_header">Please, insert your login informations bellow</string>
     <string name="dont_have_account_bottom_message">Don\'t have an account?</string>
     <string name="register_yourself_bottom_message">Signup</string>
+    <string name="already_have_account_bottom_message">Already have an account?</string>
+    <string name="login_bottom_message">Login</string>
     <string name="or_use_email">Or use the e-mail</string>
     <string name="email">E-mail</string>
     <string name="password">Password</string>

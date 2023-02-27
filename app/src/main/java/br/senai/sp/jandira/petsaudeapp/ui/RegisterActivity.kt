@@ -1,11 +1,10 @@
-package br.senai.sp.jandira.petsaudeapp
+package br.senai.sp.jandira.petsaudeapp.ui
 
+import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -21,7 +20,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -30,18 +31,21 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.startActivity
+import br.senai.sp.jandira.petsaudeapp.R
 import br.senai.sp.jandira.petsaudeapp.components.AuthHeaderTitle
-import br.senai.sp.jandira.petsaudeapp.components.BottomMessage
 import br.senai.sp.jandira.petsaudeapp.ui.theme.PetSaudeAppTheme
 
-class Register : ComponentActivity() {
+class RegisterActivity : ComponentActivity() {
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setContent {
 			PetSaudeAppTheme {
-				// A surface container using the 'background' color from the theme
 				Surface(
-					modifier = Modifier.fillMaxSize(),
+					modifier = Modifier
+						.fillMaxSize()
+						.verticalScroll(rememberScrollState()),
 					color = MaterialTheme.colors.background
 				) {
 					GlobalRegister()
@@ -53,6 +57,8 @@ class Register : ComponentActivity() {
 
 @Composable
 fun GlobalRegister() {
+	val context = LocalContext.current
+
 	Column(
 		modifier = Modifier
 			.fillMaxSize()
@@ -61,17 +67,42 @@ fun GlobalRegister() {
 	) {
 		RegisterHeader()
 		RegisterForm()
-		BottomMessage(
-			message = "Já tem uma conta? ",
-			clickable = "Faça login"
-		)
+		Box(
+			modifier = Modifier
+				.fillMaxWidth()
+				.padding(top = 32.dp),
+			contentAlignment = Alignment.BottomCenter
+		) {
+			Row(
+				modifier = Modifier.fillMaxWidth(),
+				verticalAlignment = Alignment.CenterVertically,
+				horizontalArrangement = Arrangement.Center,
+			) {
+				Text(
+					text = "${stringResource(id = R.string.already_have_account_bottom_message)} ",
+					fontSize = 14.sp,
+					fontWeight = FontWeight.Normal,
+					color = Color.Black
+				)
+				Text(
+					text = stringResource(id = R.string.login_bottom_message),
+					modifier = Modifier.clickable {
+						val openRegisterAddressActivity = Intent(context, MainActivity::class.java)
+						ContextCompat.startActivity(context, openRegisterAddressActivity, null)
+					},
+					fontSize = 14.sp,
+					fontWeight = FontWeight.Bold,
+					color = Color.Black
+				)
+			}
+		}
 	}
 }
 
 @Composable
 fun RegisterHeader() {
 	Column(
-		modifier = Modifier.fillMaxWidth(),
+		modifier = Modifier.fillMaxWidth().padding(top = 32.dp),
 		verticalArrangement = Arrangement.SpaceBetween,
 		horizontalAlignment = Alignment.CenterHorizontally
 	) {
@@ -133,6 +164,8 @@ fun RegisterHeader() {
 
 @Composable
 fun RegisterForm() {
+	val context = LocalContext.current
+
 	val customColors = TextFieldDefaults.textFieldColors(
 		backgroundColor = Color.Transparent
 	)
@@ -280,7 +313,8 @@ fun RegisterForm() {
 		Spacer(Modifier.height(32.dp))
 		Button(
 			onClick = {
-				// TODO: USER LOGIN
+				val openRegisterAddressActivity = Intent(context, RegisterAddressActivity::class.java)
+				startActivity(context, openRegisterAddressActivity, null)
 			},
 			modifier = Modifier.fillMaxWidth(),
 			shape = RoundedCornerShape(size = 5.dp),

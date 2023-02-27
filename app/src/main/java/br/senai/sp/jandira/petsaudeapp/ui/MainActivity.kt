@@ -1,5 +1,6 @@
-package br.senai.sp.jandira.petsaudeapp
+package br.senai.sp.jandira.petsaudeapp.ui
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -19,6 +20,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -29,8 +31,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat.startActivity
+import br.senai.sp.jandira.petsaudeapp.R
 import br.senai.sp.jandira.petsaudeapp.components.AuthHeaderTitle
-import br.senai.sp.jandira.petsaudeapp.components.BottomMessage
 import br.senai.sp.jandira.petsaudeapp.ui.theme.PetSaudeAppTheme
 
 class MainActivity : ComponentActivity() {
@@ -51,6 +54,8 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun GlobalLogin() {
+	val context = LocalContext.current
+
 	Column(
 		modifier = Modifier
 			.fillMaxSize()
@@ -59,10 +64,35 @@ fun GlobalLogin() {
 	) {
 		LoginHeader()
 		LoginForm()
-		BottomMessage(
-			message = "${stringResource(id = R.string.dont_have_account_bottom_message)} ",
-			clickable = stringResource(id = R.string.register_yourself_bottom_message)
-		)
+		Box(
+			modifier = Modifier
+				.fillMaxWidth()
+				.padding(top = 100.dp),
+			contentAlignment = Alignment.BottomCenter
+		) {
+			Row(
+				modifier = Modifier.fillMaxWidth(),
+				verticalAlignment = Alignment.CenterVertically,
+				horizontalArrangement = Arrangement.Center,
+			) {
+				Text(
+					text = "${stringResource(id = R.string.dont_have_account_bottom_message)} ",
+					fontSize = 14.sp,
+					fontWeight = FontWeight.Normal,
+					color = Color.Black
+				)
+				Text(
+					text = stringResource(id = R.string.register_yourself_bottom_message),
+					modifier = Modifier.clickable {
+						val openRegisterActivity = Intent(context, RegisterActivity::class.java)
+						startActivity(context, openRegisterActivity, null)
+					},
+					fontSize = 14.sp,
+					fontWeight = FontWeight.Bold,
+					color = Color.Black
+				)
+			}
+		}
 	}
 }
 
@@ -135,9 +165,6 @@ fun LoginHeader() {
 
 @Composable
 fun LoginForm() {
-	// TEST ONLY
-	//val context = LocalContext.current
-
 	val customColors = TextFieldDefaults.textFieldColors(
 		textColor = Color.Black,
 		disabledTextColor = Color.Black,
