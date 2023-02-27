@@ -65,7 +65,7 @@ fun GlobalLocalization() {
 		Box(
 			modifier = Modifier
 				.fillMaxWidth()
-				.padding(top = 100.dp),
+				.padding(top = 32.dp),
 			contentAlignment = Alignment.BottomCenter
 		) {
 			Row(
@@ -77,7 +77,7 @@ fun GlobalLocalization() {
 					text = "${stringResource(id = R.string.already_have_account_bottom_message)} ",
 					fontSize = 14.sp,
 					fontWeight = FontWeight.Normal,
-					color = Color.Black
+					color = MaterialTheme.colors.onBackground
 				)
 				Text(
 					text = stringResource(id = R.string.login_bottom_message),
@@ -87,7 +87,7 @@ fun GlobalLocalization() {
 					},
 					fontSize = 14.sp,
 					fontWeight = FontWeight.Bold,
-					color = Color.Black
+					color = MaterialTheme.colors.onBackground
 				)
 			}
 		}
@@ -97,7 +97,7 @@ fun GlobalLocalization() {
 @Composable
 fun LocalizationHeader() {
 	Column(
-		modifier = Modifier.fillMaxWidth(),
+		modifier = Modifier.fillMaxWidth().padding(top = 32.dp),
 		verticalArrangement = Arrangement.SpaceBetween,
 		horizontalAlignment = Alignment.CenterHorizontally
 	) {
@@ -112,7 +112,20 @@ fun LocalizationHeader() {
 @Composable
 fun LocalizationForm() {
 	val customColors = TextFieldDefaults.textFieldColors(
-		backgroundColor = Color.Transparent
+		textColor = MaterialTheme.colors.onBackground,
+		disabledTextColor = MaterialTheme.colors.onBackground,
+		backgroundColor = Color.Transparent,
+		cursorColor = MaterialTheme.colors.onBackground,
+		errorCursorColor = MaterialTheme.colors.error,
+		focusedIndicatorColor = MaterialTheme.colors.primaryVariant,
+		unfocusedIndicatorColor = MaterialTheme.colors.onBackground,
+		disabledIndicatorColor = MaterialTheme.colors.onBackground,
+		errorIndicatorColor = MaterialTheme.colors.error,
+		focusedLabelColor = MaterialTheme.colors.primary,
+		unfocusedLabelColor = MaterialTheme.colors.onBackground,
+		disabledLabelColor = MaterialTheme.colors.onBackground,
+		trailingIconColor = MaterialTheme.colors.onBackground,
+		placeholderColor = MaterialTheme.colors.onBackground
 	)
 
 	var cepState by rememberSaveable() {
@@ -216,45 +229,49 @@ fun LocalizationForm() {
 			colors = customColors
 		)
 		Spacer(Modifier.height(32.dp))
-		Button(
-			onClick = {
-				// TODO: USER LOGIN
-			},
-			modifier = Modifier
-				.fillMaxWidth()
-				.height(50.dp),
-			shape = RoundedCornerShape(size = 5.dp),
-			colors = ButtonDefaults.buttonColors(Color(9, 115, 138))
+		Row(
+			modifier = Modifier.padding(bottom = 32.dp),
+			horizontalArrangement = Arrangement.SpaceBetween
 		) {
-			Text(
-				text = "Cadastre-se como Cliente",
-				fontSize = 20.sp,
-				fontWeight = FontWeight.Bold,
-				color = Color.White
-			)
-		}
-		Spacer(Modifier.height(16.dp))
-		Button(
-			onClick = {
-				// TODO: USER LOGIN
-			},
-			modifier = Modifier
-				.fillMaxWidth()
-				.height(50.dp),
-			shape = RoundedCornerShape(size = 5.dp),
-			colors = ButtonDefaults.buttonColors(Color(9, 115, 138))
-		) {
-			Text(
-				text = "Cadastre-se como Profissional",
-				fontSize = 20.sp,
-				fontWeight = FontWeight.Bold,
-				color = Color.White,
-				textAlign = TextAlign.Center
-			)
+			Button(
+				onClick = {
+					// TODO: USER LOGIN
+				},
+				modifier = Modifier
+					.fillMaxWidth(0.45f)
+					.height(50.dp),
+				shape = RoundedCornerShape(size = 5.dp),
+				colors = ButtonDefaults.buttonColors(MaterialTheme.colors.secondary)
+			) {
+				Text(
+					text = "Sou cliente",
+					fontSize = 20.sp,
+					fontWeight = FontWeight.Bold,
+					color = MaterialTheme.colors.onSecondary
+				)
+			}
+			Spacer(Modifier.width(4.dp))
+			Button(
+				onClick = {
+					// TODO: USER LOGIN
+				},
+				modifier = Modifier
+					.fillMaxWidth(0.45f)
+					.height(50.dp),
+				shape = RoundedCornerShape(size = 5.dp),
+				colors = ButtonDefaults.buttonColors(MaterialTheme.colors.secondary)
+			) {
+				Text(
+					text = "Sou profissional",
+					color = MaterialTheme.colors.onSecondary,
+					fontSize = 20.sp,
+					fontWeight = FontWeight.Bold,
+					textAlign = TextAlign.Center
+				)
+			}
 		}
 	}
 }
-
 
 @Preview(showBackground = true)
 @Composable

@@ -80,9 +80,9 @@ fun GlobalRegister() {
 			) {
 				Text(
 					text = "${stringResource(id = R.string.already_have_account_bottom_message)} ",
+					color = MaterialTheme.colors.onBackground,
 					fontSize = 14.sp,
-					fontWeight = FontWeight.Normal,
-					color = Color.Black
+					fontWeight = FontWeight.Normal
 				)
 				Text(
 					text = stringResource(id = R.string.login_bottom_message),
@@ -90,9 +90,9 @@ fun GlobalRegister() {
 						val openRegisterAddressActivity = Intent(context, MainActivity::class.java)
 						ContextCompat.startActivity(context, openRegisterAddressActivity, null)
 					},
+					color = MaterialTheme.colors.onBackground,
 					fontSize = 14.sp,
-					fontWeight = FontWeight.Bold,
-					color = Color.Black
+					fontWeight = FontWeight.Bold
 				)
 			}
 		}
@@ -102,7 +102,9 @@ fun GlobalRegister() {
 @Composable
 fun RegisterHeader() {
 	Column(
-		modifier = Modifier.fillMaxWidth().padding(top = 32.dp),
+		modifier = Modifier
+			.fillMaxWidth()
+			.padding(top = 32.dp),
 		verticalArrangement = Arrangement.SpaceBetween,
 		horizontalAlignment = Alignment.CenterHorizontally
 	) {
@@ -167,7 +169,20 @@ fun RegisterForm() {
 	val context = LocalContext.current
 
 	val customColors = TextFieldDefaults.textFieldColors(
-		backgroundColor = Color.Transparent
+		textColor = MaterialTheme.colors.onBackground,
+		disabledTextColor = MaterialTheme.colors.onBackground,
+		backgroundColor = Color.Transparent,
+		cursorColor = MaterialTheme.colors.onBackground,
+		errorCursorColor = MaterialTheme.colors.error,
+		focusedIndicatorColor = MaterialTheme.colors.primaryVariant,
+		unfocusedIndicatorColor = MaterialTheme.colors.onBackground,
+		disabledIndicatorColor = MaterialTheme.colors.onBackground,
+		errorIndicatorColor = MaterialTheme.colors.error,
+		focusedLabelColor = MaterialTheme.colors.primary,
+		unfocusedLabelColor = MaterialTheme.colors.onBackground,
+		disabledLabelColor = MaterialTheme.colors.onBackground,
+		trailingIconColor = MaterialTheme.colors.onBackground,
+		placeholderColor = MaterialTheme.colors.onBackground
 	)
 
 	var nameState by rememberSaveable() {
@@ -318,13 +333,13 @@ fun RegisterForm() {
 			},
 			modifier = Modifier.fillMaxWidth(),
 			shape = RoundedCornerShape(size = 5.dp),
-			colors = ButtonDefaults.buttonColors(Color(9, 115, 138))
+			colors = ButtonDefaults.buttonColors(MaterialTheme.colors.secondary)
 		) {
 			Text(
 				text = "Continuar",
 				fontSize = 24.sp,
 				fontWeight = FontWeight.Bold,
-				color = Color.White
+				color = MaterialTheme.colors.onSecondary
 			)
 		}
 	}

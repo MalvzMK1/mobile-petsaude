@@ -13,17 +13,31 @@ import androidx.compose.ui.platform.LocalView
 private val DarkColorPalette = darkColors(
 	primary = Green400,
 	primaryVariant = Green500,
-	secondary = Blue600,
-	background = White100,
-	onBackground = Black700
+	secondary = Blue400,
+	secondaryVariant = Blue700,
+	background = Black700,
+	surface = Black700,
+	error = Error40,
+	onPrimary = Black700,
+	onSecondary = Black700,
+	onBackground = White100,
+	onSurface = White100,
+	onError = Error20
 )
 
 private val LightColorPalette = lightColors(
 	primary = Green400,
 	primaryVariant = Green500,
-	secondary = Blue600,
+	secondary = Blue400,
+	secondaryVariant = Blue400,
 	background = White100,
-	onBackground = Black700
+	surface = White100,
+	error = Error40,
+	onPrimary = White100,
+	onSecondary = White100,
+	onBackground = Black700,
+	onSurface = Black700,
+	onError = White100
 )
 
 @Composable

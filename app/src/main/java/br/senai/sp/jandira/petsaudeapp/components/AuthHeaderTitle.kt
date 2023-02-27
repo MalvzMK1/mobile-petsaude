@@ -2,6 +2,7 @@ package br.senai.sp.jandira.petsaudeapp.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -19,14 +20,14 @@ fun AuthHeaderTitle(title: String, subtitle: String) {
 	) {
 		Text(
 			text = title,
-			color = Color.Black,
+			color = MaterialTheme.colors.onBackground,
 			fontSize = 32.sp,
 			fontWeight = FontWeight.Bold,
 			textAlign = TextAlign.Center
 		)
 		Text(
 			text = subtitle,
-			color = Color.LightGray,
+			color = MaterialTheme.colors.onBackground,
 			fontSize = 16.sp,
 			fontWeight = FontWeight.Normal,
 			textAlign = TextAlign.Center

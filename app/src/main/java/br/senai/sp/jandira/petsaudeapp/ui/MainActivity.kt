@@ -60,14 +60,14 @@ fun GlobalLogin() {
 		modifier = Modifier
 			.fillMaxSize()
 			.padding(12.dp),
-		verticalArrangement = Arrangement.SpaceEvenly
+		verticalArrangement = Arrangement.SpaceBetween
 	) {
 		LoginHeader()
 		LoginForm()
 		Box(
 			modifier = Modifier
 				.fillMaxWidth()
-				.padding(top = 100.dp),
+				.padding(bottom = 32.dp),
 			contentAlignment = Alignment.BottomCenter
 		) {
 			Row(
@@ -79,7 +79,7 @@ fun GlobalLogin() {
 					text = "${stringResource(id = R.string.dont_have_account_bottom_message)} ",
 					fontSize = 14.sp,
 					fontWeight = FontWeight.Normal,
-					color = Color.Black
+					color = MaterialTheme.colors.onBackground
 				)
 				Text(
 					text = stringResource(id = R.string.register_yourself_bottom_message),
@@ -89,7 +89,7 @@ fun GlobalLogin() {
 					},
 					fontSize = 14.sp,
 					fontWeight = FontWeight.Bold,
-					color = Color.Black
+					color = MaterialTheme.colors.onBackground
 				)
 			}
 		}
@@ -101,7 +101,8 @@ fun LoginHeader() {
 
 	Column(
 		modifier = Modifier
-			.fillMaxWidth(),
+			.fillMaxWidth()
+			.padding(top = 32.dp),
 		verticalArrangement = Arrangement.SpaceBetween,
 		horizontalAlignment = Alignment.CenterHorizontally
 	) {
@@ -166,20 +167,20 @@ fun LoginHeader() {
 @Composable
 fun LoginForm() {
 	val customColors = TextFieldDefaults.textFieldColors(
-		textColor = Color.Black,
-		disabledTextColor = Color.Black,
+		textColor = MaterialTheme.colors.onBackground,
+		disabledTextColor = MaterialTheme.colors.onBackground,
 		backgroundColor = Color.Transparent,
-		cursorColor = Color.Black,
-		errorCursorColor = Color.Red,
+		cursorColor = MaterialTheme.colors.onBackground,
+		errorCursorColor = MaterialTheme.colors.error,
 		focusedIndicatorColor = MaterialTheme.colors.primaryVariant,
-		unfocusedIndicatorColor = Color.Black,
-		disabledIndicatorColor = Color.Black,
-		errorIndicatorColor = Color.Red,
+		unfocusedIndicatorColor = MaterialTheme.colors.onBackground,
+		disabledIndicatorColor = MaterialTheme.colors.onBackground,
+		errorIndicatorColor = MaterialTheme.colors.error,
 		focusedLabelColor = MaterialTheme.colors.primary,
-		unfocusedLabelColor = Color.Black,
-		disabledLabelColor = Color.Black,
-		trailingIconColor = Color.Black,
-		placeholderColor = Color.Black
+		unfocusedLabelColor = MaterialTheme.colors.onBackground,
+		disabledLabelColor = MaterialTheme.colors.onBackground,
+		trailingIconColor = MaterialTheme.colors.onBackground,
+		placeholderColor = MaterialTheme.colors.onBackground
 	)
 
 	var emailState by rememberSaveable {
@@ -260,6 +261,7 @@ fun LoginForm() {
 					.clickable(onClick = {
 //							TODO: GO TO PASSWORD RECOVER PAGE
 					}),
+				color = MaterialTheme.colors.onBackground,
 				fontSize = 12.sp,
 				fontWeight = FontWeight.Bold,
 			)
@@ -272,19 +274,19 @@ fun LoginForm() {
 			},
 			modifier = Modifier.fillMaxWidth(),
 			shape = RoundedCornerShape(size = 5.dp),
-			colors = ButtonDefaults.buttonColors(Color(9, 115, 138))
+			colors = ButtonDefaults.buttonColors(MaterialTheme.colors.secondary)
 		) {
 			Text(
 				text = stringResource(id = R.string.login_submit_button_text),
 				fontSize = 24.sp,
 				fontWeight = FontWeight.Bold,
-				color = Color.White
+				color = MaterialTheme.colors.onSecondary
 			)
 		}
 	}
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = false)
 @Composable
 fun DefaultPreview() {
 	PetSaudeAppTheme {
