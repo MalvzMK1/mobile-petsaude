@@ -1,8 +1,6 @@
 package br.senai.sp.jandira.petsaudeapp
 
 import android.os.Bundle
-import android.view.View
-import android.view.Window
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.*
@@ -21,9 +19,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.luminance
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -32,7 +29,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.view.WindowCompat
 import br.senai.sp.jandira.petsaudeapp.components.AuthHeaderTitle
 import br.senai.sp.jandira.petsaudeapp.components.BottomMessage
 import br.senai.sp.jandira.petsaudeapp.ui.theme.PetSaudeAppTheme
@@ -40,7 +36,6 @@ import br.senai.sp.jandira.petsaudeapp.ui.theme.PetSaudeAppTheme
 class MainActivity : ComponentActivity() {
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
-		WindowCompat.setDecorFitsSystemWindows(window, false)
 		setContent {
 			PetSaudeAppTheme {
 				Surface(
@@ -54,26 +49,6 @@ class MainActivity : ComponentActivity() {
 	}
 }
 
-//@Composable
-//fun StatusBar(window: Window) {
-//	MaterialTheme {
-//		window.statusBarColor = MaterialTheme.colors.surface.toArgb()
-//		window.navigationBarColor = MaterialTheme.colors.surface.toArgb()
-//
-//		@Suppress("DEPRECATION")
-//		if (MaterialTheme.colors.surface.luminance() > 0.5f) {
-//			window.decorView.systemUiVisibility = window.decorView.systemUiVisibility or
-//							View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-//		}
-//
-//		@Suppress("DEPRECATION")
-//		if (MaterialTheme.colors.surface.luminance() > 0.5f) {
-//			window.decorView.systemUiVisibility = window.decorView.systemUiVisibility or
-//							View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
-//		}
-//	}
-//}
-
 @Composable
 fun GlobalLogin() {
 	Column(
@@ -85,15 +60,14 @@ fun GlobalLogin() {
 		LoginHeader()
 		LoginForm()
 		BottomMessage(
-			message = "Ainda não tem uma conta? ",
-			clickable = "Cadastre-se"
+			message = "${stringResource(id = R.string.dont_have_account_bottom_message)} ",
+			clickable = stringResource(id = R.string.register_yourself_bottom_message)
 		)
 	}
 }
 
 @Composable
 fun LoginHeader() {
-//	val context = LocalContext.current
 
 	Column(
 		modifier = Modifier
@@ -108,8 +82,8 @@ fun LoginHeader() {
 			horizontalAlignment = Alignment.CenterHorizontally
 		) {
 			AuthHeaderTitle(
-				title = "Bem vindo de volta!",
-				subtitle = "Por favor, insira suas informações abaixo"
+				title = stringResource(id = R.string.welcome_back_login_header),
+				subtitle = stringResource(id = R.string.insert_infos_login_header)
 			)
 			Spacer(modifier = Modifier.height(32.dp))
 			Button(
@@ -141,7 +115,7 @@ fun LoginHeader() {
 						.background(color = Color.LightGray)
 				)
 				Text(
-					text = "Ou use o e-mail",
+					text = stringResource(id = R.string.or_use_email),
 					modifier = Modifier.padding(start = 10.dp, end = 10.dp),
 					color = Color.LightGray,
 					fontSize = 14.sp,
@@ -165,7 +139,20 @@ fun LoginForm() {
 	//val context = LocalContext.current
 
 	val customColors = TextFieldDefaults.textFieldColors(
-		backgroundColor = Color.Transparent
+		textColor = Color.Black,
+		disabledTextColor = Color.Black,
+		backgroundColor = Color.Transparent,
+		cursorColor = Color.Black,
+		errorCursorColor = Color.Red,
+		focusedIndicatorColor = MaterialTheme.colors.primaryVariant,
+		unfocusedIndicatorColor = Color.Black,
+		disabledIndicatorColor = Color.Black,
+		errorIndicatorColor = Color.Red,
+		focusedLabelColor = MaterialTheme.colors.primary,
+		unfocusedLabelColor = Color.Black,
+		disabledLabelColor = Color.Black,
+		trailingIconColor = Color.Black,
+		placeholderColor = Color.Black
 	)
 
 	var emailState by rememberSaveable {
@@ -197,7 +184,7 @@ fun LoginForm() {
 				},
 				modifier = Modifier
 					.fillMaxWidth(),
-				label = { Text(text = "E-mail") },
+				label = { Text(text = stringResource(id = R.string.email)) },
 				colors = customColors
 			)
 		}
@@ -216,13 +203,13 @@ fun LoginForm() {
 					visualTransformation = if (isPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
 					modifier = Modifier
 						.fillMaxWidth(),
-					label = { Text(text = "Senha") },
+					label = { Text(text = stringResource(id = R.string.password)) },
 					trailingIcon = {
 						val image = if (isPasswordVisible)
 							Icons.Filled.Visibility
 						else Icons.Filled.VisibilityOff
 
-						val description = if (isPasswordVisible) "Esconder Senha" else "Mostrar senha"
+						val description = if (isPasswordVisible) stringResource(id = R.string.hide_pass_alt) else stringResource(id = R.string.show_pass_alt)
 
 						IconButton(onClick = { isPasswordVisible = !isPasswordVisible }) {
 							Icon(
@@ -241,7 +228,7 @@ fun LoginForm() {
 			contentAlignment = Alignment.CenterEnd
 		) {
 			Text(
-				text = "Esqueceu a senha?",
+				text = stringResource(id = R.string.forgot_password),
 				modifier = Modifier
 					.clickable(onClick = {
 //							TODO: GO TO PASSWORD RECOVER PAGE
@@ -261,7 +248,7 @@ fun LoginForm() {
 			colors = ButtonDefaults.buttonColors(Color(9, 115, 138))
 		) {
 			Text(
-				text = "Entrar",
+				text = stringResource(id = R.string.login_submit_button_text),
 				fontSize = 24.sp,
 				fontWeight = FontWeight.Bold,
 				color = Color.White

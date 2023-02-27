@@ -15,7 +15,7 @@ private val DarkColorPalette = darkColors(
 	primaryVariant = Green500,
 	secondary = Blue600,
 	background = White100,
-  onBackground = Black700
+	onBackground = Black700
 )
 
 private val LightColorPalette = lightColors(
@@ -35,13 +35,13 @@ fun PetSaudeAppTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Compo
 	}
 
 	val view = LocalView.current
-  if (!view.isInEditMode) {
-    SideEffect {
-      val window = (view.context as Activity).window
-      window.statusBarColor = colors.secondary.toArgb()
-      window.navigationBarColor = colors.onBackground.toArgb()
-    }
-  }
+	if (!view.isInEditMode) {
+		SideEffect {
+			val window = (view.context as Activity).window
+			window.statusBarColor = colors.secondary.toArgb()
+			window.navigationBarColor = colors.onBackground.toArgb()
+		}
+	}
 
 	MaterialTheme(
 		colors = colors,

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PetSaude App</string>
+    <string name="title_activity_register">Register</string>
+    <string name="title_activity_localization">Localization</string>
+    <string name="welcome_back_login_header">Bem-vindo de volta!</string>
+    <string name="insert_infos_login_header">Por favor, insira suas informações abaixo</string>
+    <string name="dont_have_account_bottom_message">Ainda não tem uma conta?</string>
+    <string name="register_yourself_bottom_message">Cadastre-se</string>
+    <string name="or_use_email">Ou use o e-mail</string>
+    <string name="email">E-mail</string>
+    <string name="password">Senha</string>
+    <string name="forgot_password">Esqueceu a senha?</string>
+    <string name="login_submit_button_text">Entrar</string>
+    <string name="hide_pass_alt">Esconder senha</string>
+    <string name="show_pass_alt">Mostrar senha</string>
+</resources>
