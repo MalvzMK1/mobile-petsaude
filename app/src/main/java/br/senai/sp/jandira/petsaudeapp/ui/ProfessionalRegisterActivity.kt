@@ -10,6 +10,8 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.getValue
@@ -28,6 +30,7 @@ import androidx.compose.ui.unit.sp
 import br.senai.sp.jandira.petsaudeapp.R
 import br.senai.sp.jandira.petsaudeapp.components.AuthHeaderTitle
 import br.senai.sp.jandira.petsaudeapp.ui.theme.PetSaudeAppTheme
+import br.senai.sp.jandira.petsaudeapp.utils.DateTransformation
 import java.util.*
 
 class ProfessionalRegisterActivity : ComponentActivity() {
@@ -260,6 +263,8 @@ fun ProfessionalRegisterForm() {
 
 	// -----------------------------------------------------------------------------------------------
 
+	var dateState by rememberSaveable {mutableStateOf("")}
+
 	val year: Int
 	val month: Int
 	val day: Int
@@ -270,18 +275,37 @@ fun ProfessionalRegisterForm() {
 	day = calendar.get(Calendar.DAY_OF_MONTH)
 	calendar.time = Date()
 
-	var date by rememberSaveable {mutableStateOf("")}
+
 	val datePickerDialog = DatePickerDialog(
 		context,
 		{_: DatePicker, year: Int, month: Int, dayOfMonth: Int ->
-			date = "$month/$dayOfMonth/$year"
+			dateState = "$month/$dayOfMonth/$year"
 		}, year, month, day
 	)
 
-	OutlinedButton(onClick = { datePickerDialog.show() }) {
-		Text(text = "Data de formação: $date")
-	}
+	TextField(
+		value = dateState	,
+		onValueChange = {if (it.length <= 8) dateState = it},
+		modifier = Modifier.fillMaxWidth(),
+		enabled = false,
+		label = {Text(text = "Data de formação")},
+//		visualTransformation = DateTransformation(),
+		keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+		trailingIcon = {
+			val image = Icons.Filled.CalendarMonth
+			val description = "Calendar"
 
+			IconButton(onClick = { datePickerDialog.show() }) {
+				Icon(
+					imageVector = image,
+					contentDescription = description,
+					tint = MaterialTheme.colors.onBackground
+				)
+			}
+		},
+		singleLine = true,
+		colors = customColors
+	)
 }
 
 @Preview(showBackground = true)
