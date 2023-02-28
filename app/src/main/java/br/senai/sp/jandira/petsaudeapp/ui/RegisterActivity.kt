@@ -37,6 +37,7 @@ import br.senai.sp.jandira.petsaudeapp.R
 import br.senai.sp.jandira.petsaudeapp.components.AuthHeaderTitle
 import br.senai.sp.jandira.petsaudeapp.ui.theme.PetSaudeAppTheme
 import br.senai.sp.jandira.petsaudeapp.utils.CellPhoneNumberTransformation
+import br.senai.sp.jandira.petsaudeapp.utils.PhoneNumberTransformation
 
 class RegisterActivity : ComponentActivity() {
 	override fun onCreate(savedInstanceState: Bundle?) {
@@ -211,7 +212,7 @@ fun RegisterForm() {
 	}
 
 	var phoneNumberState by rememberSaveable() {
-		mutableStateOf("")
+		mutableStateOf("55")
 	}
 
 	var isPasswordVisible by rememberSaveable {
@@ -235,6 +236,7 @@ fun RegisterForm() {
 			},
 			modifier = Modifier.fillMaxWidth(),
 			label = { Text(text = stringResource(id = R.string.name_string_resource)) },
+			singleLine = true,
 			colors = customColors
 		)
 		Spacer(Modifier.height(16.dp))
@@ -245,6 +247,7 @@ fun RegisterForm() {
 			},
 			modifier = Modifier.fillMaxWidth(),
 			label = { Text(text = stringResource(id = R.string.last_name_string_resource)) },
+			singleLine = true,
 			colors = customColors
 		)
 		Spacer(Modifier.height(16.dp))
@@ -255,6 +258,8 @@ fun RegisterForm() {
 			},
 			modifier = Modifier.fillMaxWidth(),
 			label = { Text(text = stringResource(id = R.string.email_string_resource)) },
+			keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+			singleLine = true,
 			colors = customColors
 		)
 		Spacer(Modifier.height(16.dp))
@@ -282,6 +287,7 @@ fun RegisterForm() {
 				}
 			},
 			keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+			singleLine = true,
 			colors = customColors
 		)
 		Spacer(Modifier.height(16.dp))
@@ -309,6 +315,7 @@ fun RegisterForm() {
 				}
 			},
 			keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+			singleLine = true,
 			colors = customColors
 		)
 		Spacer(Modifier.height(16.dp))
@@ -319,16 +326,18 @@ fun RegisterForm() {
 			label = { Text(text = stringResource(id = R.string.cellphone_number_string_resource)) },
 			visualTransformation = CellPhoneNumberTransformation(),
 			keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
+			singleLine = true,
 			colors = customColors
 		)
 		Spacer(Modifier.height(16.dp))
 		TextField(
 			value = phoneNumberState,
-			onValueChange = {
-				phoneNumberState = it
-			},
+			onValueChange = {	if (it.length <= 12) phoneNumberState = it },
 			modifier = Modifier.fillMaxWidth(),
 			label = { Text(text = stringResource(id = R.string.phone_number_string_resource)) },
+			visualTransformation = PhoneNumberTransformation(),
+			keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
+			singleLine = true,
 			colors = customColors
 		)
 		Spacer(Modifier.height(32.dp))

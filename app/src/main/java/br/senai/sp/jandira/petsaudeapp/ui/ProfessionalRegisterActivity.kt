@@ -8,6 +8,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -20,6 +21,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -227,13 +229,16 @@ fun ProfessionalRegisterForm() {
 		onValueChange = {atuationAreaState = it},
 		modifier = Modifier.fillMaxWidth(),
 		label = {Text(text = "Área de atuação")},
+		singleLine = true,
 		colors = customColors
 	)
 	TextField(
 		value = crmvState,
-		onValueChange = {crmvState = it},
+		onValueChange = { if (it.length <= 4) crmvState = it },
 		modifier = Modifier.fillMaxWidth(),
 		label = {Text(text = "CRMV")},
+		keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+		singleLine = true,
 		colors = customColors
 	)
 	TextField(
@@ -241,6 +246,7 @@ fun ProfessionalRegisterForm() {
 		onValueChange = {formationState = it},
 		modifier = Modifier.fillMaxWidth(),
 		label = {Text(text = "Formação")},
+		singleLine = true,
 		colors = customColors
 	)
 	TextField(
@@ -248,6 +254,7 @@ fun ProfessionalRegisterForm() {
 		onValueChange = {institutionState = it},
 		modifier = Modifier.fillMaxWidth(),
 		label = {Text(text = "Instituição")},
+		singleLine = true,
 		colors = customColors
 	)
 

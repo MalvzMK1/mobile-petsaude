@@ -8,6 +8,8 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
@@ -22,6 +24,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.OffsetMapping
 import androidx.compose.ui.text.input.TransformedText
 import androidx.compose.ui.text.input.VisualTransformation
@@ -170,12 +173,14 @@ fun LocalizationForm() {
 		TextField(
 			value = cepState,
 			onValueChange = {
-				cepState = it
+				if (it.length <= 8) cepState = it
 			},
 			modifier = Modifier.fillMaxWidth(),
 			label = { Text(text = stringResource(id = R.string.zip_code_string_resource)) },
-			colors = customColors,
-			visualTransformation = ZipCodeTransformation()
+			visualTransformation = ZipCodeTransformation(),
+			keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+			singleLine = true,
+			colors = customColors
 		)
 		Spacer(Modifier.height(16.dp))
 		TextField(
@@ -185,6 +190,7 @@ fun LocalizationForm() {
 			},
 			modifier = Modifier.fillMaxWidth(),
 			label = { Text(text = stringResource(id = R.string.city_string_resource)) },
+			singleLine = true,
 			colors = customColors
 		)
 		Spacer(Modifier.height(16.dp))
@@ -195,6 +201,7 @@ fun LocalizationForm() {
 			},
 			modifier = Modifier.fillMaxWidth(),
 			label = { Text(text = stringResource(id = R.string.state_string_resource)) },
+			singleLine = true,
 			colors = customColors
 		)
 		Spacer(Modifier.height(16.dp))
@@ -205,6 +212,7 @@ fun LocalizationForm() {
 			},
 			modifier = Modifier.fillMaxWidth(),
 			label = { Text(text = stringResource(id = R.string.street_string_resource)) },
+			singleLine = true,
 			colors = customColors
 		)
 		Spacer(Modifier.height(16.dp))
@@ -215,6 +223,7 @@ fun LocalizationForm() {
 			},
 			modifier = Modifier.fillMaxWidth(),
 			label = { Text(text = stringResource(id = R.string.neighborhood_string_resource)) },
+			singleLine = true,
 			colors = customColors
 		)
 		Spacer(Modifier.height(16.dp))
@@ -225,6 +234,7 @@ fun LocalizationForm() {
 			},
 			modifier = Modifier.fillMaxWidth(),
 			label = { Text(text = stringResource(id = R.string.house_number_string_resource)) },
+			singleLine = true,
 			colors = customColors
 		)
 		Spacer(Modifier.height(16.dp))
@@ -235,6 +245,7 @@ fun LocalizationForm() {
 			},
 			modifier = Modifier.fillMaxWidth(),
 			label = { Text(text = stringResource(id = R.string.complement_string_resource)) },
+			singleLine = true,
 			colors = customColors
 		)
 		Spacer(Modifier.height(32.dp))
@@ -262,7 +273,8 @@ fun LocalizationForm() {
 			Spacer(Modifier.width(4.dp))
 			Button(
 				onClick = {
-					val openProfessionalRegisterActivity = Intent(context, ProfessionalRegisterActivity::class.java)
+					val openProfessionalRegisterActivity =
+						Intent(context, ProfessionalRegisterActivity::class.java)
 					startActivity(context, openProfessionalRegisterActivity, null)
 				},
 				modifier = Modifier
