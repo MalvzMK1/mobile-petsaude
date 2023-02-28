@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">PetSaude App</string>
-    <string name="title_activity_register">Register</string>
-    <string name="title_activity_register_address">Localization</string>
+    <string name="title_activity_register">Cadastro de usuário</string>
+    <string name="title_activity_register_address">Cadastro de endereço</string>
+    <string name="title_activity_professional_register">Cadastro de profissionais</string>
 
     // LOGIN ACTIVITY
 
@@ -15,7 +16,7 @@
 
     // REGISTER ACTIVITY
 
-    <string name="already_have_account_bottom_message">Já tem uma conta? Fazer </string>
+    <string name="already_have_account_bottom_message">Já tem uma conta? </string>
     <string name="login_bottom_message">Fazer login</string>
     <string name="are_you_new_signup_header">É novo por aqui?</string>
     <string name="message_signup_header">Insira suas informações abaixo e cadastre-se!</string>
@@ -52,4 +53,12 @@
     <string name="neighborhood_string_resource">Bairro</string>
     <string name="house_number_string_resource">Número</string>
     <string name="complement_string_resource">Complemento (Se houver)</string>
+
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 </resources>

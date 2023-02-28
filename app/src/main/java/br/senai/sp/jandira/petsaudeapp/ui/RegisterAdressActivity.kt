@@ -20,7 +20,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.OffsetMapping
+import androidx.compose.ui.text.input.TransformedText
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -29,6 +33,7 @@ import androidx.core.content.ContextCompat.startActivity
 import br.senai.sp.jandira.petsaudeapp.R
 import br.senai.sp.jandira.petsaudeapp.components.AuthHeaderTitle
 import br.senai.sp.jandira.petsaudeapp.ui.theme.PetSaudeAppTheme
+import br.senai.sp.jandira.petsaudeapp.utils.ZipCodeTransformation
 
 class RegisterAddressActivity : ComponentActivity() {
 	override fun onCreate(savedInstanceState: Bundle?) {
@@ -169,7 +174,8 @@ fun LocalizationForm() {
 			},
 			modifier = Modifier.fillMaxWidth(),
 			label = { Text(text = stringResource(id = R.string.zip_code_string_resource)) },
-			colors = customColors
+			colors = customColors,
+			visualTransformation = ZipCodeTransformation()
 		)
 		Spacer(Modifier.height(16.dp))
 		TextField(

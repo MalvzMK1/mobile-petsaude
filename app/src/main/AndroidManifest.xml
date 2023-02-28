@@ -14,7 +14,7 @@
         <activity
             android:name=".ui.ProfessionalRegisterActivity"
             android:exported="false"
-            android:label="@string/title_activity_veterinary_infos_register"
+            android:label="@string/title_activity_professional_register"
             android:theme="@style/Theme.PetSaudeApp" />
         <activity
             android:name=".ui.RegisterAddressActivity"

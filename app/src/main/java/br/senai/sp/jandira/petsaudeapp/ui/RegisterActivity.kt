@@ -36,6 +36,7 @@ import androidx.core.content.ContextCompat.startActivity
 import br.senai.sp.jandira.petsaudeapp.R
 import br.senai.sp.jandira.petsaudeapp.components.AuthHeaderTitle
 import br.senai.sp.jandira.petsaudeapp.ui.theme.PetSaudeAppTheme
+import br.senai.sp.jandira.petsaudeapp.utils.CellPhoneNumberTransformation
 
 class RegisterActivity : ComponentActivity() {
 	override fun onCreate(savedInstanceState: Bundle?) {
@@ -206,7 +207,7 @@ fun RegisterForm() {
 	}
 
 	var cellphoneNumberState by rememberSaveable() {
-		mutableStateOf("")
+		mutableStateOf("55")
 	}
 
 	var phoneNumberState by rememberSaveable() {
@@ -313,11 +314,11 @@ fun RegisterForm() {
 		Spacer(Modifier.height(16.dp))
 		TextField(
 			value = cellphoneNumberState,
-			onValueChange = {
-				cellphoneNumberState = it
-			},
+			onValueChange = { if (it.length <= 13) cellphoneNumberState = it },
 			modifier = Modifier.fillMaxWidth(),
 			label = { Text(text = stringResource(id = R.string.cellphone_number_string_resource)) },
+			visualTransformation = CellPhoneNumberTransformation(),
+			keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
 			colors = customColors
 		)
 		Spacer(Modifier.height(16.dp))
