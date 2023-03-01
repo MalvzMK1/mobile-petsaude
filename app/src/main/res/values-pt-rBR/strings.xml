@@ -33,6 +33,7 @@
 
     <string name="professional_register_header">Cadastro de profissionais</string>
     <string name="message_professional_register_header">Por favor, insira as informações abaixo e aproveite a plataforma!</string>
+    <string name="attended_animals">Animais que atende</string>
 
     // GENERIC STRINGS
 
@@ -53,4 +54,28 @@
     <string name="neighborhood_string_resource">Bairro</string>
     <string name="house_number_string_resource">Número</string>
     <string name="complement_string_resource">Complemento (Se houver)</string>
+    <string name="specialities_string_resource">Especialidades</string>
+    <string name="atuation_area_professional">Área de atuação</string>
+    <string name="crmv_professional">CRMV</string>
+    <string name="formation_professional">Formação</string>
+    <string name="institution_professional">Instituição</string>
+    <string name="formation_date_professional">Data de formação</string>
+    <string name="start_atuating_date_professional">Início de atuação</string>
+
+    // SPECIALITIES
+
+    <string name="surgeon_speciality">Cirurgião</string>
+    <string name="clinic_speciality">Clínica</string>
+    <string name="research_speciality">Pesquisa</string>
+    <string name="laboratory_speciality">Laboratorial</string>
+    <string name="anhestetist_speciality">Anestesista</string>
+    <string name="pharmacy_speciality">Farmácia veterinária</string>
+
+    // ANIMAL TYPES
+
+    <string name="dog_animal_type">Cachorros</string>
+    <string name="cat_animal_type">Gatos</string>
+    <string name="birds_animal_type">Aves</string>
+    <string name="reptiles_animal_type">Répteis</string>
+    <string name="exotic_animal_type">Exóticos</string>
 </resources>

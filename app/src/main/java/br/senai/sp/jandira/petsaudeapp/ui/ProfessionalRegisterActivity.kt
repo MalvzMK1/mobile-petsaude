@@ -1,14 +1,17 @@
 package br.senai.sp.jandira.petsaudeapp.ui
 
 import android.app.DatePickerDialog
+import android.content.Intent
 import android.os.Bundle
 import android.widget.DatePicker
-import android.widget.Space
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CalendarMonth
@@ -27,10 +30,10 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat
 import br.senai.sp.jandira.petsaudeapp.R
 import br.senai.sp.jandira.petsaudeapp.components.AuthHeaderTitle
 import br.senai.sp.jandira.petsaudeapp.ui.theme.PetSaudeAppTheme
-import br.senai.sp.jandira.petsaudeapp.utils.DateTransformation
 import java.util.*
 
 class ProfessionalRegisterActivity : ComponentActivity() {
@@ -39,7 +42,9 @@ class ProfessionalRegisterActivity : ComponentActivity() {
 		setContent {
 			PetSaudeAppTheme {
 				Surface(
-					modifier = Modifier.fillMaxSize(),
+					modifier = Modifier
+						.fillMaxSize()
+						.verticalScroll(rememberScrollState()),
 					color = MaterialTheme.colors.background
 				) {
 					ProfessionalRegisterGlobal()
@@ -51,6 +56,8 @@ class ProfessionalRegisterActivity : ComponentActivity() {
 
 @Composable
 fun ProfessionalRegisterGlobal() {
+	val context = LocalContext.current
+
 	Column(
 		modifier = Modifier
 			.fillMaxSize()
@@ -58,6 +65,34 @@ fun ProfessionalRegisterGlobal() {
 	) {
 		ProfessionalRegisterHeader()
 		ProfessionalRegisterForm()
+		Box(
+			modifier = Modifier
+				.fillMaxWidth(),
+			contentAlignment = Alignment.BottomCenter
+		) {
+			Row(
+				modifier = Modifier.fillMaxWidth(),
+				verticalAlignment = Alignment.CenterVertically,
+				horizontalArrangement = Arrangement.Center,
+			) {
+				Text(
+					text = "${stringResource(id = R.string.dont_have_account_bottom_message)} ",
+					fontSize = 14.sp,
+					fontWeight = FontWeight.Normal,
+					color = MaterialTheme.colors.onBackground
+				)
+				Text(
+					text = stringResource(id = R.string.register_yourself_bottom_message),
+					modifier = Modifier.clickable {
+						val openRegisterActivity = Intent(context, MainActivity::class.java)
+						ContextCompat.startActivity(context, openRegisterActivity, null)
+					},
+					fontSize = 14.sp,
+					fontWeight = FontWeight.Bold,
+					color = MaterialTheme.colors.onBackground
+				)
+			}
+		}
 	}
 }
 
@@ -89,11 +124,23 @@ fun ProfessionalRegisterForm() {
 		mutableStateOf(false)
 	}
 
+	var laboratoryCheckState by rememberSaveable {
+		mutableStateOf(false)
+	}
+
+	var anesthetistCheckState by rememberSaveable {
+		mutableStateOf(false)
+	}
+
+	var veterinaryPharmacyCheckState by rememberSaveable {
+		mutableStateOf(false)
+	}
+
 	Column(
 		modifier = Modifier.fillMaxWidth()
 	) {
 		Text(
-			text = "Especialidades",
+			text = stringResource(id = R.string.specialities_string_resource),
 			fontSize = 20.sp,
 			fontWeight = FontWeight.Bold,
 			color = MaterialTheme.colors.onBackground
@@ -106,29 +153,49 @@ fun ProfessionalRegisterForm() {
 				horizontalArrangement = Arrangement.Start,
 				verticalAlignment = Alignment.CenterVertically
 			) {
-				Checkbox(
-					checked = surgeonCheckState,
-					onCheckedChange = {surgeonCheckState = it},
-					colors = CheckboxDefaults.colors(
-						checkedColor = MaterialTheme.colors.secondary
-					)
-				)
-				Text(text = "Cirurgião")
+				Checkbox(checked = surgeonCheckState, onCheckedChange = {surgeonCheckState = it})
+				Text(text = stringResource(id = R.string.surgeon_speciality))
 			}
 			Row(
 				horizontalArrangement = Arrangement.Start,
 				verticalAlignment = Alignment.CenterVertically
 			) {
 				Checkbox(checked = clinicCheckState, onCheckedChange = {clinicCheckState = it})
-				Text(text = "Clínica")
+				Text(text = stringResource(id = R.string.clinic_speciality))
 			}
 			Row(
 				horizontalArrangement = Arrangement.Start,
 				verticalAlignment = Alignment.CenterVertically
 			) {
 				Checkbox(checked = researchCheckState, onCheckedChange = {researchCheckState = it})
-				Text(text = "Pesquisa")
+				Text(text = stringResource(id = R.string.research_speciality))
 			}
+		}
+		Row(
+			modifier = Modifier.fillMaxWidth(),
+			horizontalArrangement = Arrangement.Start
+		) {
+			Row(
+				horizontalArrangement = Arrangement.Start,
+				verticalAlignment = Alignment.CenterVertically
+			) {
+				Checkbox(checked = laboratoryCheckState, onCheckedChange = {laboratoryCheckState = it})
+				Text(text = stringResource(id = R.string.laboratory_speciality))
+			}
+			Row(
+				horizontalArrangement = Arrangement.Start,
+				verticalAlignment = Alignment.CenterVertically
+			) {
+				Checkbox(checked = anesthetistCheckState, onCheckedChange = {anesthetistCheckState = it})
+				Text(text = stringResource(id = R.string.anhestetist_speciality))
+			}
+		}
+		Row(
+			horizontalArrangement = Arrangement.Start,
+			verticalAlignment = Alignment.CenterVertically
+		) {
+			Checkbox(checked = veterinaryPharmacyCheckState, onCheckedChange = {veterinaryPharmacyCheckState = it})
+			Text(text = stringResource(id = R.string.pharmacy_speciality))
 		}
 	}
 
@@ -141,14 +208,23 @@ fun ProfessionalRegisterForm() {
 	var catCheckState by rememberSaveable {
 		mutableStateOf(false)
 	}
+
 	var reptileCheckState by rememberSaveable {
+		mutableStateOf(false)
+	}
+
+	var birdCheckState by rememberSaveable {
+		mutableStateOf(false)
+	}
+
+	var exoticCheckState by rememberSaveable {
 		mutableStateOf(false)
 	}
 
 
 	Spacer(modifier = Modifier.height(16.dp))
 	Text(
-		text = "Animais que atende",
+		text = stringResource(id = R.string.attended_animals),
 		fontSize = 20.sp,
 		fontWeight = FontWeight.Bold,
 		color = MaterialTheme.colors.onBackground
@@ -168,7 +244,7 @@ fun ProfessionalRegisterForm() {
 					checkedColor = MaterialTheme.colors.secondary
 				)
 			)
-			Text(text = "Cachorro")
+			Text(text = stringResource(id = R.string.dog_animal_type))
 		}
 		Row(
 			horizontalArrangement = Arrangement.Start,
@@ -178,7 +254,7 @@ fun ProfessionalRegisterForm() {
 				checked = catCheckState,
 				onCheckedChange = {catCheckState = it}
 			)
-			Text(text = "Gato")
+			Text(text = stringResource(id = R.string.cat_animal_type))
 		}
 		Row(
 			horizontalArrangement = Arrangement.Start,
@@ -188,8 +264,28 @@ fun ProfessionalRegisterForm() {
 				checked = reptileCheckState,
 				onCheckedChange = {reptileCheckState = it}
 			)
-			Text(text = "Aves")
+			Text(text = stringResource(id = R.string.reptiles_animal_type))
 		}
+		Row(
+			horizontalArrangement = Arrangement.Start,
+			verticalAlignment = Alignment.CenterVertically
+		) {
+			Checkbox(
+				checked = birdCheckState,
+				onCheckedChange = {birdCheckState = it}
+			)
+			Text(text = stringResource(id = R.string.birds_animal_type))
+		}
+	}
+	Row(
+		horizontalArrangement = Arrangement.Start,
+		verticalAlignment = Alignment.CenterVertically
+	) {
+		Checkbox(
+			checked = exoticCheckState,
+			onCheckedChange = {exoticCheckState = it}
+		)
+		Text(text = stringResource(id = R.string.exotic_animal_type))
 	}
 
 	// -----------------------------------------------------------------------------------------------
@@ -231,7 +327,7 @@ fun ProfessionalRegisterForm() {
 		value = atuationAreaState,
 		onValueChange = {atuationAreaState = it},
 		modifier = Modifier.fillMaxWidth(),
-		label = {Text(text = "Área de atuação")},
+		label = {Text(text = stringResource(id = R.string.atuation_area_professional))},
 		singleLine = true,
 		colors = customColors
 	)
@@ -239,7 +335,7 @@ fun ProfessionalRegisterForm() {
 		value = crmvState,
 		onValueChange = { if (it.length <= 4) crmvState = it },
 		modifier = Modifier.fillMaxWidth(),
-		label = {Text(text = "CRMV")},
+		label = {Text(text = stringResource(id = R.string.crmv_professional))},
 		keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
 		singleLine = true,
 		colors = customColors
@@ -248,7 +344,7 @@ fun ProfessionalRegisterForm() {
 		value = formationState,
 		onValueChange = {formationState = it},
 		modifier = Modifier.fillMaxWidth(),
-		label = {Text(text = "Formação")},
+		label = {Text(text = stringResource(id = R.string.formation_professional))},
 		singleLine = true,
 		colors = customColors
 	)
@@ -256,14 +352,15 @@ fun ProfessionalRegisterForm() {
 		value = institutionState,
 		onValueChange = {institutionState = it},
 		modifier = Modifier.fillMaxWidth(),
-		label = {Text(text = "Instituição")},
+		label = {Text(text = stringResource(id = R.string.institution_professional))},
 		singleLine = true,
 		colors = customColors
 	)
 
 	// -----------------------------------------------------------------------------------------------
 
-	var dateState by rememberSaveable {mutableStateOf("")}
+	var formationDateState by rememberSaveable {mutableStateOf("")}
+	var startAtuatingDateState by rememberSaveable {mutableStateOf("")}
 
 	val year: Int
 	val month: Int
@@ -276,26 +373,32 @@ fun ProfessionalRegisterForm() {
 	calendar.time = Date()
 
 
-	val datePickerDialog = DatePickerDialog(
+	val formationDatePickerDialog = DatePickerDialog(
 		context,
 		{_: DatePicker, year: Int, month: Int, dayOfMonth: Int ->
-			dateState = "$month/$dayOfMonth/$year"
+			formationDateState = "$month/$dayOfMonth/$year"
+		}, year, month, day
+	)
+
+	val startAtuatingDatePickerDialog = DatePickerDialog(
+		context,
+		{_: DatePicker, year: Int, month: Int, dayOfMonth: Int ->
+			startAtuatingDateState = "$month/$dayOfMonth/$year"
 		}, year, month, day
 	)
 
 	TextField(
-		value = dateState	,
-		onValueChange = {if (it.length <= 8) dateState = it},
+		value = formationDateState	,
+		onValueChange = {if (it.length <= 8) formationDateState = it},
 		modifier = Modifier.fillMaxWidth(),
 		enabled = false,
-		label = {Text(text = "Data de formação")},
-//		visualTransformation = DateTransformation(),
+		label = {Text(text = stringResource(id = R.string.formation_date_professional))},
 		keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
 		trailingIcon = {
 			val image = Icons.Filled.CalendarMonth
 			val description = "Calendar"
 
-			IconButton(onClick = { datePickerDialog.show() }) {
+			IconButton(onClick = { formationDatePickerDialog.show() }) {
 				Icon(
 					imageVector = image,
 					contentDescription = description,
@@ -306,6 +409,46 @@ fun ProfessionalRegisterForm() {
 		singleLine = true,
 		colors = customColors
 	)
+	TextField(
+		value = formationDateState	,
+		onValueChange = {if (it.length <= 8) formationDateState = it},
+		modifier = Modifier.fillMaxWidth(),
+		enabled = false,
+		label = {Text(text = stringResource(id = R.string.start_atuating_date_professional))},
+		keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+		trailingIcon = {
+			val image = Icons.Filled.CalendarMonth
+			val description = "Calendar"
+
+			IconButton(onClick = { startAtuatingDatePickerDialog.show() }) {
+				Icon(
+					imageVector = image,
+					contentDescription = description,
+					tint = MaterialTheme.colors.onBackground
+				)
+			}
+		},
+		singleLine = true,
+		colors = customColors
+	)
+	Spacer(modifier = Modifier.height(32.dp))
+	Button(
+		onClick = {
+//				TODO: PROFESSIONAL REGISTER
+
+		},
+		modifier = Modifier.fillMaxWidth(),
+		shape = RoundedCornerShape(size = 5.dp),
+		colors = ButtonDefaults.buttonColors(MaterialTheme.colors.secondary)
+	) {
+		Text(
+			text = stringResource(id = R.string.enter_string_resource),
+			fontSize = 24.sp,
+			fontWeight = FontWeight.Bold,
+			color = MaterialTheme.colors.onSecondary
+		)
+	}
+	Spacer(modifier = Modifier.height(32.dp))
 }
 
 @Preview(showBackground = true)

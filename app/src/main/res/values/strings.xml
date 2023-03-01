@@ -35,6 +35,7 @@
 
     <string name="professional_register_header">Professional register</string>
     <string name="message_professional_register_header">Please, put your informations below and enjoy the platform!</string>
+    <string name="attended_animals">Animals that attend</string>
 
     // GENERIC STRINGS
 
@@ -52,4 +53,29 @@
     <string name="house_number_string_resource">Number</string>
     <string name="complement_string_resource">Complement (If there is)</string>
     <string name="continue_string_resource">Continue</string>
+    <string name="specialities_string_resource">Specialities</string>
+    <string name="atuation_area_professional">Atuation area</string>
+    <string name="crmv_professional">CRMV</string>
+    <string name="formation_professional">Formation</string>
+    <string name="institution_professional">Institution</string>
+    <string name="formation_date_professional">Formation date</string>
+    <string name="start_atuating_date_professional">Atuation beginning</string>
+
+    // SPECIALITIES
+
+    <string name="surgeon_speciality">Surgeon</string>
+    <string name="clinic_speciality">Clinic</string>
+    <string name="research_speciality">Research</string>
+    <string name="laboratory_speciality">Laboratory</string>
+    <string name="anhestetist_speciality">Anhestetist</string>
+    <string name="pharmacy_speciality">Veterinary pharmacy</string>
+
+    // ANIMAL TYPES
+
+    <string name="dog_animal_type">Dogs</string>
+    <string name="cat_animal_type">Cats</string>
+    <string name="birds_animal_type">Birds</string>
+    <string name="reptiles_animal_type">Reptiles</string>
+    <string name="exotic_animal_type">Exotics</string>
+
 </resources>

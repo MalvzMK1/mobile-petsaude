@@ -2,6 +2,7 @@ package br.senai.sp.jandira.petsaudeapp.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.*
@@ -34,6 +35,8 @@ import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat.startActivity
 import br.senai.sp.jandira.petsaudeapp.R
 import br.senai.sp.jandira.petsaudeapp.components.AuthHeaderTitle
+import br.senai.sp.jandira.petsaudeapp.components.PasswordInputHideShowIcon
+import br.senai.sp.jandira.petsaudeapp.components.TextFieldInput
 import br.senai.sp.jandira.petsaudeapp.ui.theme.PetSaudeAppTheme
 
 class MainActivity : ComponentActivity() {
@@ -166,56 +169,15 @@ fun LoginHeader() {
 
 @Composable
 fun LoginForm() {
-	val customColors = TextFieldDefaults.textFieldColors(
-		textColor = MaterialTheme.colors.onBackground,
-		disabledTextColor = MaterialTheme.colors.onBackground,
-		backgroundColor = Color.Transparent,
-		cursorColor = MaterialTheme.colors.onBackground,
-		errorCursorColor = MaterialTheme.colors.error,
-		focusedIndicatorColor = MaterialTheme.colors.primaryVariant,
-		unfocusedIndicatorColor = MaterialTheme.colors.onBackground,
-		disabledIndicatorColor = MaterialTheme.colors.onBackground,
-		errorIndicatorColor = MaterialTheme.colors.error,
-		focusedLabelColor = MaterialTheme.colors.primary,
-		unfocusedLabelColor = MaterialTheme.colors.onBackground,
-		disabledLabelColor = MaterialTheme.colors.onBackground,
-		trailingIconColor = MaterialTheme.colors.onBackground,
-		placeholderColor = MaterialTheme.colors.onBackground
-	)
-
-	var emailState by rememberSaveable {
-		mutableStateOf("")
-	}
-
-	var passwordState by rememberSaveable {
-		mutableStateOf("")
-	}
-
-	var isPasswordVisible by rememberSaveable {
-		mutableStateOf(false)
-	}
-
+	val context = LocalContext.current
+	var loginEmail = ""
+	var loginPassword = ""
 	Column(
 		modifier = Modifier
 			.fillMaxWidth()
 			.padding(top = 32.dp)
 	) {
-		Box(
-			modifier = Modifier
-				.fillMaxWidth()
-				.background(Color.Transparent),
-		) {
-			TextField(
-				value = emailState,
-				onValueChange = {
-					emailState = it
-				},
-				modifier = Modifier
-					.fillMaxWidth(),
-				label = { Text(text = stringResource(id = R.string.email_string_resource)) },
-				colors = customColors
-			)
-		}
+		loginEmail = TextFieldInput(label = stringResource(id = R.string.email_string_resource), type = KeyboardType.Email)
 		Spacer(Modifier.height(16.dp))
 		Column() {
 			Box(
@@ -223,32 +185,7 @@ fun LoginForm() {
 					.fillMaxWidth()
 					.background(Color.Transparent),
 			) {
-				TextField(
-					value = passwordState,
-					onValueChange = {
-						passwordState = it
-					},
-					visualTransformation = if (isPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-					modifier = Modifier
-						.fillMaxWidth(),
-					label = { Text(text = stringResource(id = R.string.password_string_resource)) },
-					trailingIcon = {
-						val image = if (isPasswordVisible)
-							Icons.Filled.Visibility
-						else Icons.Filled.VisibilityOff
-
-						val description = if (isPasswordVisible) stringResource(id = R.string.hide_pass_alt) else stringResource(id = R.string.show_pass_alt)
-
-						IconButton(onClick = { isPasswordVisible = !isPasswordVisible }) {
-							Icon(
-								imageVector = image,
-								contentDescription = description
-							)
-						}
-					},
-					keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-					colors = customColors
-				)
+				loginPassword = PasswordInputHideShowIcon(label = stringResource(id = R.string.password_string_resource))
 			}
 		}
 		Box(
@@ -270,7 +207,7 @@ fun LoginForm() {
 		Button(
 			onClick = {
 //				TODO: USER LOGIN
-//					Toast.makeText(context, "$emailState, $passwordState", Toast.LENGTH_SHORT).show()
+					Toast.makeText(context, "$loginEmail, $loginPassword", Toast.LENGTH_SHORT).show()
 			},
 			modifier = Modifier.fillMaxWidth(),
 			shape = RoundedCornerShape(size = 5.dp),
