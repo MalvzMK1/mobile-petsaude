@@ -1,5 +1,6 @@
-package br.senai.sp.jandira.petsaudeapp
+package br.senai.sp.jandira.petsaudeapp.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -22,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -30,8 +32,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat.startActivity
+import br.senai.sp.jandira.petsaudeapp.R
 import br.senai.sp.jandira.petsaudeapp.components.AuthHeaderTitle
-import br.senai.sp.jandira.petsaudeapp.components.BottomMessage
+import br.senai.sp.jandira.petsaudeapp.components.PasswordInputHideShowIcon
+import br.senai.sp.jandira.petsaudeapp.components.TextFieldInput
 import br.senai.sp.jandira.petsaudeapp.ui.theme.PetSaudeAppTheme
 
 class MainActivity : ComponentActivity() {
@@ -40,12 +45,10 @@ class MainActivity : ComponentActivity() {
 		setContent {
 			PetSaudeAppTheme {
 				Surface(
-					modifier = Modifier
-						.fillMaxSize()
-						.padding(12.dp),
+					modifier = Modifier.fillMaxSize(),
 					color = MaterialTheme.colors.background
 				) {
-					Global()
+					GlobalLogin()
 				}
 			}
 		}
@@ -53,24 +56,56 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Global() {
+fun GlobalLogin() {
+	val context = LocalContext.current
+
 	Column(
-		modifier = Modifier.fillMaxSize(),
-		verticalArrangement = Arrangement.SpaceEvenly
+		modifier = Modifier
+			.fillMaxSize()
+			.padding(12.dp),
+		verticalArrangement = Arrangement.SpaceBetween
 	) {
 		LoginHeader()
 		LoginForm()
-		BottomMessage()
+		Box(
+			modifier = Modifier
+				.fillMaxWidth()
+				.padding(bottom = 32.dp),
+			contentAlignment = Alignment.BottomCenter
+		) {
+			Row(
+				modifier = Modifier.fillMaxWidth(),
+				verticalAlignment = Alignment.CenterVertically,
+				horizontalArrangement = Arrangement.Center,
+			) {
+				Text(
+					text = "${stringResource(id = R.string.dont_have_account_bottom_message)} ",
+					fontSize = 14.sp,
+					fontWeight = FontWeight.Normal,
+					color = MaterialTheme.colors.onBackground
+				)
+				Text(
+					text = stringResource(id = R.string.register_yourself_bottom_message),
+					modifier = Modifier.clickable {
+						val openRegisterActivity = Intent(context, RegisterActivity::class.java)
+						startActivity(context, openRegisterActivity, null)
+					},
+					fontSize = 14.sp,
+					fontWeight = FontWeight.Bold,
+					color = MaterialTheme.colors.onBackground
+				)
+			}
+		}
 	}
 }
 
 @Composable
 fun LoginHeader() {
-	val context = LocalContext.current
 
 	Column(
 		modifier = Modifier
-			.fillMaxWidth(),
+			.fillMaxWidth()
+			.padding(top = 32.dp),
 		verticalArrangement = Arrangement.SpaceBetween,
 		horizontalAlignment = Alignment.CenterHorizontally
 	) {
@@ -81,14 +116,14 @@ fun LoginHeader() {
 			horizontalAlignment = Alignment.CenterHorizontally
 		) {
 			AuthHeaderTitle(
-				title = "Bem vindo de volta!",
-				subtitle = "Por favor, insira suas informações abaixo"
+				title = stringResource(id = R.string.welcome_back_login_header),
+				subtitle = stringResource(id = R.string.insert_infos_login_header)
 			)
 			Spacer(modifier = Modifier.height(32.dp))
 			Button(
 				onClick = {
 //				TODO: FIREBASE AUTHENTICATION
-					Toast.makeText(context, "Button Click", Toast.LENGTH_SHORT).show()
+//					Toast.makeText(context, "Button Click", Toast.LENGTH_SHORT).show()
 				},
 				modifier = Modifier.size(60.dp),
 				shape = RoundedCornerShape(50),
@@ -114,7 +149,7 @@ fun LoginHeader() {
 						.background(color = Color.LightGray)
 				)
 				Text(
-					text = "Ou use o e-mail",
+					text = stringResource(id = R.string.or_use_email),
 					modifier = Modifier.padding(start = 10.dp, end = 10.dp),
 					color = Color.LightGray,
 					fontSize = 14.sp,
@@ -134,81 +169,23 @@ fun LoginHeader() {
 
 @Composable
 fun LoginForm() {
-	// TEST ONLY
 	val context = LocalContext.current
-
-	val customColors = TextFieldDefaults.textFieldColors(
-		backgroundColor = Color.Transparent
-	)
-
-	var emailState by rememberSaveable {
-		mutableStateOf("")
-	}
-
-	var passwordState by rememberSaveable {
-		mutableStateOf("")
-	}
-
-	var isPasswordVisible by rememberSaveable {
-		mutableStateOf(false)
-	}
-
+	var loginEmail = ""
+	var loginPassword = ""
 	Column(
 		modifier = Modifier
 			.fillMaxWidth()
 			.padding(top = 32.dp)
 	) {
-		Box(
-			modifier = Modifier
-				.fillMaxWidth()
-				.border(BorderStroke(1.dp, Color.Black), shape = MaterialTheme.shapes.small)
-				.background(Color.Transparent),
-		) {
-			TextField(
-				value = emailState,
-				onValueChange = {
-					emailState = it
-				},
-				modifier = Modifier
-					.fillMaxWidth(),
-				label = { Text(text = "E-mail") },
-				colors = customColors
-			)
-		}
+		loginEmail = TextFieldInput(label = stringResource(id = R.string.email_string_resource), type = KeyboardType.Email)
 		Spacer(Modifier.height(16.dp))
 		Column() {
 			Box(
 				modifier = Modifier
 					.fillMaxWidth()
-					.border(BorderStroke(1.dp, Color.Black), shape = MaterialTheme.shapes.small)
 					.background(Color.Transparent),
 			) {
-				TextField(
-					value = passwordState,
-					onValueChange = {
-						passwordState = it
-					},
-					visualTransformation = if (isPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-					modifier = Modifier
-						.fillMaxWidth(),
-					label = { Text(text = "Senha") },
-					trailingIcon = {
-						val image = if (isPasswordVisible)
-							Icons.Filled.Visibility
-						else Icons.Filled.VisibilityOff
-
-						val description = if (isPasswordVisible) "Esconder Senha" else "Mostrar senha"
-
-						IconButton(onClick = { isPasswordVisible = !isPasswordVisible }) {
-							Icon(
-								imageVector = image,
-								contentDescription = description
-							)
-						}
-					},
-					keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-					colors = customColors
-				)
+				loginPassword = PasswordInputHideShowIcon(label = stringResource(id = R.string.password_string_resource))
 			}
 		}
 		Box(
@@ -216,11 +193,12 @@ fun LoginForm() {
 			contentAlignment = Alignment.CenterEnd
 		) {
 			Text(
-				text = "Esqueceu a senha?",
+				text = stringResource(id = R.string.forgot_password),
 				modifier = Modifier
 					.clickable(onClick = {
-						//TODO: GO TO PASSWORD RECOVER PAGE
+//							TODO: GO TO PASSWORD RECOVER PAGE
 					}),
+				color = MaterialTheme.colors.onBackground,
 				fontSize = 12.sp,
 				fontWeight = FontWeight.Bold,
 			)
@@ -228,27 +206,27 @@ fun LoginForm() {
 		Spacer(Modifier.height(32.dp))
 		Button(
 			onClick = {
-				Toast.makeText(context, "$emailState, $passwordState", Toast.LENGTH_SHORT).show()
-				// TODO: USER LOGIN
+//				TODO: USER LOGIN
+					Toast.makeText(context, "$loginEmail, $loginPassword", Toast.LENGTH_SHORT).show()
 			},
 			modifier = Modifier.fillMaxWidth(),
 			shape = RoundedCornerShape(size = 5.dp),
-			colors = ButtonDefaults.buttonColors(Color(9, 115, 138))
+			colors = ButtonDefaults.buttonColors(MaterialTheme.colors.secondary)
 		) {
 			Text(
-				text = "Entrar",
+				text = stringResource(id = R.string.enter_string_resource),
 				fontSize = 24.sp,
 				fontWeight = FontWeight.Bold,
-				color = Color.White
+				color = MaterialTheme.colors.onSecondary
 			)
 		}
 	}
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = false)
 @Composable
 fun DefaultPreview() {
 	PetSaudeAppTheme {
-		Global()
+		GlobalLogin()
 	}
 }

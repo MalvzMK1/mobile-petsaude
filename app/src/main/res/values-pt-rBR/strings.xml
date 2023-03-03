@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PetSaude App</string>
+    <string name="title_activity_register">Cadastro de usuário</string>
+    <string name="title_activity_register_address">Cadastro de endereço</string>
+    <string name="title_activity_professional_register">Cadastro de profissionais</string>
+
+    // LOGIN ACTIVITY
+
+    <string name="welcome_back_login_header">Bem-vindo de volta!</string>
+    <string name="insert_infos_login_header">Por favor, insira suas informações abaixo</string>
+    <string name="dont_have_account_bottom_message">Ainda não tem uma conta?</string>
+    <string name="register_yourself_bottom_message">Cadastre-se</string>
+    <string name="or_use_email">Ou use o e-mail</string>
+    <string name="forgot_password">Esqueceu a senha?</string>
+
+    // REGISTER ACTIVITY
+
+    <string name="already_have_account_bottom_message">Já tem uma conta? </string>
+    <string name="login_bottom_message">Fazer login</string>
+    <string name="are_you_new_signup_header">É novo por aqui?</string>
+    <string name="message_signup_header">Insira suas informações abaixo e cadastre-se!</string>
+    <string name="confirm_password_string_resource">Confirme sua senha</string>
+
+    // ADDRESS REGISTER ACTIVITY
+
+    <string name="can_we_know_address_register_header">Podemos saber a sua localização?</string>
+    <string name="message_address_register_header">Para a experiência completa na plataforma, informe-nos a sua localização!</string>
+    <string name="im_client_button_string">Sou cliente</string>
+    <string name="im_professional_button_string">Sou profissional</string>
+
+    // PROFESSIONAL REGISTER ACTIVITY
+
+    <string name="professional_register_header">Cadastro de profissionais</string>
+    <string name="message_professional_register_header">Por favor, insira as informações abaixo e aproveite a plataforma!</string>
+    <string name="attended_animals">Animais que atende</string>
+
+    // GENERIC STRINGS
+
+    <string name="email_string_resource">E-mail</string>
+    <string name="password_string_resource">Senha</string>
+    <string name="enter_string_resource">Entrar</string>
+    <string name="hide_pass_alt">Esconder senha</string>
+    <string name="show_pass_alt">Mostrar senha</string>
+    <string name="name_string_resource">Nome</string>
+    <string name="last_name_string_resource">Sobrenome</string>
+    <string name="cellphone_number_string_resource">Celular</string>
+    <string name="phone_number_string_resource">Telefone</string>
+    <string name="continue_string_resource">Continuar</string>
+    <string name="zip_code_string_resource">CEP</string>
+    <string name="city_string_resource">Cidade</string>
+    <string name="state_string_resource">Estado</string>
+    <string name="street_string_resource">Rua</string>
+    <string name="neighborhood_string_resource">Bairro</string>
+    <string name="house_number_string_resource">Número</string>
+    <string name="complement_string_resource">Complemento (Se houver)</string>
+    <string name="specialities_string_resource">Especialidades</string>
+    <string name="atuation_area_professional">Área de atuação</string>
+    <string name="crmv_professional">CRMV</string>
+    <string name="formation_professional">Formação</string>
+    <string name="institution_professional">Instituição</string>
+    <string name="formation_date_professional">Data de formação</string>
+    <string name="start_atuating_date_professional">Início de atuação</string>
+
+    // SPECIALITIES
+
+    <string name="surgeon_speciality">Cirurgião</string>
+    <string name="clinic_speciality">Clínica</string>
+    <string name="research_speciality">Pesquisa</string>
+    <string name="laboratory_speciality">Laboratorial</string>
+    <string name="anhestetist_speciality">Anestesista</string>
+    <string name="pharmacy_speciality">Farmácia veterinária</string>
+
+    // ANIMAL TYPES
+
+    <string name="dog_animal_type">Cachorros</string>
+    <string name="cat_animal_type">Gatos</string>
+    <string name="birds_animal_type">Aves</string>
+    <string name="reptiles_animal_type">Répteis</string>
+    <string name="exotic_animal_type">Exóticos</string>
+</resources>
