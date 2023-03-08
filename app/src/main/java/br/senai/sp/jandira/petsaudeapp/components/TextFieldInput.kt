@@ -89,7 +89,7 @@ fun PasswordInputHideShowIcon(label: String): String {
 		visualTransformation = if (isPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
 		modifier = Modifier
 			.fillMaxWidth(),
-		label = { Text(text = stringResource(id = R.string.password_string_resource)) },
+		label = { Text(text = label) },
 		trailingIcon = {
 			val image = if (isPasswordVisible)
 				Icons.Filled.Visibility

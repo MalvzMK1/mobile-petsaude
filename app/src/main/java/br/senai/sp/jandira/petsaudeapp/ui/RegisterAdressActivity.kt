@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat.startActivity
 import br.senai.sp.jandira.petsaudeapp.R
 import br.senai.sp.jandira.petsaudeapp.components.AuthHeaderTitle
+import br.senai.sp.jandira.petsaudeapp.components.TextFieldInput
 import br.senai.sp.jandira.petsaudeapp.ui.theme.PetSaudeAppTheme
 import br.senai.sp.jandira.petsaudeapp.utils.ZipCodeTransformation
 
@@ -139,115 +140,36 @@ fun LocalizationForm() {
 		placeholderColor = MaterialTheme.colors.onBackground
 	)
 
-	var cepState by rememberSaveable() {
-		mutableStateOf("")
-	}
+	var zipCodeState = ""
 
-	var cityState by rememberSaveable() {
-		mutableStateOf("")
-	}
+	var cityState = ""
 
-	var stateState by rememberSaveable() {
-		mutableStateOf("")
-	}
+	var stateState = ""
 
-	var streetState by rememberSaveable() {
-		mutableStateOf("")
-	}
+	var streetState = ""
 
-	var neighborhoodState by rememberSaveable() {
-		mutableStateOf("")
-	}
+	var neighborhoodState = ""
 
-	var numberState by rememberSaveable() {
-		mutableStateOf("")
-	}
+	var numberState = ""
 
-	var complementState by rememberSaveable() {
-		mutableStateOf("")
-	}
+	var complementState = ""
 
 	Column(
 		modifier = Modifier.fillMaxWidth()
 	) {
-		TextField(
-			value = cepState,
-			onValueChange = {
-				if (it.length <= 8) cepState = it
-			},
-			modifier = Modifier.fillMaxWidth(),
-			label = { Text(text = stringResource(id = R.string.zip_code_string_resource)) },
-			visualTransformation = ZipCodeTransformation(),
-			keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-			singleLine = true,
-			colors = customColors
-		)
+		zipCodeState = TextFieldInput(label = stringResource(id = R.string.zip_code_string_resource), type = KeyboardType.Number)
 		Spacer(Modifier.height(16.dp))
-		TextField(
-			value = cityState,
-			onValueChange = {
-				cityState = it
-			},
-			modifier = Modifier.fillMaxWidth(),
-			label = { Text(text = stringResource(id = R.string.city_string_resource)) },
-			singleLine = true,
-			colors = customColors
-		)
+		cityState = TextFieldInput(label = stringResource(id = R.string.city_string_resource), type = KeyboardType.Text)
 		Spacer(Modifier.height(16.dp))
-		TextField(
-			value = stateState,
-			onValueChange = {
-				stateState = it
-			},
-			modifier = Modifier.fillMaxWidth(),
-			label = { Text(text = stringResource(id = R.string.state_string_resource)) },
-			singleLine = true,
-			colors = customColors
-		)
+		stateState = TextFieldInput(label = stringResource(id = R.string.state_string_resource), type = KeyboardType.Text)
 		Spacer(Modifier.height(16.dp))
-		TextField(
-			value = streetState,
-			onValueChange = {
-				streetState = it
-			},
-			modifier = Modifier.fillMaxWidth(),
-			label = { Text(text = stringResource(id = R.string.street_string_resource)) },
-			singleLine = true,
-			colors = customColors
-		)
+		streetState = TextFieldInput(label = stringResource(id = R.string.street_string_resource), type = KeyboardType.Text)
 		Spacer(Modifier.height(16.dp))
-		TextField(
-			value = neighborhoodState,
-			onValueChange = {
-				neighborhoodState = it
-			},
-			modifier = Modifier.fillMaxWidth(),
-			label = { Text(text = stringResource(id = R.string.neighborhood_string_resource)) },
-			singleLine = true,
-			colors = customColors
-		)
+		neighborhoodState = TextFieldInput(label = stringResource(id = R.string.neighborhood_string_resource), type = KeyboardType.Text)
 		Spacer(Modifier.height(16.dp))
-		TextField(
-			value = numberState,
-			onValueChange = {
-				numberState = it
-			},
-			modifier = Modifier.fillMaxWidth(),
-			label = { Text(text = stringResource(id = R.string.house_number_string_resource)) },
-			singleLine = true,
-			colors = customColors
-		)
+		numberState = TextFieldInput(label = stringResource(id = R.string.house_number_string_resource), type = KeyboardType.Number)
 		Spacer(Modifier.height(16.dp))
-		TextField(
-			value = complementState,
-			onValueChange = {
-				complementState = it
-			},
-			modifier = Modifier.fillMaxWidth(),
-			label = { Text(text = stringResource(id = R.string.complement_string_resource)) },
-			singleLine = true,
-			colors = customColors
-		)
+		complementState =TextFieldInput(label = stringResource(id = R.string.complement_string_resource), type = KeyboardType.Text)
 		Spacer(Modifier.height(32.dp))
 		Row(
 			modifier = Modifier.padding(bottom = 32.dp),

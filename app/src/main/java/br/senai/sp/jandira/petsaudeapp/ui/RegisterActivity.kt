@@ -35,6 +35,8 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.startActivity
 import br.senai.sp.jandira.petsaudeapp.R
 import br.senai.sp.jandira.petsaudeapp.components.AuthHeaderTitle
+import br.senai.sp.jandira.petsaudeapp.components.PasswordInputHideShowIcon
+import br.senai.sp.jandira.petsaudeapp.components.TextFieldInput
 import br.senai.sp.jandira.petsaudeapp.ui.theme.PetSaudeAppTheme
 import br.senai.sp.jandira.petsaudeapp.utils.CellPhoneNumberTransformation
 import br.senai.sp.jandira.petsaudeapp.utils.PhoneNumberTransformation
@@ -187,159 +189,38 @@ fun RegisterForm() {
 		placeholderColor = MaterialTheme.colors.onBackground
 	)
 
-	var nameState by rememberSaveable() {
-		mutableStateOf("")
-	}
+	var nameState = ""
 
-	var lastnameState by rememberSaveable() {
-		mutableStateOf("")
-	}
+	var lastnameState = ""
 
-	var emailState by rememberSaveable {
-		mutableStateOf("")
-	}
+	var emailState = ""
 
-	var passwordState by rememberSaveable {
-		mutableStateOf("")
-	}
+	var passwordState = ""
 
-	var checkPassState by rememberSaveable() {
-		mutableStateOf("")
-	}
+	var checkPassState = ""
 
-	var cellphoneNumberState by rememberSaveable() {
-		mutableStateOf("55")
-	}
+	var cellphoneNumberState = "55"
 
-	var phoneNumberState by rememberSaveable() {
-		mutableStateOf("55")
-	}
-
-	var isPasswordVisible by rememberSaveable {
-		mutableStateOf(false)
-	}
-	
-	var isConfirmPasswordVisible by rememberSaveable {
-		mutableStateOf(false)
-	}
-	
+	var phoneNumberState = "55"
 
 	Column(
 		modifier = Modifier
 			.fillMaxWidth()
 			.padding(top = 32.dp)
 	) {
-		TextField(
-			value = nameState,
-			onValueChange = {
-				nameState = it
-			},
-			modifier = Modifier.fillMaxWidth(),
-			label = { Text(text = stringResource(id = R.string.name_string_resource)) },
-			singleLine = true,
-			colors = customColors
-		)
+		nameState = TextFieldInput(label = stringResource(id = R.string.name_string_resource), type = KeyboardType.Text)
 		Spacer(Modifier.height(16.dp))
-		TextField(
-			value = lastnameState,
-			onValueChange = {
-				lastnameState = it
-			},
-			modifier = Modifier.fillMaxWidth(),
-			label = { Text(text = stringResource(id = R.string.last_name_string_resource)) },
-			singleLine = true,
-			colors = customColors
-		)
+		lastnameState = TextFieldInput(label = stringResource(id = R.string.last_name_string_resource), type = KeyboardType.Text)
 		Spacer(Modifier.height(16.dp))
-		TextField(
-			value = emailState,
-			onValueChange = {
-				emailState = it
-			},
-			modifier = Modifier.fillMaxWidth(),
-			label = { Text(text = stringResource(id = R.string.email_string_resource)) },
-			keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-			singleLine = true,
-			colors = customColors
-		)
+		emailState = TextFieldInput(label = stringResource(id = R.string.email_string_resource), type = KeyboardType.Email)
 		Spacer(Modifier.height(16.dp))
-		TextField(
-			value = passwordState,
-			onValueChange = {
-				passwordState = it
-			},
-			visualTransformation = if (isPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-			modifier = Modifier
-				.fillMaxWidth(),
-			label = { Text(text = stringResource(id = R.string.password_string_resource)) },
-			trailingIcon = {
-				val image = if (isPasswordVisible)
-					Icons.Filled.Visibility
-				else Icons.Filled.VisibilityOff
-
-				val description = if (isPasswordVisible) stringResource(id = R.string.hide_pass_alt) else stringResource(id = R.string.show_pass_alt)
-
-				IconButton(onClick = { isPasswordVisible = !isPasswordVisible }) {
-					Icon(
-						imageVector = image,
-						contentDescription = description
-					)
-				}
-			},
-			keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-			singleLine = true,
-			colors = customColors
-		)
+		passwordState = PasswordInputHideShowIcon(label = stringResource(id = R.string.password_string_resource))
 		Spacer(Modifier.height(16.dp))
-		TextField(
-			value = checkPassState,
-			onValueChange = {
-				checkPassState = it
-			},
-			visualTransformation = if (isConfirmPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-			modifier = Modifier
-				.fillMaxWidth(),
-			label = { Text(text = stringResource(id = R.string.confirm_password_string_resource)) },
-			trailingIcon = {
-				val image = if (isConfirmPasswordVisible)
-					Icons.Filled.Visibility
-				else Icons.Filled.VisibilityOff
-
-				val description = if (isConfirmPasswordVisible) stringResource(id = R.string.hide_pass_alt) else stringResource(id = R.string.show_pass_alt)
-
-				IconButton(onClick = { isConfirmPasswordVisible = !isConfirmPasswordVisible }) {
-					Icon(
-						imageVector = image,
-						contentDescription = description
-					)
-				}
-			},
-			keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-			singleLine = true,
-			colors = customColors
-		)
+		checkPassState = PasswordInputHideShowIcon(label = stringResource(id = R.string.confirm_password_string_resource))
 		Spacer(Modifier.height(16.dp))
-		TextField(
-			value = cellphoneNumberState,
-			onValueChange = { if (it.length <= 13) cellphoneNumberState = it },
-			modifier = Modifier.fillMaxWidth(),
-			label = { Text(text = stringResource(id = R.string.cellphone_number_string_resource)) },
-			visualTransformation = CellPhoneNumberTransformation(),
-			keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
-			singleLine = true,
-			colors = customColors
-		)
+		cellphoneNumberState = TextFieldInput(label = stringResource(id = R.string.cellphone_number_string_resource), type = KeyboardType.Number)
 		Spacer(Modifier.height(16.dp))
-		TextField(
-			value = phoneNumberState,
-			onValueChange = {	if (it.length <= 12) phoneNumberState = it },
-			modifier = Modifier.fillMaxWidth(),
-			label = { Text(text = stringResource(id = R.string.phone_number_string_resource)) },
-			visualTransformation = PhoneNumberTransformation(),
-			keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
-			singleLine = true,
-			colors = customColors
-		)
+		phoneNumberState = TextFieldInput(label = stringResource(id = R.string.phone_number_string_resource), type = KeyboardType.Number)
 		Spacer(Modifier.height(32.dp))
 		Button(
 			onClick = {

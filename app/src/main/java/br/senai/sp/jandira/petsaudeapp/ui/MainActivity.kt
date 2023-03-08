@@ -37,6 +37,7 @@ import br.senai.sp.jandira.petsaudeapp.R
 import br.senai.sp.jandira.petsaudeapp.components.AuthHeaderTitle
 import br.senai.sp.jandira.petsaudeapp.components.PasswordInputHideShowIcon
 import br.senai.sp.jandira.petsaudeapp.components.TextFieldInput
+import br.senai.sp.jandira.petsaudeapp.service.loginUser
 import br.senai.sp.jandira.petsaudeapp.ui.theme.PetSaudeAppTheme
 
 class MainActivity : ComponentActivity() {
@@ -101,7 +102,6 @@ fun GlobalLogin() {
 
 @Composable
 fun LoginHeader() {
-
 	Column(
 		modifier = Modifier
 			.fillMaxWidth()
@@ -172,6 +172,7 @@ fun LoginForm() {
 	val context = LocalContext.current
 	var loginEmail = ""
 	var loginPassword = ""
+	var login by rememberSaveable() {mutableStateOf("")}
 	Column(
 		modifier = Modifier
 			.fillMaxWidth()
@@ -206,8 +207,15 @@ fun LoginForm() {
 		Spacer(Modifier.height(32.dp))
 		Button(
 			onClick = {
+				login = loginUser(loginEmail, loginPassword) {
+					login = it
+				}.toString()
+				if (login.isNotEmpty()) {
+					val openHomePetActivity = Intent(context, HomePetActivity::class.java)
+					startActivity(context, openHomePetActivity, null)
+				}
 //				TODO: USER LOGIN
-					Toast.makeText(context, "$loginEmail, $loginPassword", Toast.LENGTH_SHORT).show()
+//					Toast.makeText(context, "$loginEmail, $loginPassword", Toast.LENGTH_SHORT).show()
 			},
 			modifier = Modifier.fillMaxWidth(),
 			shape = RoundedCornerShape(size = 5.dp),
