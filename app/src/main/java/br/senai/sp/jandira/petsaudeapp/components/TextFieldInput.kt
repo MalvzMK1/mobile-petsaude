@@ -4,12 +4,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.MonitorWeight
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
+import androidx.compose.material.icons.filled.Warning
+import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -17,6 +16,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.style.TextAlign
 import br.senai.sp.jandira.petsaudeapp.R
 
 @Composable
@@ -47,7 +47,13 @@ fun TextFieldInput(label: String, type: KeyboardType): String {
 		onValueChange = { thisInputState = it },
 		modifier = Modifier.fillMaxWidth(),
 		label = { Text(text = label) },
+//		leadingIcon = {
+//			if (isError) Icon(imageVector = Icons.Default.Warning, contentDescription = "fail")
+//			false
+//		},
+//		isError = isError,
 		keyboardOptions = KeyboardOptions(keyboardType = type),
+		singleLine = true,
 		colors = customColors
 	)
 

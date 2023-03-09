@@ -177,7 +177,18 @@ fun LocalizationForm() {
 		) {
 			Button(
 				onClick = {
+//					userSaveAdress = saveUserAdress(
+//						zipCodeState,
+//						cityState,
+//						stateState,
+//						streetState,
+//						neighborhoodState,
+//						numberState,
+//						complementState
+//					)
 					// TODO: USER LOGIN
+					val openMainActivity = Intent(context, MainActivity::class.java)
+					startActivity(context, openMainActivity, null)
 				},
 				modifier = Modifier
 					.fillMaxWidth(0.5f)
@@ -195,8 +206,7 @@ fun LocalizationForm() {
 			Spacer(Modifier.width(4.dp))
 			Button(
 				onClick = {
-					val openProfessionalRegisterActivity =
-						Intent(context, ProfessionalRegisterActivity::class.java)
+					val openProfessionalRegisterActivity = Intent(context, ProfessionalRegisterActivity::class.java)
 					startActivity(context, openProfessionalRegisterActivity, null)
 				},
 				modifier = Modifier

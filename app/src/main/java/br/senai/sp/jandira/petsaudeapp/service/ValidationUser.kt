@@ -1,11 +1,11 @@
 package br.senai.sp.jandira.petsaudeapp.service
-//
+
 //import br.senai.sp.jandira.petsaudeapp.model.Token
 //import retrofit2.Call
 //import retrofit2.Callback
 //import retrofit2.Response
 //
-//fun userJWT(auth: String, onComplete: (String) -> Unit) {
+//fun validationUserJWT(auth: String, onComplete: (String) -> Unit) {
 //	var result = ""
 //	var token = Token(auth)
 //

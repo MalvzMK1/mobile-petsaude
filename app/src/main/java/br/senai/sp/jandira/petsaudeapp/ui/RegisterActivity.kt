@@ -2,6 +2,7 @@ package br.senai.sp.jandira.petsaudeapp.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.*
@@ -37,6 +38,7 @@ import br.senai.sp.jandira.petsaudeapp.R
 import br.senai.sp.jandira.petsaudeapp.components.AuthHeaderTitle
 import br.senai.sp.jandira.petsaudeapp.components.PasswordInputHideShowIcon
 import br.senai.sp.jandira.petsaudeapp.components.TextFieldInput
+//import br.senai.sp.jandira.petsaudeapp.service.saveUserRegister
 import br.senai.sp.jandira.petsaudeapp.ui.theme.PetSaudeAppTheme
 import br.senai.sp.jandira.petsaudeapp.utils.CellPhoneNumberTransformation
 import br.senai.sp.jandira.petsaudeapp.utils.PhoneNumberTransformation
@@ -193,15 +195,19 @@ fun RegisterForm() {
 
 	var lastnameState = ""
 
+	var itpState = ""
+
 	var emailState = ""
 
 	var passwordState = ""
 
 	var checkPassState = ""
 
-	var cellphoneNumberState = "55"
+	var cellphoneNumberState = ""
 
-	var phoneNumberState = "55"
+	var phoneNumberState = ""
+
+	var userSaveRegister by rememberSaveable() {mutableStateOf("")}
 
 	Column(
 		modifier = Modifier
@@ -211,6 +217,8 @@ fun RegisterForm() {
 		nameState = TextFieldInput(label = stringResource(id = R.string.name_string_resource), type = KeyboardType.Text)
 		Spacer(Modifier.height(16.dp))
 		lastnameState = TextFieldInput(label = stringResource(id = R.string.last_name_string_resource), type = KeyboardType.Text)
+		Spacer(Modifier.height(16.dp))
+		itpState = TextFieldInput(label = stringResource(id = R.string.itp_string_resource), type = KeyboardType.Number)
 		Spacer(Modifier.height(16.dp))
 		emailState = TextFieldInput(label = stringResource(id = R.string.email_string_resource), type = KeyboardType.Email)
 		Spacer(Modifier.height(16.dp))
@@ -224,8 +232,23 @@ fun RegisterForm() {
 		Spacer(Modifier.height(32.dp))
 		Button(
 			onClick = {
-				val openRegisterAddressActivity = Intent(context, RegisterAddressActivity::class.java)
-				startActivity(context, openRegisterAddressActivity, null)
+//				if (checkPassState === passwordState) {
+//					userSaveRegister = saveUserRegister(
+//						nameState,
+//						lastnameState,
+//						itpState,
+//						emailState,
+//						passwordState,
+//						cellphoneNumberState,
+//						phoneNumberState
+//					).toString()
+//					if (userSaveRegister.isNotEmpty()) {
+//						val openRegisterAddressActivity = Intent(context, RegisterAddressActivity::class.java)
+//						startActivity(context, openRegisterAddressActivity, null)
+//					}
+//				} else {
+//					Toast.makeText(context, "Confirme a sua senha!", Toast.LENGTH_SHORT).show()
+//				}
 			},
 			modifier = Modifier.fillMaxWidth(),
 			shape = RoundedCornerShape(size = 5.dp),

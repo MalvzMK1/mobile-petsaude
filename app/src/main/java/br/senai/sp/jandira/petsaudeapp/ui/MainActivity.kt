@@ -213,9 +213,8 @@ fun LoginForm() {
 				if (login.isNotEmpty()) {
 					val openHomePetActivity = Intent(context, HomePetActivity::class.java)
 					startActivity(context, openHomePetActivity, null)
+					Toast.makeText(context, "Seja Bem-Vindo!", Toast.LENGTH_SHORT).show()
 				}
-//				TODO: USER LOGIN
-//					Toast.makeText(context, "$loginEmail, $loginPassword", Toast.LENGTH_SHORT).show()
 			},
 			modifier = Modifier.fillMaxWidth(),
 			shape = RoundedCornerShape(size = 5.dp),
