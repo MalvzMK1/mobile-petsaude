@@ -1,7 +1,6 @@
 package br.senai.sp.jandira.petsaudeapp.service
 
 import android.util.Log
-import androidx.compose.material.Text
 import br.senai.sp.jandira.petsaudeapp.model.Token
 import br.senai.sp.jandira.petsaudeapp.model.UserLogin
 import retrofit2.Call
@@ -17,10 +16,10 @@ fun loginUser (loginEmail: String, loginPassword: String, onComplete: (String) -
 		override fun onResponse(call: Call<Token>, response: Response<Token>) {
 			if (response.body()?.token == null) {
 //				Log.i("ds3", "token nulo")
-				onComplete.invoke(tokenJWT)
+				onComplete.invoke(false.toString())
 			} else {
 				tokenJWT = response.body()!!.token
-//				Log.i("CHEGOU", tokenJWT)
+				Log.i("CHEGOU", tokenJWT)
 				onComplete.invoke(tokenJWT)
 			}
 		}

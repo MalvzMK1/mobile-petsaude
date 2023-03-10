@@ -4,7 +4,8 @@ import br.senai.sp.jandira.petsaudeapp.model.Token
 import br.senai.sp.jandira.petsaudeapp.model.UserLogin
 import br.senai.sp.jandira.petsaudeapp.model.UserRegister
 import retrofit2.Call
-import retrofit2.http.*
+import retrofit2.http.Body
+import retrofit2.http.POST
 
 interface PetSaudeRetrofitService {
 

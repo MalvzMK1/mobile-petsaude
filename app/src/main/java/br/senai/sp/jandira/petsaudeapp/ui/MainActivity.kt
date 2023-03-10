@@ -2,6 +2,7 @@ package br.senai.sp.jandira.petsaudeapp.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -204,12 +205,20 @@ fun LoginForm() {
 				isErrorPasswordState = validateEmptyInput(loginPasswordState)
 				isErrorEmailState = validateEmptyInput(loginEmailState)
 
-				loginState = loginUser(loginEmailState, loginPasswordState) {
-					loginState = it
-					if (loginState.isNotEmpty()) {
+				if (isErrorEmailState || isErrorPasswordState) {
+					Toast.makeText(context, "Campos obrigatórios não informados", Toast.LENGTH_SHORT).show()
+				} else {
+					loginState = loginUser(loginEmailState, loginPasswordState) {
+						loginState = it
+					}
+					Log.i("TOKEN", loginState)
+					if (loginState.toBoolean() != false) {
 						val openHomePetActivity = Intent(context, HomePetActivity::class.java)
 						startActivity(context, openHomePetActivity, null)
 						Toast.makeText(context, "Seja Bem-Vindo!", Toast.LENGTH_SHORT).show()
+					} else {
+						isErrorEmailState = true
+						isErrorPasswordState = true
 					}
 				}
 			},
