@@ -209,11 +209,11 @@ fun LoginForm() {
 			onClick = {
 				login = loginUser(loginEmail, loginPassword) {
 					login = it
-				}.toString()
-				if (login.isNotEmpty()) {
-					val openHomePetActivity = Intent(context, HomePetActivity::class.java)
-					startActivity(context, openHomePetActivity, null)
-					Toast.makeText(context, "Seja Bem-Vindo!", Toast.LENGTH_SHORT).show()
+					if (login.isNotEmpty()) {
+						val openHomePetActivity = Intent(context, HomePetActivity::class.java)
+						startActivity(context, openHomePetActivity, null)
+						Toast.makeText(context, "Seja Bem-Vindo!", Toast.LENGTH_SHORT).show()
+					}
 				}
 			},
 			modifier = Modifier.fillMaxWidth(),
