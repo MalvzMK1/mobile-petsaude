@@ -29,7 +29,7 @@ fun saveUserRegister(nameState: String,
 	call.enqueue(object: Callback<Boolean> {
 		override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {
 
-			Log.i("DS3M", "USUÁRIO CRIADO COM SUCESSO, NOME: ${response.body()!!.nome}")
+//			Log.i("DS3M", "USUÁRIO CRIADO COM SUCESSO, NOME: ${response.body()!!}")
 		}
 
 		override fun onFailure(call: Call<Boolean>, t: Throwable) {
