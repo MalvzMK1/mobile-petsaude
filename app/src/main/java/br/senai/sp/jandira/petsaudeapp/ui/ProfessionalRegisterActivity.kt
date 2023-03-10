@@ -313,14 +313,14 @@ fun ProfessionalRegisterForm() {
 	var institutionState = ""
 
 	Spacer(modifier = Modifier.height(16.dp))
-	atuationAreaState = TextFieldInput(label = stringResource(id = R.string.atuation_area_professional), type = KeyboardType.Text)
-	Spacer(modifier = Modifier.height(16.dp))
-	crmvState = TextFieldInput(label = stringResource(id = R.string.crmv_professional), type = KeyboardType.Text)
-	Spacer(modifier = Modifier.height(16.dp))
-	formationState = TextFieldInput(label = stringResource(id = R.string.formation_professional), type = KeyboardType.Text)
-	Spacer(modifier = Modifier.height(16.dp))
-	institutionState = TextFieldInput(label = stringResource(id = R.string.institution_professional), type = KeyboardType.Text)
-	Spacer(modifier = Modifier.height(16.dp))
+//	atuationAreaState = TextFieldInput(label = stringResource(id = R.string.atuation_area_professional), type = KeyboardType.Text)
+//	Spacer(modifier = Modifier.height(16.dp))
+//	crmvState = TextFieldInput(label = stringResource(id = R.string.crmv_professional), type = KeyboardType.Text)
+//	Spacer(modifier = Modifier.height(16.dp))
+//	formationState = TextFieldInput(label = stringResource(id = R.string.formation_professional), type = KeyboardType.Text)
+//	Spacer(modifier = Modifier.height(16.dp))
+//	institutionState = TextFieldInput(label = stringResource(id = R.string.institution_professional), type = KeyboardType.Text)
+//	Spacer(modifier = Modifier.height(16.dp))
 
 	// -----------------------------------------------------------------------------------------------
 
