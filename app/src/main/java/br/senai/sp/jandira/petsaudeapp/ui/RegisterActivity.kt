@@ -2,6 +2,7 @@ package br.senai.sp.jandira.petsaudeapp.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -38,7 +39,7 @@ import br.senai.sp.jandira.petsaudeapp.R
 import br.senai.sp.jandira.petsaudeapp.components.AuthHeaderTitle
 import br.senai.sp.jandira.petsaudeapp.components.PasswordInputHideShowIcon
 import br.senai.sp.jandira.petsaudeapp.components.TextFieldInput
-//import br.senai.sp.jandira.petsaudeapp.service.saveUserRegister
+import br.senai.sp.jandira.petsaudeapp.service.saveUserRegister
 import br.senai.sp.jandira.petsaudeapp.ui.theme.PetSaudeAppTheme
 import br.senai.sp.jandira.petsaudeapp.utils.CellPhoneNumberTransformation
 import br.senai.sp.jandira.petsaudeapp.utils.PhoneNumberTransformation
@@ -232,23 +233,22 @@ fun RegisterForm() {
 		Spacer(Modifier.height(32.dp))
 		Button(
 			onClick = {
-//				if (checkPassState === passwordState) {
-//					userSaveRegister = saveUserRegister(
-//						nameState,
-//						lastnameState,
-//						itpState,
-//						emailState,
-//						passwordState,
-//						cellphoneNumberState,
-//						phoneNumberState
-//					).toString()
-//					if (userSaveRegister.isNotEmpty()) {
-//						val openRegisterAddressActivity = Intent(context, RegisterAddressActivity::class.java)
-//						startActivity(context, openRegisterAddressActivity, null)
-//					}
-//				} else {
-//					Toast.makeText(context, "Confirme a sua senha!", Toast.LENGTH_SHORT).show()
-//				}
+				if (checkPassState === passwordState) {
+					userSaveRegister = saveUserRegister(
+						nameState,
+						lastnameState,
+						itpState,
+						emailState,
+						passwordState,
+						cellphoneNumberState,
+						phoneNumberState
+					) { userSaveRegister = it }.toString()
+					if (userSaveRegister.isNotEmpty()) {
+						val openRegisterAddressActivity = Intent(context, RegisterAddressActivity::class.java)
+						startActivity(context, openRegisterAddressActivity, null)
+						Log.i("DS3M", "USUÁRIO CRIADO COM SUCESSO, NOME: ${nameState}")
+					}
+				}
 			},
 			modifier = Modifier.fillMaxWidth(),
 			shape = RoundedCornerShape(size = 5.dp),

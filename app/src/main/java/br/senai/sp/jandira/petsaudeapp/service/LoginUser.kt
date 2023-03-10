@@ -11,7 +11,7 @@ import retrofit2.Response
 fun loginUser (loginEmail: String, loginPassword: String, onComplete: (String) -> Unit): String {
 	var tokenJWT = ""
 	var userInfos = UserLogin(loginEmail, loginPassword)
-	val call = RetrofitFactroy().retrofitService().loginUser(userInfos)
+	val call = RetrofitFactory().retrofitService().loginUser(userInfos)
 
 	call.enqueue(object: Callback<Token> {
 		override fun onResponse(call: Call<Token>, response: Response<Token>) {
@@ -25,6 +25,7 @@ fun loginUser (loginEmail: String, loginPassword: String, onComplete: (String) -
 			}
 		}
 		override fun onFailure(call: Call<Token>, t: Throwable) {
+			Log.i("ERROR DS3M", t.message.toString())
 		}
 	})
 	return tokenJWT

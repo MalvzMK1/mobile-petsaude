@@ -18,7 +18,7 @@ interface PetSaudeRetrofitService {
 
 //--------------------------------------RegisterActivity------------------------------------------//
 	@POST("user")
-	fun saveUserRegister(@Body userRegister: UserRegister): Boolean
+	fun saveUserRegister(@Body userRegister: UserRegister): Call<Boolean>
 
-//-----------------------------------RegisterADressActivity---------------------------------------//
+//-----------------------------------RegisterAdressActivity---------------------------------------//
 }

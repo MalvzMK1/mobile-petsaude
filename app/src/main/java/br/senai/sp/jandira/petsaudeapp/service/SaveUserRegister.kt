@@ -1,41 +1,40 @@
 package br.senai.sp.jandira.petsaudeapp.service
 
+import android.util.Log
 import br.senai.sp.jandira.petsaudeapp.model.UserRegister
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-//fun saveUserRegister(nameState: String,
-//										 lastnameState: String,
-//										 itpState: String,
-//										 emailState: String,
-//										 passwordState: String,
-//										 cellphoneNumberState: String,
-//										 phoneNumberState: String,
-//										 onComplete: (String) -> Unit): Boolean {
-//
-//	var result = false
-//	var userRegister = UserRegister(
-//		nameState,
-//		lastnameState,
-//		itpState,
-//		emailState,
-//		passwordState,
-//		cellphoneNumberState,
-//		phoneNumberState
-//	)
-//	val call = RetrofitFactroy().retrofitService().saveUserRegister(userRegister)
-//
-//	call.enqueue()
+fun saveUserRegister(nameState: String,
+										 lastnameState: String,
+										 itpState: String,
+										 emailState: String,
+										 passwordState: String,
+										 cellphoneNumberState: String,
+										 phoneNumberState: String,
+										 onComplete: (String) -> Unit) {
+	var resultSave = ""
+	var userRegister = UserRegister(
+		nameState,
+		lastnameState,
+		itpState,
+		emailState,
+		passwordState,
+		cellphoneNumberState,
+		phoneNumberState
+	)
+	val call = RetrofitFactory().retrofitService().saveUserRegister(userRegister)
 	
-//		override fun onResponse(call: Call<UserRegister>, response: Response<UserRegister>) {
-//			TODO("Not yet implemented")
-//		}
-//
-//		override fun onFailure(call: Call<UserRegister>, t: Throwable) {
-//			TODO("Not yet implemented")
-//		}
-		
+	call.enqueue(object: Callback<Boolean> {
+		override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {
 
-//	return result
-//}
+			Log.i("DS3M", "USUÁRIO CRIADO COM SUCESSO, NOME: ${response.body()!!.nome}")
+		}
+
+		override fun onFailure(call: Call<Boolean>, t: Throwable) {
+			Log.i("DS3M", "ERRO AO CRIAR O USUÁRIO")
+		}
+
+	})
+}
