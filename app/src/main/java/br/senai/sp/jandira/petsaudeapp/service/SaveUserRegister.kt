@@ -14,7 +14,7 @@ fun saveUserRegister(nameState: String,
 										 cellphoneNumberState: String,
 										 phoneNumberState: String,
 										 onComplete: (String) -> Unit) {
-	var resultSave = ""
+//	var resultSave = ""
 	var userRegister = UserRegister(
 		nameState,
 		lastnameState,
@@ -28,12 +28,16 @@ fun saveUserRegister(nameState: String,
 	
 	call.enqueue(object: Callback<Boolean> {
 		override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {
+<<<<<<< HEAD
 
 //			Log.i("DS3M", "USUÁRIO CRIADO COM SUCESSO, NOME: ${response.body()!!}")
+=======
+			Log.i("DS3M", "USUÁRIO CRIADO COM SUCESSO, NOME: ${response.body()!!.}")
+>>>>>>> 2c1cea5 (funcao para salver usuario)
 		}
 
 		override fun onFailure(call: Call<Boolean>, t: Throwable) {
-			Log.i("DS3M", "ERRO AO CRIAR O USUÁRIO")
+//			Log.i("DS3M", "ERRO AO CRIAR O USUÁRIO")
 		}
 
 	})

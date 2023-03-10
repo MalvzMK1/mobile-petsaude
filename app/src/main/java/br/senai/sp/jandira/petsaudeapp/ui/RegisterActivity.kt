@@ -244,9 +244,9 @@ fun RegisterForm() {
 						phoneNumberState
 					) { userSaveRegister = it }.toString()
 					if (userSaveRegister.isNotEmpty()) {
-						val openRegisterAddressActivity = Intent(context, RegisterAddressActivity::class.java)
-						startActivity(context, openRegisterAddressActivity, null)
 						Log.i("DS3M", "USUÁRIO CRIADO COM SUCESSO, NOME: ${nameState}")
+//						val openRegisterAddressActivity = Intent(context, RegisterAddressActivity::class.java)
+//						startActivity(context, openRegisterAddressActivity, null)
 					}
 				}
 			},
