@@ -2,32 +2,27 @@ package br.senai.sp.jandira.petsaudeapp.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.OffsetMapping
-import androidx.compose.ui.text.input.TransformedText
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -36,8 +31,9 @@ import androidx.core.content.ContextCompat.startActivity
 import br.senai.sp.jandira.petsaudeapp.R
 import br.senai.sp.jandira.petsaudeapp.components.AuthHeaderTitle
 import br.senai.sp.jandira.petsaudeapp.components.TextFieldInput
+import br.senai.sp.jandira.petsaudeapp.model.Address
 import br.senai.sp.jandira.petsaudeapp.ui.theme.PetSaudeAppTheme
-import br.senai.sp.jandira.petsaudeapp.utils.ZipCodeTransformation
+import br.senai.sp.jandira.petsaudeapp.utils.validateEmptyInput
 
 class RegisterAddressActivity : ComponentActivity() {
 	override fun onCreate(savedInstanceState: Bundle?) {
@@ -141,35 +137,81 @@ fun LocalizationForm() {
 	)
 
 	var zipCodeState = ""
+	var isErrorZipCodeState by rememberSaveable {
+		mutableStateOf(false)
+	}
 
 	var cityState = ""
+	var isErrorCityState by rememberSaveable {
+		mutableStateOf(false)
+	}
 
 	var stateState = ""
+	var isErrorStateState by rememberSaveable {
+		mutableStateOf(false)
+	}
 
 	var streetState = ""
+	var isErrorStreetState by rememberSaveable {
+		mutableStateOf(false)
+	}
 
 	var neighborhoodState = ""
+	var isErrorNeighborhoodState by rememberSaveable {
+		mutableStateOf(false)
+	}
 
 	var numberState = ""
+	var isErrorNumberState by rememberSaveable {
+		mutableStateOf(false)
+	}
 
 	var complementState = ""
 
 	Column(
 		modifier = Modifier.fillMaxWidth()
 	) {
-//		zipCodeState = TextFieldInput(label = stringResource(id = R.string.zip_code_string_resource), type = KeyboardType.Number)
-//		Spacer(Modifier.height(16.dp))
-//		cityState = TextFieldInput(label = stringResource(id = R.string.city_string_resource), type = KeyboardType.Text)
-//		Spacer(Modifier.height(16.dp))
-//		stateState = TextFieldInput(label = stringResource(id = R.string.state_string_resource), type = KeyboardType.Text)
-//		Spacer(Modifier.height(16.dp))
-//		streetState = TextFieldInput(label = stringResource(id = R.string.street_string_resource), type = KeyboardType.Text)
-//		Spacer(Modifier.height(16.dp))
-//		neighborhoodState = TextFieldInput(label = stringResource(id = R.string.neighborhood_string_resource), type = KeyboardType.Text)
-//		Spacer(Modifier.height(16.dp))
-//		numberState = TextFieldInput(label = stringResource(id = R.string.house_number_string_resource), type = KeyboardType.Number)
-//		Spacer(Modifier.height(16.dp))
-//		complementState =TextFieldInput(label = stringResource(id = R.string.complement_string_resource), type = KeyboardType.Text)
+		zipCodeState = TextFieldInput(
+			label = stringResource(id = R.string.zip_code_string_resource),
+			type = KeyboardType.Number,
+			errorState = isErrorZipCodeState
+		)
+		Spacer(Modifier.height(16.dp))
+		cityState = TextFieldInput(
+			label = stringResource(id = R.string.city_string_resource),
+			type = KeyboardType.Text,
+			errorState = isErrorCityState
+		)
+		Spacer(Modifier.height(16.dp))
+		stateState = TextFieldInput(
+			label = stringResource(id = R.string.state_string_resource),
+			type = KeyboardType.Text,
+			errorState = isErrorStateState
+		)
+		Spacer(Modifier.height(16.dp))
+		streetState = TextFieldInput(
+			label = stringResource(id = R.string.street_string_resource),
+			type = KeyboardType.Text,
+			errorState = isErrorStreetState
+		)
+		Spacer(Modifier.height(16.dp))
+		neighborhoodState = TextFieldInput(
+			label = stringResource(id = R.string.neighborhood_string_resource),
+			type = KeyboardType.Text,
+			errorState = isErrorNeighborhoodState
+		)
+		Spacer(Modifier.height(16.dp))
+		numberState = TextFieldInput(
+			label = stringResource(id = R.string.house_number_string_resource),
+			type = KeyboardType.Number,
+			errorState = isErrorNumberState
+		)
+		Spacer(Modifier.height(16.dp))
+		complementState = TextFieldInput(
+			label = stringResource(id = R.string.complement_string_resource),
+			type = KeyboardType.Text,
+			errorState = false
+		)
 		Spacer(Modifier.height(32.dp))
 		Row(
 			modifier = Modifier.padding(bottom = 32.dp),
@@ -177,18 +219,35 @@ fun LocalizationForm() {
 		) {
 			Button(
 				onClick = {
-//					userSaveAdress = saveUserAdress(
-//						zipCodeState,
-//						cityState,
-//						stateState,
-//						streetState,
-//						neighborhoodState,
-//						numberState,
-//						complementState
-//					)
-					// TODO: USER LOGIN
-					val openMainActivity = Intent(context, MainActivity::class.java)
-					startActivity(context, openMainActivity, null)
+					isErrorZipCodeState = validateEmptyInput(zipCodeState)
+					isErrorCityState = validateEmptyInput(cityState)
+					isErrorStateState = validateEmptyInput(stateState)
+					isErrorStreetState = validateEmptyInput(streetState)
+					isErrorNeighborhoodState = validateEmptyInput(neighborhoodState)
+					isErrorNumberState = validateEmptyInput(numberState)
+
+					if (
+						isErrorZipCodeState ||
+						isErrorCityState ||
+						isErrorStateState ||
+						isErrorStreetState ||
+						isErrorNeighborhoodState ||
+						isErrorNumberState
+					) {
+						Toast.makeText(context, "Campos vazios!", Toast.LENGTH_SHORT).show()
+					} else {
+						val address = Address(
+							zipCode = zipCodeState,
+							city = cityState,
+							state = stateState,
+							street = streetState,
+							neighborhood = neighborhoodState,
+							number = numberState,
+							complement = complementState
+						)
+						val openMainActivity = Intent(context, MainActivity::class.java)
+						startActivity(context, openMainActivity, null)
+					}
 				},
 				modifier = Modifier
 					.fillMaxWidth(0.5f)
@@ -206,7 +265,8 @@ fun LocalizationForm() {
 			Spacer(Modifier.width(4.dp))
 			Button(
 				onClick = {
-					val openProfessionalRegisterActivity = Intent(context, ProfessionalRegisterActivity::class.java)
+					val openProfessionalRegisterActivity =
+						Intent(context, ProfessionalRegisterActivity::class.java)
 					startActivity(context, openProfessionalRegisterActivity, null)
 				},
 				modifier = Modifier
