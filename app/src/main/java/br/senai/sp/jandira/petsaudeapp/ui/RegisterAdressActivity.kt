@@ -2,6 +2,7 @@ package br.senai.sp.jandira.petsaudeapp.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -30,6 +31,7 @@ import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat.startActivity
 import br.senai.sp.jandira.petsaudeapp.R
 import br.senai.sp.jandira.petsaudeapp.components.AuthHeaderTitle
+import br.senai.sp.jandira.petsaudeapp.components.MaskedZipCodeInput
 import br.senai.sp.jandira.petsaudeapp.components.TextFieldInput
 import br.senai.sp.jandira.petsaudeapp.model.Address
 import br.senai.sp.jandira.petsaudeapp.ui.theme.PetSaudeAppTheme
@@ -171,9 +173,8 @@ fun LocalizationForm() {
 	Column(
 		modifier = Modifier.fillMaxWidth()
 	) {
-		zipCodeState = TextFieldInput(
+		zipCodeState = MaskedZipCodeInput(
 			label = stringResource(id = R.string.zip_code_string_resource),
-			type = KeyboardType.Number,
 			errorState = isErrorZipCodeState
 		)
 		Spacer(Modifier.height(16.dp))
@@ -203,7 +204,7 @@ fun LocalizationForm() {
 		Spacer(Modifier.height(16.dp))
 		numberState = TextFieldInput(
 			label = stringResource(id = R.string.house_number_string_resource),
-			type = KeyboardType.Number,
+			type = KeyboardType.Text,
 			errorState = isErrorNumberState
 		)
 		Spacer(Modifier.height(16.dp))
@@ -236,6 +237,7 @@ fun LocalizationForm() {
 					) {
 						Toast.makeText(context, "Campos vazios!", Toast.LENGTH_SHORT).show()
 					} else {
+						Log.i("zipcode", zipCodeState)
 						val address = Address(
 							zipCode = zipCodeState,
 							city = cityState,

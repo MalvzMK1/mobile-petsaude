@@ -257,7 +257,7 @@ fun RegisterForm() {
 		phoneNumberState = TextFieldInput(
 			label = stringResource(id = R.string.phone_number_string_resource),
 			type = KeyboardType.Number,
-			errorState = isErrorPhoneNumberState
+			errorState = false
 		)
 		Spacer(Modifier.height(32.dp))
 		Button(
