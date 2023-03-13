@@ -284,22 +284,22 @@ fun RegisterForm() {
 					Toast.makeText(context, "Campos vazios", Toast.LENGTH_SHORT).show()
 				} else {
 					if (checkPassState == passwordState) {
-//						userSaveRegister = saveUserRegister(
-//							nameState,
-//							lastNameState,
-//							itpState,
-//							emailState,
-//							passwordState,
-//							cellphoneNumberState,
-//							phoneNumberState
-//						) { userSaveRegister = it }.toString()
-//						if (userSaveRegister.isNotEmpty()) {
-//							Log.i("DS3M", "USUÁRIO CRIADO COM SUCESSO, NOME: ${nameState}")
-						val openRegisterAddressActivity = Intent(context, RegisterAddressActivity::class.java)
-						startActivity(context, openRegisterAddressActivity, null)
-//						}
+						userSaveRegister = saveUserRegister(
+							nameState,
+							lastNameState,
+							itpState,
+							emailState,
+							passwordState,
+							cellphoneNumberState,
+							phoneNumberState
+						) { userSaveRegister = it }.toString()
+						if (userSaveRegister.isNotEmpty()) {
+							Log.i("DS3M", "USUÁRIO CRIADO COM SUCESSO, NOME: ${nameState}")
+							val openRegisterAddressActivity = Intent(context, RegisterAddressActivity::class.java)
+							startActivity(context, openRegisterAddressActivity, null)
+						}
 					} else {
-						Toast.makeText(context, "As senhas não batem", Toast.LENGTH_SHORT).show()
+						Toast.makeText(context, "Suas senhas são diferentes!", Toast.LENGTH_SHORT).show()
 						isErrorCheckPasswordState = true
 					}
 				}
