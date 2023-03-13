@@ -4,6 +4,7 @@ import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
 import android.widget.DatePicker
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.clickable
@@ -31,9 +32,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.startActivity
 import br.senai.sp.jandira.petsaudeapp.R
 import br.senai.sp.jandira.petsaudeapp.components.AuthHeaderTitle
+import br.senai.sp.jandira.petsaudeapp.components.TextFieldInput
 import br.senai.sp.jandira.petsaudeapp.ui.theme.PetSaudeAppTheme
+import br.senai.sp.jandira.petsaudeapp.utils.validateEmptyInput
 import java.util.*
 
 class ProfessionalRegisterActivity : ComponentActivity() {
@@ -153,21 +157,21 @@ fun ProfessionalRegisterForm() {
 				horizontalArrangement = Arrangement.Start,
 				verticalAlignment = Alignment.CenterVertically
 			) {
-				Checkbox(checked = surgeonCheckState, onCheckedChange = {surgeonCheckState = it})
+				Checkbox(checked = surgeonCheckState, onCheckedChange = { surgeonCheckState = it })
 				Text(text = stringResource(id = R.string.surgeon_speciality))
 			}
 			Row(
 				horizontalArrangement = Arrangement.Start,
 				verticalAlignment = Alignment.CenterVertically
 			) {
-				Checkbox(checked = clinicCheckState, onCheckedChange = {clinicCheckState = it})
+				Checkbox(checked = clinicCheckState, onCheckedChange = { clinicCheckState = it })
 				Text(text = stringResource(id = R.string.clinic_speciality))
 			}
 			Row(
 				horizontalArrangement = Arrangement.Start,
 				verticalAlignment = Alignment.CenterVertically
 			) {
-				Checkbox(checked = researchCheckState, onCheckedChange = {researchCheckState = it})
+				Checkbox(checked = researchCheckState, onCheckedChange = { researchCheckState = it })
 				Text(text = stringResource(id = R.string.research_speciality))
 			}
 		}
@@ -179,14 +183,14 @@ fun ProfessionalRegisterForm() {
 				horizontalArrangement = Arrangement.Start,
 				verticalAlignment = Alignment.CenterVertically
 			) {
-				Checkbox(checked = laboratoryCheckState, onCheckedChange = {laboratoryCheckState = it})
+				Checkbox(checked = laboratoryCheckState, onCheckedChange = { laboratoryCheckState = it })
 				Text(text = stringResource(id = R.string.laboratory_speciality))
 			}
 			Row(
 				horizontalArrangement = Arrangement.Start,
 				verticalAlignment = Alignment.CenterVertically
 			) {
-				Checkbox(checked = anesthetistCheckState, onCheckedChange = {anesthetistCheckState = it})
+				Checkbox(checked = anesthetistCheckState, onCheckedChange = { anesthetistCheckState = it })
 				Text(text = stringResource(id = R.string.anhestetist_speciality))
 			}
 		}
@@ -194,7 +198,9 @@ fun ProfessionalRegisterForm() {
 			horizontalArrangement = Arrangement.Start,
 			verticalAlignment = Alignment.CenterVertically
 		) {
-			Checkbox(checked = veterinaryPharmacyCheckState, onCheckedChange = {veterinaryPharmacyCheckState = it})
+			Checkbox(
+				checked = veterinaryPharmacyCheckState,
+				onCheckedChange = { veterinaryPharmacyCheckState = it })
 			Text(text = stringResource(id = R.string.pharmacy_speciality))
 		}
 	}
@@ -239,7 +245,7 @@ fun ProfessionalRegisterForm() {
 		) {
 			Checkbox(
 				checked = dogCheckState,
-				onCheckedChange = {dogCheckState = it},
+				onCheckedChange = { dogCheckState = it },
 				colors = CheckboxDefaults.colors(
 					checkedColor = MaterialTheme.colors.secondary
 				)
@@ -252,7 +258,7 @@ fun ProfessionalRegisterForm() {
 		) {
 			Checkbox(
 				checked = catCheckState,
-				onCheckedChange = {catCheckState = it}
+				onCheckedChange = { catCheckState = it }
 			)
 			Text(text = stringResource(id = R.string.cat_animal_type))
 		}
@@ -262,19 +268,9 @@ fun ProfessionalRegisterForm() {
 		) {
 			Checkbox(
 				checked = reptileCheckState,
-				onCheckedChange = {reptileCheckState = it}
+				onCheckedChange = { reptileCheckState = it }
 			)
 			Text(text = stringResource(id = R.string.reptiles_animal_type))
-		}
-		Row(
-			horizontalArrangement = Arrangement.Start,
-			verticalAlignment = Alignment.CenterVertically
-		) {
-			Checkbox(
-				checked = birdCheckState,
-				onCheckedChange = {birdCheckState = it}
-			)
-			Text(text = stringResource(id = R.string.birds_animal_type))
 		}
 	}
 	Row(
@@ -282,8 +278,14 @@ fun ProfessionalRegisterForm() {
 		verticalAlignment = Alignment.CenterVertically
 	) {
 		Checkbox(
+			checked = birdCheckState,
+			onCheckedChange = { birdCheckState = it }
+		)
+		Text(text = stringResource(id = R.string.birds_animal_type))
+
+		Checkbox(
 			checked = exoticCheckState,
-			onCheckedChange = {exoticCheckState = it}
+			onCheckedChange = { exoticCheckState = it }
 		)
 		Text(text = stringResource(id = R.string.exotic_animal_type))
 	}
@@ -307,60 +309,59 @@ fun ProfessionalRegisterForm() {
 		placeholderColor = MaterialTheme.colors.onBackground
 	)
 
-	var atuationAreaState by rememberSaveable {
-		mutableStateOf("")
+	var atuationAreaState = ""
+	var isErrorAtuationAreaState by rememberSaveable {
+		mutableStateOf(false)
 	}
 
-	var crmvState by rememberSaveable {
-		mutableStateOf("")
+	var crmvState = ""
+	var isErrorCrmvState by rememberSaveable {
+		mutableStateOf(false)
 	}
 
-	var formationState by rememberSaveable {
-		mutableStateOf("")
+	var formationState = ""
+	var isErrorFormationState by rememberSaveable {
+		mutableStateOf(false)
 	}
 
-	var institutionState by rememberSaveable {
-		mutableStateOf("")
+	var institutionState = ""
+	var isErrorInstitutionState by rememberSaveable {
+		mutableStateOf(false)
 	}
 
-	TextField(
-		value = atuationAreaState,
-		onValueChange = {atuationAreaState = it},
-		modifier = Modifier.fillMaxWidth(),
-		label = {Text(text = stringResource(id = R.string.atuation_area_professional))},
-		singleLine = true,
-		colors = customColors
+	Spacer(modifier = Modifier.height(16.dp))
+	atuationAreaState = TextFieldInput(
+		label = stringResource(id = R.string.atuation_area_professional),
+		type = KeyboardType.Text,
+		errorState = isErrorAtuationAreaState
 	)
-	TextField(
-		value = crmvState,
-		onValueChange = { if (it.length <= 4) crmvState = it },
-		modifier = Modifier.fillMaxWidth(),
-		label = {Text(text = stringResource(id = R.string.crmv_professional))},
-		keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-		singleLine = true,
-		colors = customColors
+	Spacer(modifier = Modifier.height(16.dp))
+	crmvState = TextFieldInput(
+		label = stringResource(id = R.string.crmv_professional),
+		type = KeyboardType.Text,
+		errorState = isErrorCrmvState
 	)
-	TextField(
-		value = formationState,
-		onValueChange = {formationState = it},
-		modifier = Modifier.fillMaxWidth(),
-		label = {Text(text = stringResource(id = R.string.formation_professional))},
-		singleLine = true,
-		colors = customColors
+	Spacer(modifier = Modifier.height(16.dp))
+	formationState = TextFieldInput(
+		label = stringResource(id = R.string.formation_professional),
+		type = KeyboardType.Text,
+		errorState = isErrorFormationState
 	)
-	TextField(
-		value = institutionState,
-		onValueChange = {institutionState = it},
-		modifier = Modifier.fillMaxWidth(),
-		label = {Text(text = stringResource(id = R.string.institution_professional))},
-		singleLine = true,
-		colors = customColors
+	Spacer(modifier = Modifier.height(16.dp))
+	institutionState = TextFieldInput(
+		label = stringResource(id = R.string.institution_professional),
+		type = KeyboardType.Text,
+		errorState = isErrorInstitutionState
 	)
+	Spacer(modifier = Modifier.height(16.dp))
 
 	// -----------------------------------------------------------------------------------------------
 
-	var formationDateState by rememberSaveable {mutableStateOf("")}
-	var startAtuatingDateState by rememberSaveable {mutableStateOf("")}
+	var formationDateState by rememberSaveable { mutableStateOf("") }
+	var isErrorFormationDateState by rememberSaveable { mutableStateOf(false) }
+
+	var startAtuatingDateState by rememberSaveable { mutableStateOf("") }
+	var isErrorStartAtuatingDateState by rememberSaveable { mutableStateOf(false) }
 
 	val year: Int
 	val month: Int
@@ -375,56 +376,65 @@ fun ProfessionalRegisterForm() {
 
 	val formationDatePickerDialog = DatePickerDialog(
 		context,
-		{_: DatePicker, year: Int, month: Int, dayOfMonth: Int ->
+		{ _: DatePicker, year: Int, month: Int, dayOfMonth: Int ->
 			formationDateState = "$month/$dayOfMonth/$year"
 		}, year, month, day
 	)
 
 	val startAtuatingDatePickerDialog = DatePickerDialog(
 		context,
-		{_: DatePicker, year: Int, month: Int, dayOfMonth: Int ->
+		{ _: DatePicker, year: Int, month: Int, dayOfMonth: Int ->
 			startAtuatingDateState = "$month/$dayOfMonth/$year"
 		}, year, month, day
 	)
 
 	TextField(
-		value = formationDateState	,
-		onValueChange = {if (it.length <= 8) formationDateState = it},
+		value = formationDateState,
+		onValueChange = { if (it.length <= 8) formationDateState = it },
 		modifier = Modifier.fillMaxWidth(),
 		enabled = false,
-		label = {Text(text = stringResource(id = R.string.formation_date_professional))},
+		label = { Text(text = stringResource(id = R.string.formation_date_professional)) },
 		keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+		isError = isErrorFormationDateState,
 		trailingIcon = {
 			val image = Icons.Filled.CalendarMonth
 			val description = "Calendar"
 
 			IconButton(onClick = { formationDatePickerDialog.show() }) {
+				val iconColor = if (isErrorFormationDateState)
+					MaterialTheme.colors.error
+				else MaterialTheme.colors.onBackground
 				Icon(
 					imageVector = image,
 					contentDescription = description,
-					tint = MaterialTheme.colors.onBackground
+					tint = iconColor
 				)
 			}
 		},
 		singleLine = true,
 		colors = customColors
 	)
+	Spacer(modifier = Modifier.height(16.dp))
 	TextField(
-		value = formationDateState	,
-		onValueChange = {if (it.length <= 8) formationDateState = it},
+		value = startAtuatingDateState,
+		onValueChange = { if (it.length <= 8) formationDateState = it },
 		modifier = Modifier.fillMaxWidth(),
 		enabled = false,
-		label = {Text(text = stringResource(id = R.string.start_atuating_date_professional))},
+		label = { Text(text = stringResource(id = R.string.start_atuating_date_professional)) },
 		keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+		isError = isErrorStartAtuatingDateState,
 		trailingIcon = {
 			val image = Icons.Filled.CalendarMonth
 			val description = "Calendar"
 
 			IconButton(onClick = { startAtuatingDatePickerDialog.show() }) {
+				val iconColor = if (isErrorAtuationAreaState)
+					MaterialTheme.colors.error
+				else MaterialTheme.colors.onBackground
 				Icon(
 					imageVector = image,
 					contentDescription = description,
-					tint = MaterialTheme.colors.onBackground
+					tint = iconColor
 				)
 			}
 		},
@@ -434,8 +444,27 @@ fun ProfessionalRegisterForm() {
 	Spacer(modifier = Modifier.height(32.dp))
 	Button(
 		onClick = {
-//				TODO: PROFESSIONAL REGISTER
+			isErrorAtuationAreaState = validateEmptyInput(atuationAreaState)
+			isErrorCrmvState = validateEmptyInput(crmvState)
+			isErrorFormationState = validateEmptyInput(formationState)
+			isErrorInstitutionState = validateEmptyInput(institutionState)
+			isErrorFormationDateState = validateEmptyInput(formationDateState)
+			isErrorStartAtuatingDateState = validateEmptyInput(startAtuatingDateState)
 
+			if (
+				isErrorAtuationAreaState ||
+				isErrorCrmvState ||
+				isErrorFormationState ||
+				isErrorInstitutionState ||
+				isErrorFormationState ||
+				isErrorFormationDateState ||
+				isErrorStartAtuatingDateState
+			) {
+				Toast.makeText(context, "Campos vazios", Toast.LENGTH_SHORT).show()
+			} else {
+				val openHomePetActivity = Intent(context, HomePetActivity::class.java)
+				startActivity(context, openHomePetActivity, null)
+			}
 		},
 		modifier = Modifier.fillMaxWidth(),
 		shape = RoundedCornerShape(size = 5.dp),

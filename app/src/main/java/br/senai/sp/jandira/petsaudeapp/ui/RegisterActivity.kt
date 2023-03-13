@@ -2,16 +2,14 @@ package br.senai.sp.jandira.petsaudeapp.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Visibility
-import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -25,19 +23,18 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.startActivity
 import br.senai.sp.jandira.petsaudeapp.R
 import br.senai.sp.jandira.petsaudeapp.components.AuthHeaderTitle
+import br.senai.sp.jandira.petsaudeapp.components.PasswordInputHideShowIcon
+import br.senai.sp.jandira.petsaudeapp.components.TextFieldInput
+import br.senai.sp.jandira.petsaudeapp.service.saveUserRegister
 import br.senai.sp.jandira.petsaudeapp.ui.theme.PetSaudeAppTheme
-import br.senai.sp.jandira.petsaudeapp.utils.CellPhoneNumberTransformation
-import br.senai.sp.jandira.petsaudeapp.utils.PhoneNumberTransformation
+import br.senai.sp.jandira.petsaudeapp.utils.validateEmptyInput
 
 class RegisterActivity : ComponentActivity() {
 	override fun onCreate(savedInstanceState: Bundle?) {
@@ -90,7 +87,7 @@ fun GlobalRegister() {
 					text = stringResource(id = R.string.login_bottom_message),
 					modifier = Modifier.clickable {
 						val openRegisterAddressActivity = Intent(context, MainActivity::class.java)
-						ContextCompat.startActivity(context, openRegisterAddressActivity, null)
+						startActivity(context, openRegisterAddressActivity, null)
 					},
 					color = MaterialTheme.colors.onBackground,
 					fontSize = 14.sp,
@@ -170,181 +167,142 @@ fun RegisterHeader() {
 fun RegisterForm() {
 	val context = LocalContext.current
 
-	val customColors = TextFieldDefaults.textFieldColors(
-		textColor = MaterialTheme.colors.onBackground,
-		disabledTextColor = MaterialTheme.colors.onBackground,
-		backgroundColor = Color.Transparent,
-		cursorColor = MaterialTheme.colors.onBackground,
-		errorCursorColor = MaterialTheme.colors.error,
-		focusedIndicatorColor = MaterialTheme.colors.primaryVariant,
-		unfocusedIndicatorColor = MaterialTheme.colors.onBackground,
-		disabledIndicatorColor = MaterialTheme.colors.onBackground,
-		errorIndicatorColor = MaterialTheme.colors.error,
-		focusedLabelColor = MaterialTheme.colors.primary,
-		unfocusedLabelColor = MaterialTheme.colors.onBackground,
-		disabledLabelColor = MaterialTheme.colors.onBackground,
-		trailingIconColor = MaterialTheme.colors.onBackground,
-		placeholderColor = MaterialTheme.colors.onBackground
-	)
-
-	var nameState by rememberSaveable() {
-		mutableStateOf("")
-	}
-
-	var lastnameState by rememberSaveable() {
-		mutableStateOf("")
-	}
-
-	var emailState by rememberSaveable {
-		mutableStateOf("")
-	}
-
-	var passwordState by rememberSaveable {
-		mutableStateOf("")
-	}
-
-	var checkPassState by rememberSaveable() {
-		mutableStateOf("")
-	}
-
-	var cellphoneNumberState by rememberSaveable() {
-		mutableStateOf("55")
-	}
-
-	var phoneNumberState by rememberSaveable() {
-		mutableStateOf("55")
-	}
-
-	var isPasswordVisible by rememberSaveable {
+	var nameState = ""
+	var isErrorNameState by rememberSaveable {
 		mutableStateOf(false)
 	}
-	
-	var isConfirmPasswordVisible by rememberSaveable {
+
+	var lastNameState = ""
+	var isErrorLastNameState by rememberSaveable {
 		mutableStateOf(false)
 	}
-	
+
+	var itpState = ""
+	var isErrorItpState by rememberSaveable {
+		mutableStateOf(false)
+	}
+
+	var emailState = ""
+	var isErrorEmailState by rememberSaveable {
+		mutableStateOf(false)
+	}
+
+	var passwordState = ""
+	var isErrorPasswordState by rememberSaveable {
+		mutableStateOf(false)
+	}
+
+	var checkPassState = ""
+	var isErrorCheckPasswordState by rememberSaveable {
+		mutableStateOf(false)
+	}
+
+	var cellphoneNumberState = ""
+	var isErrorCellphoneNumberState by rememberSaveable {
+		mutableStateOf(false)
+	}
+
+	var phoneNumberState = ""
+	var isErrorPhoneNumberState by rememberSaveable {
+		mutableStateOf(false)
+	}
+
+	var userSaveRegister by rememberSaveable { mutableStateOf("") }
 
 	Column(
 		modifier = Modifier
 			.fillMaxWidth()
 			.padding(top = 32.dp)
 	) {
-		TextField(
-			value = nameState,
-			onValueChange = {
-				nameState = it
-			},
-			modifier = Modifier.fillMaxWidth(),
-			label = { Text(text = stringResource(id = R.string.name_string_resource)) },
-			singleLine = true,
-			colors = customColors
+		nameState = TextFieldInput(
+			label = stringResource(id = R.string.name_string_resource),
+			type = KeyboardType.Text,
+			errorState = isErrorNameState
 		)
 		Spacer(Modifier.height(16.dp))
-		TextField(
-			value = lastnameState,
-			onValueChange = {
-				lastnameState = it
-			},
-			modifier = Modifier.fillMaxWidth(),
-			label = { Text(text = stringResource(id = R.string.last_name_string_resource)) },
-			singleLine = true,
-			colors = customColors
+		lastNameState = TextFieldInput(
+			label = stringResource(id = R.string.last_name_string_resource),
+			type = KeyboardType.Text,
+			errorState = isErrorLastNameState
 		)
 		Spacer(Modifier.height(16.dp))
-		TextField(
-			value = emailState,
-			onValueChange = {
-				emailState = it
-			},
-			modifier = Modifier.fillMaxWidth(),
-			label = { Text(text = stringResource(id = R.string.email_string_resource)) },
-			keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-			singleLine = true,
-			colors = customColors
+		itpState = TextFieldInput(
+			label = stringResource(id = R.string.itp_string_resource),
+			type = KeyboardType.Number,
+			errorState = isErrorItpState
 		)
 		Spacer(Modifier.height(16.dp))
-		TextField(
-			value = passwordState,
-			onValueChange = {
-				passwordState = it
-			},
-			visualTransformation = if (isPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-			modifier = Modifier
-				.fillMaxWidth(),
-			label = { Text(text = stringResource(id = R.string.password_string_resource)) },
-			trailingIcon = {
-				val image = if (isPasswordVisible)
-					Icons.Filled.Visibility
-				else Icons.Filled.VisibilityOff
-
-				val description = if (isPasswordVisible) stringResource(id = R.string.hide_pass_alt) else stringResource(id = R.string.show_pass_alt)
-
-				IconButton(onClick = { isPasswordVisible = !isPasswordVisible }) {
-					Icon(
-						imageVector = image,
-						contentDescription = description
-					)
-				}
-			},
-			keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-			singleLine = true,
-			colors = customColors
+		emailState = TextFieldInput(
+			label = stringResource(id = R.string.email_string_resource),
+			type = KeyboardType.Email,
+			errorState = isErrorEmailState
 		)
 		Spacer(Modifier.height(16.dp))
-		TextField(
-			value = checkPassState,
-			onValueChange = {
-				checkPassState = it
-			},
-			visualTransformation = if (isConfirmPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-			modifier = Modifier
-				.fillMaxWidth(),
-			label = { Text(text = stringResource(id = R.string.confirm_password_string_resource)) },
-			trailingIcon = {
-				val image = if (isConfirmPasswordVisible)
-					Icons.Filled.Visibility
-				else Icons.Filled.VisibilityOff
-
-				val description = if (isConfirmPasswordVisible) stringResource(id = R.string.hide_pass_alt) else stringResource(id = R.string.show_pass_alt)
-
-				IconButton(onClick = { isConfirmPasswordVisible = !isConfirmPasswordVisible }) {
-					Icon(
-						imageVector = image,
-						contentDescription = description
-					)
-				}
-			},
-			keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-			singleLine = true,
-			colors = customColors
+		passwordState = PasswordInputHideShowIcon(
+			label = stringResource(id = R.string.password_string_resource),
+			errorState = isErrorPasswordState
 		)
 		Spacer(Modifier.height(16.dp))
-		TextField(
-			value = cellphoneNumberState,
-			onValueChange = { if (it.length <= 13) cellphoneNumberState = it },
-			modifier = Modifier.fillMaxWidth(),
-			label = { Text(text = stringResource(id = R.string.cellphone_number_string_resource)) },
-			visualTransformation = CellPhoneNumberTransformation(),
-			keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
-			singleLine = true,
-			colors = customColors
+		checkPassState = PasswordInputHideShowIcon(
+			label = stringResource(id = R.string.confirm_password_string_resource),
+			errorState = isErrorCheckPasswordState
 		)
 		Spacer(Modifier.height(16.dp))
-		TextField(
-			value = phoneNumberState,
-			onValueChange = {	if (it.length <= 12) phoneNumberState = it },
-			modifier = Modifier.fillMaxWidth(),
-			label = { Text(text = stringResource(id = R.string.phone_number_string_resource)) },
-			visualTransformation = PhoneNumberTransformation(),
-			keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
-			singleLine = true,
-			colors = customColors
+		cellphoneNumberState = TextFieldInput(
+			label = stringResource(id = R.string.cellphone_number_string_resource),
+			type = KeyboardType.Number,
+			errorState = isErrorCellphoneNumberState
+		)
+		Spacer(Modifier.height(16.dp))
+		phoneNumberState = TextFieldInput(
+			label = stringResource(id = R.string.phone_number_string_resource),
+			type = KeyboardType.Number,
+			errorState = isErrorPhoneNumberState
 		)
 		Spacer(Modifier.height(32.dp))
 		Button(
 			onClick = {
-				val openRegisterAddressActivity = Intent(context, RegisterAddressActivity::class.java)
-				startActivity(context, openRegisterAddressActivity, null)
+				isErrorNameState = validateEmptyInput(nameState)
+				isErrorLastNameState = validateEmptyInput(lastNameState)
+				isErrorItpState = validateEmptyInput(itpState)
+				isErrorEmailState = validateEmptyInput(emailState)
+				isErrorPasswordState = validateEmptyInput(passwordState)
+				isErrorCheckPasswordState = validateEmptyInput(checkPassState)
+				isErrorCellphoneNumberState = validateEmptyInput(cellphoneNumberState)
+				isErrorPhoneNumberState = validateEmptyInput(phoneNumberState)
+
+				if (
+					isErrorNameState ||
+					isErrorLastNameState ||
+					isErrorItpState ||
+					isErrorEmailState ||
+					isErrorPasswordState ||
+					isErrorCheckPasswordState ||
+					isErrorCellphoneNumberState ||
+					isErrorPhoneNumberState
+				) {
+					Toast.makeText(context, "Campos vazios", Toast.LENGTH_SHORT).show()
+				} else {
+					if (checkPassState == passwordState) {
+//						userSaveRegister = saveUserRegister(
+//							nameState,
+//							lastNameState,
+//							itpState,
+//							emailState,
+//							passwordState,
+//							cellphoneNumberState,
+//							phoneNumberState
+//						) { userSaveRegister = it }.toString()
+//						if (userSaveRegister.isNotEmpty()) {
+//							Log.i("DS3M", "USUÁRIO CRIADO COM SUCESSO, NOME: ${nameState}")
+						val openRegisterAddressActivity = Intent(context, RegisterAddressActivity::class.java)
+						startActivity(context, openRegisterAddressActivity, null)
+//						}
+					} else {
+						Toast.makeText(context, "As senhas não batem", Toast.LENGTH_SHORT).show()
+						isErrorCheckPasswordState = true
+					}
+				}
 			},
 			modifier = Modifier.fillMaxWidth(),
 			shape = RoundedCornerShape(size = 5.dp),

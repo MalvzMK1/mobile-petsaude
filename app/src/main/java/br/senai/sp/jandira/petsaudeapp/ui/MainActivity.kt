@@ -2,17 +2,14 @@ package br.senai.sp.jandira.petsaudeapp.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Visibility
-import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.getValue
@@ -26,8 +23,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -37,7 +32,9 @@ import br.senai.sp.jandira.petsaudeapp.R
 import br.senai.sp.jandira.petsaudeapp.components.AuthHeaderTitle
 import br.senai.sp.jandira.petsaudeapp.components.PasswordInputHideShowIcon
 import br.senai.sp.jandira.petsaudeapp.components.TextFieldInput
+import br.senai.sp.jandira.petsaudeapp.service.loginUser
 import br.senai.sp.jandira.petsaudeapp.ui.theme.PetSaudeAppTheme
+import br.senai.sp.jandira.petsaudeapp.utils.validateEmptyInput
 
 class MainActivity : ComponentActivity() {
 	override fun onCreate(savedInstanceState: Bundle?) {
@@ -101,7 +98,6 @@ fun GlobalLogin() {
 
 @Composable
 fun LoginHeader() {
-
 	Column(
 		modifier = Modifier
 			.fillMaxWidth()
@@ -170,24 +166,24 @@ fun LoginHeader() {
 @Composable
 fun LoginForm() {
 	val context = LocalContext.current
-	var loginEmail = ""
-	var loginPassword = ""
+	var loginEmailState = ""
+	var loginPasswordState = ""
+	var loginState by rememberSaveable() { mutableStateOf("") }
+	var isErrorEmailState by rememberSaveable { mutableStateOf(false) }
+	var isErrorPasswordState by rememberSaveable { mutableStateOf(false) }
 	Column(
 		modifier = Modifier
 			.fillMaxWidth()
 			.padding(top = 32.dp)
 	) {
-		loginEmail = TextFieldInput(label = stringResource(id = R.string.email_string_resource), type = KeyboardType.Email)
+		loginEmailState = TextFieldInput(
+			label = stringResource(id = R.string.email_string_resource),
+			type = KeyboardType.Email,
+			errorState = isErrorEmailState
+		)
 		Spacer(Modifier.height(16.dp))
-		Column() {
-			Box(
-				modifier = Modifier
-					.fillMaxWidth()
-					.background(Color.Transparent),
-			) {
-				loginPassword = PasswordInputHideShowIcon(label = stringResource(id = R.string.password_string_resource))
-			}
-		}
+		loginPasswordState =
+			PasswordInputHideShowIcon(label = stringResource(id = R.string.password_string_resource), errorState = isErrorPasswordState)
 		Box(
 			modifier = Modifier.fillMaxWidth(),
 			contentAlignment = Alignment.CenterEnd
@@ -206,8 +202,30 @@ fun LoginForm() {
 		Spacer(Modifier.height(32.dp))
 		Button(
 			onClick = {
-//				TODO: USER LOGIN
-					Toast.makeText(context, "$loginEmail, $loginPassword", Toast.LENGTH_SHORT).show()
+				isErrorPasswordState = validateEmptyInput(loginPasswordState)
+				isErrorEmailState = validateEmptyInput(loginEmailState)
+
+				if (isErrorEmailState || isErrorPasswordState) {
+					Toast.makeText(context, "Campos obrigatórios não informados", Toast.LENGTH_SHORT).show()
+				} else {
+					if (loginEmailState.indexOf("@") != -1) {
+						loginState = loginUser(loginEmailState, loginPasswordState) {
+							loginState = it
+						}
+						Log.i("TOKEN", loginState)
+						if (loginState.toBoolean() == false) {
+							isErrorEmailState = true
+							isErrorPasswordState = true
+						} else {
+							val openHomePetActivity = Intent(context, HomePetActivity::class.java)
+							startActivity(context, openHomePetActivity, null)
+							Toast.makeText(context, "Seja Bem-Vindo!", Toast.LENGTH_SHORT).show()
+						}
+					} else {
+						Toast.makeText(context, "E-mail inválido", Toast.LENGTH_SHORT).show()
+						isErrorEmailState = true
+					}
+				}
 			},
 			modifier = Modifier.fillMaxWidth(),
 			shape = RoundedCornerShape(size = 5.dp),

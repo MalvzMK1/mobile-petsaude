@@ -44,6 +44,7 @@
     <string name="show_pass_alt">Mostrar senha</string>
     <string name="name_string_resource">Nome</string>
     <string name="last_name_string_resource">Sobrenome</string>
+    <string name="itp_string_resource">CPF</string>
     <string name="cellphone_number_string_resource">Celular</string>
     <string name="phone_number_string_resource">Telefone</string>
     <string name="continue_string_resource">Continuar</string>

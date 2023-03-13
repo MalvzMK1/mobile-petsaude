@@ -18,6 +18,7 @@
     <string name="message_signup_header">Put your informations below and signup!</string>
     <string name="name_string_resource">Name</string>
     <string name="last_name_string_resource">Last Name</string>
+    <string name="itp_string_resource">ITP</string>
     <string name="confirm_password_string_resource">Confirm your password</string>
     <string name="cellphone_number_string_resource">Cellphone Number</string>
     <string name="phone_number_string_resource">Phone Number</string>
@@ -77,5 +78,6 @@
     <string name="birds_animal_type">Birds</string>
     <string name="reptiles_animal_type">Reptiles</string>
     <string name="exotic_animal_type">Exotics</string>
+    <string name="title_activity_home_pet">HomePet</string>
 
 </resources>
