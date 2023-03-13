@@ -15,6 +15,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import br.senai.sp.jandira.petsaudeapp.R
+import br.senai.sp.jandira.petsaudeapp.utils.CellPhoneNumberTransformation
 import br.senai.sp.jandira.petsaudeapp.utils.PhoneNumberTransformation
 import br.senai.sp.jandira.petsaudeapp.utils.ZipCodeTransformation
 
@@ -124,7 +125,46 @@ fun PasswordInputHideShowIcon(label: String, errorState: Boolean): String {
 }
 
 @Composable
-fun MaskedPhoneNumberInput(label: String): String {
+fun MaskedPhoneNumberInput(label: String, errorState: Boolean): String {
+	val customColors = TextFieldDefaults.textFieldColors(
+		textColor = MaterialTheme.colors.onBackground,
+		disabledTextColor = MaterialTheme.colors.onBackground,
+		backgroundColor = Color.Transparent,
+		cursorColor = MaterialTheme.colors.onBackground,
+		errorCursorColor = MaterialTheme.colors.error,
+		focusedIndicatorColor = MaterialTheme.colors.primaryVariant,
+		unfocusedIndicatorColor = MaterialTheme.colors.onBackground,
+		disabledIndicatorColor = MaterialTheme.colors.onBackground,
+		errorIndicatorColor = MaterialTheme.colors.error,
+		focusedLabelColor = MaterialTheme.colors.primary,
+		unfocusedLabelColor = MaterialTheme.colors.onBackground,
+		disabledLabelColor = MaterialTheme.colors.onBackground,
+		trailingIconColor = MaterialTheme.colors.onBackground,
+		placeholderColor = MaterialTheme.colors.onBackground
+	)
+
+	var thisPhoneNumberState by rememberSaveable {
+		mutableStateOf("")
+	}
+
+	TextField(
+		value = thisPhoneNumberState,
+		onValueChange = { if (it.length <= 12) thisPhoneNumberState = it },
+		modifier = Modifier
+			.fillMaxWidth(),
+		label = { Text(text = label) },
+		isError = errorState,
+		visualTransformation = PhoneNumberTransformation(),
+		keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
+		singleLine = true,
+		colors = customColors
+	)
+
+	return thisPhoneNumberState
+}
+
+@Composable
+fun MaskedCellphoneNumberInput(label: String, errorState: Boolean): String {
 	val customColors = TextFieldDefaults.textFieldColors(
 		textColor = MaterialTheme.colors.onBackground,
 		disabledTextColor = MaterialTheme.colors.onBackground,
@@ -152,7 +192,8 @@ fun MaskedPhoneNumberInput(label: String): String {
 		modifier = Modifier
 			.fillMaxWidth(),
 		label = { Text(text = label) },
-		visualTransformation = PhoneNumberTransformation(),
+		isError = errorState,
+		visualTransformation = CellPhoneNumberTransformation(),
 		keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
 		singleLine = true,
 		colors = customColors
@@ -160,6 +201,7 @@ fun MaskedPhoneNumberInput(label: String): String {
 
 	return thisPhoneNumberState
 }
+
 
 @Composable
 fun MaskedZipCodeInput(label: String, errorState: Boolean): String {

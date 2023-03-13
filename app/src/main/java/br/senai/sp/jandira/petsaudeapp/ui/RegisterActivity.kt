@@ -29,9 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat.startActivity
 import br.senai.sp.jandira.petsaudeapp.R
-import br.senai.sp.jandira.petsaudeapp.components.AuthHeaderTitle
-import br.senai.sp.jandira.petsaudeapp.components.PasswordInputHideShowIcon
-import br.senai.sp.jandira.petsaudeapp.components.TextFieldInput
+import br.senai.sp.jandira.petsaudeapp.components.*
 import br.senai.sp.jandira.petsaudeapp.service.saveUserRegister
 import br.senai.sp.jandira.petsaudeapp.ui.theme.PetSaudeAppTheme
 import br.senai.sp.jandira.petsaudeapp.utils.validateEmptyInput
@@ -248,15 +246,13 @@ fun RegisterForm() {
 			errorState = isErrorCheckPasswordState
 		)
 		Spacer(Modifier.height(16.dp))
-		cellphoneNumberState = TextFieldInput(
+		cellphoneNumberState = MaskedCellphoneNumberInput(
 			label = stringResource(id = R.string.cellphone_number_string_resource),
-			type = KeyboardType.Number,
 			errorState = isErrorCellphoneNumberState
 		)
 		Spacer(Modifier.height(16.dp))
-		phoneNumberState = TextFieldInput(
+		phoneNumberState = MaskedPhoneNumberInput(
 			label = stringResource(id = R.string.phone_number_string_resource),
-			type = KeyboardType.Number,
 			errorState = false
 		)
 		Spacer(Modifier.height(32.dp))
