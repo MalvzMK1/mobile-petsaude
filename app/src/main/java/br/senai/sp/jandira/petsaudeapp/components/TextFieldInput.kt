@@ -148,10 +148,7 @@ fun MaskedPhoneNumberInput(label: String): String {
 
 	TextField(
 		value = thisPhoneNumberState,
-		onValueChange = {
-			if (thisPhoneNumberState.length > 13)
-				thisPhoneNumberState = it
-		},
+		onValueChange = { if (it.length <= 13) thisPhoneNumberState = it },
 		modifier = Modifier
 			.fillMaxWidth(),
 		label = { Text(text = label) },
@@ -189,11 +186,7 @@ fun MaskedZipCodeInput(label: String, errorState: Boolean): String {
 
 	TextField(
 		value = thisInputState,
-		onValueChange = {
-			if (thisInputState.length < 8) {
-				thisInputState = it
-			}
-		},
+		onValueChange = { if (it.length <= 8) thisInputState = it },
 		modifier = Modifier
 			.fillMaxWidth(),
 		label = { Text(text = label) },
