@@ -208,17 +208,22 @@ fun LoginForm() {
 				if (isErrorEmailState || isErrorPasswordState) {
 					Toast.makeText(context, "Campos obrigatórios não informados", Toast.LENGTH_SHORT).show()
 				} else {
-					loginState = loginUser(loginEmailState, loginPasswordState) {
-						loginState = it
-					}
-					Log.i("TOKEN", loginState)
-					if (loginState.toBoolean() != false) {
-						val openHomePetActivity = Intent(context, HomePetActivity::class.java)
-						startActivity(context, openHomePetActivity, null)
-						Toast.makeText(context, "Seja Bem-Vindo!", Toast.LENGTH_SHORT).show()
+					if (loginEmailState.indexOf("@") != -1) {
+						loginState = loginUser(loginEmailState, loginPasswordState) {
+							loginState = it
+						}
+						Log.i("TOKEN", loginState)
+						if (loginState.toBoolean() == false) {
+							isErrorEmailState = true
+							isErrorPasswordState = true
+						} else {
+							val openHomePetActivity = Intent(context, HomePetActivity::class.java)
+							startActivity(context, openHomePetActivity, null)
+							Toast.makeText(context, "Seja Bem-Vindo!", Toast.LENGTH_SHORT).show()
+						}
 					} else {
+						Toast.makeText(context, "E-mail inválido", Toast.LENGTH_SHORT).show()
 						isErrorEmailState = true
-						isErrorPasswordState = true
 					}
 				}
 			},
