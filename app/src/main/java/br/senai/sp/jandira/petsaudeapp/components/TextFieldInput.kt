@@ -1,5 +1,6 @@
 package br.senai.sp.jandira.petsaudeapp.components
 
+import android.util.Log
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
@@ -10,6 +11,8 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.key.key
+import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -230,7 +233,12 @@ fun MaskedZipCodeInput(label: String, errorState: Boolean): String {
 		value = thisInputState,
 		onValueChange = { if (it.length <= 8) thisInputState = it },
 		modifier = Modifier
-			.fillMaxWidth(),
+			.fillMaxWidth()
+			.onKeyEvent {
+			Log.i("key", it.key.toString())
+				true
+
+			},
 		label = { Text(text = label) },
 		isError = errorState,
 		visualTransformation = ZipCodeTransformation(),

@@ -175,6 +175,11 @@ fun RegisterForm() {
 		mutableStateOf(false)
 	}
 
+	var userNameState = ""
+	var isErrorUserNameState by rememberSaveable {
+		mutableStateOf(false)
+	}
+
 	var itpState = ""
 	var isErrorItpState by rememberSaveable {
 		mutableStateOf(false)
@@ -224,6 +229,12 @@ fun RegisterForm() {
 			errorState = isErrorLastNameState
 		)
 		Spacer(Modifier.height(16.dp))
+		userNameState = TextFieldInput(
+			label = stringResource(id = R.string.last_name_string_resource),
+			type = KeyboardType.Text,
+			errorState = isErrorUserNameState
+		)
+		Spacer(Modifier.height(16.dp))
 		itpState = TextFieldInput(
 			label = stringResource(id = R.string.itp_string_resource),
 			type = KeyboardType.Number,
@@ -260,6 +271,7 @@ fun RegisterForm() {
 			onClick = {
 				isErrorNameState = validateEmptyInput(nameState)
 				isErrorLastNameState = validateEmptyInput(lastNameState)
+				isErrorUserNameState = validateEmptyInput(userNameState)
 				isErrorItpState = validateEmptyInput(itpState)
 				isErrorEmailState = validateEmptyInput(emailState)
 				isErrorPasswordState = validateEmptyInput(passwordState)
@@ -270,6 +282,7 @@ fun RegisterForm() {
 				if (
 					isErrorNameState ||
 					isErrorLastNameState ||
+					isErrorUserNameState ||
 					isErrorItpState ||
 					isErrorEmailState ||
 					isErrorPasswordState ||
@@ -278,11 +291,14 @@ fun RegisterForm() {
 					isErrorPhoneNumberState
 				) {
 					Toast.makeText(context, "Campos vazios", Toast.LENGTH_SHORT).show()
+				} else if (passwordState.length < 6) {
+					Toast.makeText(context, "A senha não pode ter menos de 6 caractéres", Toast.LENGTH_SHORT).show()
 				} else {
 					if (checkPassState == passwordState) {
 						userSaveRegister = saveUserRegister(
 							nameState,
 							lastNameState,
+							userNameState,
 							itpState,
 							emailState,
 							passwordState,
@@ -290,7 +306,8 @@ fun RegisterForm() {
 							phoneNumberState
 						) { userSaveRegister = it }.toString()
 						if (userSaveRegister.isNotEmpty()) {
-							Log.i("DS3M", "USUÁRIO CRIADO COM SUCESSO, NOME: ${nameState}")
+//							TODO: GUARDAR INFORMAÇÕES DO USUÁRIO EM UM BANCO LOCAL
+//							Log.i("DS3M", "USUÁRIO CRIADO COM SUCESSO, NOME: ${nameState}")
 							val openRegisterAddressActivity = Intent(context, RegisterAddressActivity::class.java)
 							startActivity(context, openRegisterAddressActivity, null)
 						}

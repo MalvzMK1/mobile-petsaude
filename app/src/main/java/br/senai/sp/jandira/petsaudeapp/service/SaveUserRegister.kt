@@ -1,31 +1,35 @@
 package br.senai.sp.jandira.petsaudeapp.service
 
 import android.util.Log
+import br.senai.sp.jandira.petsaudeapp.model.PhoneNumber
 import br.senai.sp.jandira.petsaudeapp.model.UserRegister
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-fun saveUserRegister(nameState: String,
-										 lastnameState: String,
-										 itpState: String,
-										 emailState: String,
-										 passwordState: String,
-										 cellphoneNumberState: String,
-										 phoneNumberState: String,
-										 onComplete: (String) -> Unit) {
-	var userRegister = UserRegister(
-		nameState,
-		lastnameState,
-		itpState,
-		emailState,
-		passwordState,
-		cellphoneNumberState,
-		phoneNumberState
+fun saveUserRegister(
+	name: String,
+	lastName: String,
+	userName: String,
+	itp: String,
+	email: String,
+	password: String,
+	cellphoneNumber: String,
+	phoneNumber: String,
+	onComplete: (String) -> Unit
+) {
+	val userRegister = UserRegister(
+		name = "$name $lastName",
+		userName,
+		itp,
+		email,
+		password,
+		cellphoneNumber,
+		phoneNumber,
 	)
 	val call = RetrofitFactory().retrofitService().saveUserRegister(userRegister)
-	
-	call.enqueue(object: Callback<Boolean> {
+
+	call.enqueue(object : Callback<Boolean> {
 		override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {
 			Log.i("DS3M", "USUÁRIO CRIADO COM SUCESSO")
 		}
