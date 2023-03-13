@@ -204,14 +204,13 @@ fun LoginForm() {
 			onClick = {
 				isErrorPasswordState = validateEmptyInput(loginPasswordState)
 				isErrorEmailState = validateEmptyInput(loginEmailState)
-
 				if (isErrorEmailState || isErrorPasswordState) {
 					Toast.makeText(context, "Campos obrigatórios não informados", Toast.LENGTH_SHORT).show()
 				} else {
 					if (loginEmailState.indexOf("@") != -1) {
 						loginState = loginUser(loginEmailState, loginPasswordState) {
 							loginState = it
-							Log.i("TOKEN", loginState)
+//							Log.i("TOKEN", loginState)
 							if (loginState.isNotEmpty()) {
 								val openHomePetActivity = Intent(context, HomePetActivity::class.java)
 								startActivity(context, openHomePetActivity, null)

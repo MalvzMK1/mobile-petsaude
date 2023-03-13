@@ -20,7 +20,7 @@ fun loginUser (loginEmail: String, loginPassword: String, onComplete: (String) -
 				onComplete.invoke(tokenJWT)
 			} else {
 				tokenJWT = response.body()!!.token
-				Log.i("CHEGOU", tokenJWT)
+//				Log.i("CHEGOU", tokenJWT)
 				onComplete.invoke(tokenJWT)
 			}
 		}

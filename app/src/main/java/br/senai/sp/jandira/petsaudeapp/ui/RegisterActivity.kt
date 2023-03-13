@@ -287,8 +287,7 @@ fun RegisterForm() {
 					isErrorEmailState ||
 					isErrorPasswordState ||
 					isErrorCheckPasswordState ||
-					isErrorCellphoneNumberState ||
-					isErrorPhoneNumberState
+					isErrorCellphoneNumberState
 				) {
 					Toast.makeText(context, "Campos vazios", Toast.LENGTH_SHORT).show()
 				} else if (passwordState.length < 6) {

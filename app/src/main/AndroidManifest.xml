@@ -42,6 +42,10 @@
         <activity
             android:name=".ui.MainActivity"
             android:exported="true"
+<<<<<<< HEAD
+=======
+            android:label="@string/app_name"
+>>>>>>> 212b1dc (save register user in progress)
             android:theme="@style/Theme.PetSaudeApp">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
