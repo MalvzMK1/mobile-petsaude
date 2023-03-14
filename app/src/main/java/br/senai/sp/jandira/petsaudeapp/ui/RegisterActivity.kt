@@ -29,7 +29,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat.startActivity
 import br.senai.sp.jandira.petsaudeapp.R
-import br.senai.sp.jandira.petsaudeapp.components.*
+import br.senai.sp.jandira.petsaudeapp.components.AuthHeaderTitle
+import br.senai.sp.jandira.petsaudeapp.components.PasswordInputHideShowIcon
+import br.senai.sp.jandira.petsaudeapp.components.TextFieldInput
 import br.senai.sp.jandira.petsaudeapp.service.saveUserRegister
 import br.senai.sp.jandira.petsaudeapp.ui.theme.PetSaudeAppTheme
 import br.senai.sp.jandira.petsaudeapp.utils.validateEmptyInput
@@ -175,11 +177,6 @@ fun RegisterForm() {
 		mutableStateOf(false)
 	}
 
-	var userNameState = ""
-	var isErrorUserNameState by rememberSaveable {
-		mutableStateOf(false)
-	}
-
 	var itpState = ""
 	var isErrorItpState by rememberSaveable {
 		mutableStateOf(false)
@@ -229,12 +226,6 @@ fun RegisterForm() {
 			errorState = isErrorLastNameState
 		)
 		Spacer(Modifier.height(16.dp))
-		userNameState = TextFieldInput(
-			label = stringResource(id = R.string.last_name_string_resource),
-			type = KeyboardType.Text,
-			errorState = isErrorUserNameState
-		)
-		Spacer(Modifier.height(16.dp))
 		itpState = TextFieldInput(
 			label = stringResource(id = R.string.itp_string_resource),
 			type = KeyboardType.Number,
@@ -257,21 +248,22 @@ fun RegisterForm() {
 			errorState = isErrorCheckPasswordState
 		)
 		Spacer(Modifier.height(16.dp))
-		cellphoneNumberState = MaskedCellphoneNumberInput(
+		cellphoneNumberState = TextFieldInput(
 			label = stringResource(id = R.string.cellphone_number_string_resource),
+			type = KeyboardType.Number,
 			errorState = isErrorCellphoneNumberState
 		)
 		Spacer(Modifier.height(16.dp))
-		phoneNumberState = MaskedPhoneNumberInput(
+		phoneNumberState = TextFieldInput(
 			label = stringResource(id = R.string.phone_number_string_resource),
-			errorState = false
+			type = KeyboardType.Number,
+			errorState = isErrorPhoneNumberState
 		)
 		Spacer(Modifier.height(32.dp))
 		Button(
 			onClick = {
 				isErrorNameState = validateEmptyInput(nameState)
 				isErrorLastNameState = validateEmptyInput(lastNameState)
-				isErrorUserNameState = validateEmptyInput(userNameState)
 				isErrorItpState = validateEmptyInput(itpState)
 				isErrorEmailState = validateEmptyInput(emailState)
 				isErrorPasswordState = validateEmptyInput(passwordState)
@@ -282,7 +274,6 @@ fun RegisterForm() {
 				if (
 					isErrorNameState ||
 					isErrorLastNameState ||
-					isErrorUserNameState ||
 					isErrorItpState ||
 					isErrorEmailState ||
 					isErrorPasswordState ||
@@ -290,28 +281,24 @@ fun RegisterForm() {
 					isErrorCellphoneNumberState
 				) {
 					Toast.makeText(context, "Campos vazios", Toast.LENGTH_SHORT).show()
-				} else if (passwordState.length < 6) {
-					Toast.makeText(context, "A senha não pode ter menos de 6 caractéres", Toast.LENGTH_SHORT).show()
 				} else {
 					if (checkPassState == passwordState) {
-						userSaveRegister = saveUserRegister(
-							nameState,
-							lastNameState,
-							userNameState,
-							itpState,
-							emailState,
-							passwordState,
-							cellphoneNumberState,
-							phoneNumberState
-						) { userSaveRegister = it }.toString()
-						if (userSaveRegister.isNotEmpty()) {
-//							TODO: GUARDAR INFORMAÇÕES DO USUÁRIO EM UM BANCO LOCAL
+//						userSaveRegister = saveUserRegister(
+//							nameState,
+//							lastNameState,
+//							itpState,
+//							emailState,
+//							passwordState,
+//							cellphoneNumberState,
+//							phoneNumberState
+//						) { userSaveRegister = it }.toString()
+//						if (userSaveRegister.isNotEmpty()) {
 //							Log.i("DS3M", "USUÁRIO CRIADO COM SUCESSO, NOME: ${nameState}")
-							val openRegisterAddressActivity = Intent(context, RegisterAddressActivity::class.java)
-							startActivity(context, openRegisterAddressActivity, null)
-						}
+						val openRegisterAddressActivity = Intent(context, RegisterAddressActivity::class.java)
+						startActivity(context, openRegisterAddressActivity, null)
+//						}
 					} else {
-						Toast.makeText(context, "Suas senhas são diferentes!", Toast.LENGTH_SHORT).show()
+						Toast.makeText(context, "As senhas não batem", Toast.LENGTH_SHORT).show()
 						isErrorCheckPasswordState = true
 					}
 				}
