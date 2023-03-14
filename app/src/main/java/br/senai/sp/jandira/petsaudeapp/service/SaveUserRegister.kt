@@ -1,7 +1,7 @@
 package br.senai.sp.jandira.petsaudeapp.service
 
 import android.util.Log
-import br.senai.sp.jandira.petsaudeapp.model.PhoneNumber
+//import br.senai.sp.jandira.petsaudeapp.model.PhoneNumber
 import br.senai.sp.jandira.petsaudeapp.model.UserRegister
 import retrofit2.Call
 import retrofit2.Callback
