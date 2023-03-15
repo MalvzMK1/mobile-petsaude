@@ -118,6 +118,7 @@ fun LoginHeader() {
 			Spacer(modifier = Modifier.height(32.dp))
 			Button(
 				onClick = {
+
 //				TODO: FIREBASE AUTHENTICATION
 //					Toast.makeText(context, "Button Click", Toast.LENGTH_SHORT).show()
 				},
@@ -210,7 +211,6 @@ fun LoginForm() {
 					if (loginEmailState.indexOf("@") != -1) {
 						loginState = loginUser(loginEmailState, loginPasswordState) {
 							loginState = it
-//							Log.i("TOKEN", loginState)
 							if (loginState.isNotEmpty()) {
 								val openHomePetActivity = Intent(context, HomePetActivity::class.java)
 								startActivity(context, openHomePetActivity, null)

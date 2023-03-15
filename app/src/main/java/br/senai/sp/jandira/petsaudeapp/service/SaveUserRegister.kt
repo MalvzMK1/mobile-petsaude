@@ -14,8 +14,7 @@ fun saveUserRegister(
 	itp: String,
 	email: String,
 	password: String,
-	cellphoneNumber: String,
-	phoneNumber: String,
+	phoneNumber: List<String>,
 	onComplete: (String) -> Unit
 ) {
 	val userRegister = UserRegister(
@@ -24,7 +23,6 @@ fun saveUserRegister(
 		itp,
 		email,
 		password,
-		cellphoneNumber,
 		phoneNumber,
 	)
 	val call = RetrofitFactory().retrofitService().saveUserRegister(userRegister)

@@ -34,6 +34,7 @@ import br.senai.sp.jandira.petsaudeapp.components.AuthHeaderTitle
 import br.senai.sp.jandira.petsaudeapp.components.MaskedZipCodeInput
 import br.senai.sp.jandira.petsaudeapp.components.TextFieldInput
 import br.senai.sp.jandira.petsaudeapp.model.Address
+import br.senai.sp.jandira.petsaudeapp.service.saveUserRegister
 import br.senai.sp.jandira.petsaudeapp.ui.theme.PetSaudeAppTheme
 import br.senai.sp.jandira.petsaudeapp.utils.validateEmptyInput
 
@@ -170,6 +171,8 @@ fun LocalizationForm() {
 
 	var complementState = ""
 
+	var saveUserAddress by rememberSaveable { mutableStateOf("") }
+
 	Column(
 		modifier = Modifier.fillMaxWidth()
 	) {
@@ -237,7 +240,6 @@ fun LocalizationForm() {
 					) {
 						Toast.makeText(context, "Campos vazios!", Toast.LENGTH_SHORT).show()
 					} else {
-						Log.i("zipcode", zipCodeState)
 						val address = Address(
 							zipCode = zipCodeState,
 							city = cityState,
@@ -247,6 +249,7 @@ fun LocalizationForm() {
 							number = numberState,
 							complement = complementState
 						)
+//						saveUserAddress = saveUserRegister(address)
 						val openMainActivity = Intent(context, MainActivity::class.java)
 						startActivity(context, openMainActivity, null)
 					}

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "743700098917",
+    "project_id": "pet-saude-cc417",
+    "storage_bucket": "pet-saude-cc417.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:743700098917:android:5257713b5e978825117b8c",
+        "android_client_info": {
+          "package_name": "br.senai.sp.jandira.petsaudeapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "743700098917-gnn7bigjcu41m4h2k50qjm3lh2u8ah0d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDVlaCsmWvbWAlANCN5DAvNxqiC7w6D3C0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "743700098917-gnn7bigjcu41m4h2k50qjm3lh2u8ah0d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

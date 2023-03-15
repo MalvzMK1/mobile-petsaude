@@ -7,5 +7,5 @@ data class Address(
 	val street: String,
 	val neighborhood: String,
 	val number: String,
-	val complement: String?,
+	val complement: String?
 )
