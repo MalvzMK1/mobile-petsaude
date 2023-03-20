@@ -18,7 +18,7 @@ import br.senai.sp.jandira.petsaudeapp.ui.theme.PetSaudeAppTheme
 @Composable
 fun UserConfigHeader() {
 	Column(
-		modifier = Modifier.fillMaxSize()
+		modifier = Modifier.fillMaxWidth()
 	) {
 		Row(
 			modifier = Modifier

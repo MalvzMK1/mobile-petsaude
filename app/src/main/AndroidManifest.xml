@@ -21,7 +21,8 @@
             android:name=".ui.profile.UserConfigActivity"
             android:exported="false"
             android:label="@string/title_activity_user_config"
-            android:theme="@style/Theme.PetSaudeApp" />
+            android:theme="@style/Theme.PetSaudeApp">
+        </activity>
         <activity
             android:name=".ui.HomePetActivity"
             android:exported="false"
