@@ -79,5 +79,6 @@
     <string name="reptiles_animal_type">Reptiles</string>
     <string name="exotic_animal_type">Exotics</string>
     <string name="title_activity_home_pet">HomePet</string>
+    <string name="title_activity_user_config">UserConfigActivity</string>
 
 </resources>

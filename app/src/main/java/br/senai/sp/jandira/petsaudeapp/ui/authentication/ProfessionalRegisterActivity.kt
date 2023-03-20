@@ -1,4 +1,4 @@
-package br.senai.sp.jandira.petsaudeapp.ui
+package br.senai.sp.jandira.petsaudeapp.ui.authentication
 
 import android.app.DatePickerDialog
 import android.content.Intent
@@ -36,6 +36,7 @@ import androidx.core.content.ContextCompat.startActivity
 import br.senai.sp.jandira.petsaudeapp.R
 import br.senai.sp.jandira.petsaudeapp.components.AuthHeaderTitle
 import br.senai.sp.jandira.petsaudeapp.components.TextFieldInput
+import br.senai.sp.jandira.petsaudeapp.ui.HomePetActivity
 import br.senai.sp.jandira.petsaudeapp.ui.theme.PetSaudeAppTheme
 import br.senai.sp.jandira.petsaudeapp.utils.validateEmptyInput
 import java.util.*

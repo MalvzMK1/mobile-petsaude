@@ -1,4 +1,4 @@
-package br.senai.sp.jandira.petsaudeapp.ui
+package br.senai.sp.jandira.petsaudeapp.ui.authentication
 
 import android.content.Intent
 import android.os.Bundle
@@ -33,6 +33,7 @@ import br.senai.sp.jandira.petsaudeapp.components.AuthHeaderTitle
 import br.senai.sp.jandira.petsaudeapp.components.PasswordInputHideShowIcon
 import br.senai.sp.jandira.petsaudeapp.components.TextFieldInput
 import br.senai.sp.jandira.petsaudeapp.service.loginUser
+import br.senai.sp.jandira.petsaudeapp.ui.HomePetActivity
 import br.senai.sp.jandira.petsaudeapp.ui.theme.PetSaudeAppTheme
 import br.senai.sp.jandira.petsaudeapp.utils.validateEmptyInput
 

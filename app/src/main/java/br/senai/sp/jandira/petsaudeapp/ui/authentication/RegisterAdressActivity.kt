@@ -1,4 +1,4 @@
-package br.senai.sp.jandira.petsaudeapp.ui
+package br.senai.sp.jandira.petsaudeapp.ui.authentication
 
 import android.content.Intent
 import android.os.Bundle
