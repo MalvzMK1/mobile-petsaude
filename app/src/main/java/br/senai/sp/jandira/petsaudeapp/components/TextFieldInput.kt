@@ -47,7 +47,7 @@ fun TextFieldInput(label: String, type: KeyboardType, errorState: Boolean): Stri
 		mutableStateOf("")
 	}
 
-	OutlinedTextField(
+	TextField(
 		value = thisInputState,
 		onValueChange = {
 			thisInputState = it
