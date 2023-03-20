@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import br.senai.sp.jandira.petsaudeapp.components.UserConfigHeader
 import br.senai.sp.jandira.petsaudeapp.ui.theme.PetSaudeAppTheme
 
 class UserConfigActivity : ComponentActivity() {
@@ -40,7 +41,7 @@ fun GlobalUserConfig() {
 			.padding(12.dp),
 		verticalArrangement = Arrangement.SpaceEvenly
 	) {
-
+		UserConfigHeader()
 	}
 }
 
