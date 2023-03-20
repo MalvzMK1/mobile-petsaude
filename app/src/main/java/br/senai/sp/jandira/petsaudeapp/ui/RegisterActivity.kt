@@ -32,7 +32,7 @@ import br.senai.sp.jandira.petsaudeapp.R
 import br.senai.sp.jandira.petsaudeapp.components.AuthHeaderTitle
 import br.senai.sp.jandira.petsaudeapp.components.PasswordInputHideShowIcon
 import br.senai.sp.jandira.petsaudeapp.components.TextFieldInput
-import br.senai.sp.jandira.petsaudeapp.service.saveUserRegister
+//import br.senai.sp.jandira.petsaudeapp.service.saveUserRegister
 import br.senai.sp.jandira.petsaudeapp.ui.theme.PetSaudeAppTheme
 import br.senai.sp.jandira.petsaudeapp.utils.validateEmptyInput
 

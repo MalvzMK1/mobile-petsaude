@@ -118,9 +118,10 @@ fun LoginHeader() {
 			Spacer(modifier = Modifier.height(32.dp))
 			Button(
 				onClick = {
-
 //				TODO: FIREBASE AUTHENTICATION
+
 //					Toast.makeText(context, "Button Click", Toast.LENGTH_SHORT).show()
+
 				},
 				modifier = Modifier.size(60.dp),
 				shape = RoundedCornerShape(50),
@@ -241,7 +242,7 @@ fun LoginForm() {
 	}
 }
 
-@Preview(showBackground = false)
+@Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
 	PetSaudeAppTheme {
