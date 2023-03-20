@@ -3,6 +3,7 @@ package br.senai.sp.jandira.petsaudeapp.service
 import br.senai.sp.jandira.petsaudeapp.model.Token
 import br.senai.sp.jandira.petsaudeapp.model.UserLogin
 import br.senai.sp.jandira.petsaudeapp.model.UserRegister
+import br.senai.sp.jandira.petsaudeapp.service.response.PostUserResponse
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.POST
@@ -19,7 +20,7 @@ interface PetSaudeRetrofitService {
 
 //--------------------------------------RegisterActivity------------------------------------------//
 	@POST("user")
-	fun saveUserRegister(@Body register: UserRegister): Call<Boolean>
+	fun saveUserRegister(@Body register: UserRegister): Call<PostUserResponse>
 
 //-----------------------------------RegisterAdressActivity---------------------------------------//
 }

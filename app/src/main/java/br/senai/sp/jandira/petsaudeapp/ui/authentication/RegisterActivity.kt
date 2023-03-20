@@ -32,6 +32,7 @@ import br.senai.sp.jandira.petsaudeapp.R
 import br.senai.sp.jandira.petsaudeapp.components.AuthHeaderTitle
 import br.senai.sp.jandira.petsaudeapp.components.PasswordInputHideShowIcon
 import br.senai.sp.jandira.petsaudeapp.components.TextFieldInput
+import br.senai.sp.jandira.petsaudeapp.model.UserInfos
 //import br.senai.sp.jandira.petsaudeapp.service.saveUserRegister
 import br.senai.sp.jandira.petsaudeapp.ui.theme.PetSaudeAppTheme
 import br.senai.sp.jandira.petsaudeapp.utils.validateEmptyInput
@@ -207,8 +208,6 @@ fun RegisterForm() {
 		mutableStateOf(false)
 	}
 
-	var userSaveRegister by rememberSaveable { mutableStateOf("") }
-
 	Column(
 		modifier = Modifier
 			.fillMaxWidth()
@@ -283,18 +282,17 @@ fun RegisterForm() {
 					Toast.makeText(context, "Campos vazios", Toast.LENGTH_SHORT).show()
 				} else {
 					if (checkPassState == passwordState) {
-//						userSaveRegister = saveUserRegister(
-//							nameState,
-//							lastNameState,
-//							itpState,
-//							emailState,
-//							passwordState,
-//							cellphoneNumberState,
-//							phoneNumberState
-//						) { userSaveRegister = it }.toString()
-//						if (userSaveRegister.isNotEmpty()) {
-//							Log.i("DS3M", "USUÁRIO CRIADO COM SUCESSO, NOME: ${nameState}")
+						val userSaveRegister = UserInfos(
+							name = "$nameState $lastNameState",
+							itpState,
+							emailState,
+							passwordState,
+							cellphoneNumberState,
+							phoneNumberState
+						)
+						Toast.makeText(context, userSaveRegister.toString(), Toast.LENGTH_SHORT).show()
 						val openRegisterAddressActivity = Intent(context, RegisterAddressActivity::class.java)
+						openRegisterAddressActivity.putExtra("userInfos", userSaveRegister)
 						startActivity(context, openRegisterAddressActivity, null)
 //						}
 					} else {
