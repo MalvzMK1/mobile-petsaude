@@ -7,7 +7,7 @@
     // LOGIN ACTIVITY
 
     <string name="welcome_back_login_header">Welcome back!</string>
-    <string name="insert_infos_login_header">Please, insert your login informations bellow</string>
+    <string name="insert_infos_login_header">Please, insert your login information bellow</string>
     <string name="dont_have_account_bottom_message">Don\'t have an account?</string>
     <string name="register_yourself_bottom_message">Signup</string>
     <string name="forgot_password">Forgot your password?</string>
@@ -37,6 +37,21 @@
     <string name="professional_register_header">Professional register</string>
     <string name="message_professional_register_header">Please, put your informations below and enjoy the platform!</string>
     <string name="attended_animals">Animals that attend</string>
+
+    // USER CONFIG ACTIVITYs
+    <string name="user_config_settings">Settings</string>
+    <string name="user_config_additional">Additional</string>
+    <string name="user_config_personal_information">Personal information</string>
+    <string name="user_config_security">Security</string>
+    <string name="user_config_location">Location</string>
+    <string name="user_config_queries">Queries</string>
+    <string name="user_config_professional_information">Professional information</string>
+    <string name="user_config_logout">Logout</string>
+    <string name="user_config_pets">Pets</string>
+    <string name="user_config_profile">Profile</string>
+    <string name="user_config_change_email">Change E-mail</string>
+    <string name="user_config_change_password">Change password</string>
+    <string name="user_config_save_edit_user">Save</string>
 
     // GENERIC STRINGS
 
@@ -78,7 +93,15 @@
     <string name="birds_animal_type">Birds</string>
     <string name="reptiles_animal_type">Reptiles</string>
     <string name="exotic_animal_type">Exotics</string>
+
+
+    //NAME ACTIVITY
+
     <string name="title_activity_home_pet">HomePet</string>
     <string name="title_activity_user_config">UserConfigActivity</string>
+    <string name="title_activity_user_location">UserLocationActivity</string>
+    <string name="title_activity_user_security">UserSecurityActivity</string>
+    <string name="title_activity_user_professional">UserProfessionalActivity</string>
+    <string name="title_activity_user_info_personal">UserInfoPersonalActivity</string>
 
 </resources>

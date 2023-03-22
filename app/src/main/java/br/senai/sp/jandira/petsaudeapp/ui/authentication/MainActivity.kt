@@ -52,11 +52,9 @@ class MainActivity : ComponentActivity() {
 		}
 	}
 }
-
 @Composable
 fun GlobalLogin() {
 	val context = LocalContext.current
-
 	Column(
 		modifier = Modifier
 			.fillMaxSize()
@@ -96,7 +94,6 @@ fun GlobalLogin() {
 		}
 	}
 }
-
 @Composable
 fun LoginHeader() {
 	Column(
@@ -120,9 +117,6 @@ fun LoginHeader() {
 			Button(
 				onClick = {
 //				TODO: FIREBASE AUTHENTICATION
-
-//					Toast.makeText(context, "Button Click", Toast.LENGTH_SHORT).show()
-
 				},
 				modifier = Modifier.size(60.dp),
 				shape = RoundedCornerShape(50),
@@ -165,7 +159,6 @@ fun LoginHeader() {
 		}
 	}
 }
-
 @Composable
 fun LoginForm() {
 	val context = LocalContext.current
@@ -242,7 +235,6 @@ fun LoginForm() {
 		}
 	}
 }
-
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {

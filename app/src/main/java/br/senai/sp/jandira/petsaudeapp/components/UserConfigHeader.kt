@@ -9,6 +9,9 @@ import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -16,7 +19,7 @@ import br.senai.sp.jandira.petsaudeapp.ui.profile.GlobalUserConfig
 import br.senai.sp.jandira.petsaudeapp.ui.theme.PetSaudeAppTheme
 
 @Composable
-fun UserConfigHeader() {
+fun UserConfigHeader(headline: String) {
 	Column(
 		modifier = Modifier.fillMaxWidth()
 	) {
@@ -36,26 +39,21 @@ fun UserConfigHeader() {
 				)
 			}
 			Text(
-				text = "Pet Saúde",
-				fontSize = 22.sp
+				text = headline,
+				modifier = Modifier.width(200.dp),
+				fontSize = 22.sp,
+				fontWeight = FontWeight.W500,
+				textAlign = TextAlign.Center
 			)
 			IconButton(
 				onClick = { /*TODO*/ }
 			) {
 				Icon(
 					imageVector = Icons.Filled.Settings,
-					contentDescription = "Configurações",
+					contentDescription = "Settings",
 					modifier = Modifier.size(30.dp)
 				)
 			}
 		}
-	}
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview7() {
-	PetSaudeAppTheme {
-		UserConfigHeader()
 	}
 }

@@ -129,37 +129,37 @@ fun LocalizationHeader() {
 fun LocalizationForm(user: UserInfos) {
 	val context = LocalContext.current
 
-	var zipCodeState = ""
-	var isErrorZipCodeState by rememberSaveable {
-		mutableStateOf(false)
-	}
+		var zipCodeState = ""
+		var isErrorZipCodeState by rememberSaveable {
+			mutableStateOf(false)
+		}
 
-	var cityState = ""
-	var isErrorCityState by rememberSaveable {
-		mutableStateOf(false)
-	}
+		var cityState = ""
+		var isErrorCityState by rememberSaveable {
+			mutableStateOf(false)
+		}
 
-	var stateState = ""
-	var isErrorStateState by rememberSaveable {
-		mutableStateOf(false)
-	}
+		var stateState = ""
+		var isErrorStateState by rememberSaveable {
+			mutableStateOf(false)
+		}
 
-	var streetState = ""
-	var isErrorStreetState by rememberSaveable {
-		mutableStateOf(false)
-	}
+		var streetState = ""
+		var isErrorStreetState by rememberSaveable {
+			mutableStateOf(false)
+		}
 
-	var neighborhoodState = ""
-	var isErrorNeighborhoodState by rememberSaveable {
-		mutableStateOf(false)
-	}
+		var neighborhoodState = ""
+		var isErrorNeighborhoodState by rememberSaveable {
+			mutableStateOf(false)
+		}
 
-	var numberState = ""
-	var isErrorNumberState by rememberSaveable {
-		mutableStateOf(false)
-	}
+		var numberState = ""
+		var isErrorNumberState by rememberSaveable {
+			mutableStateOf(false)
+		}
 
-	var complementState = ""
+		var complementState = ""
 
 	Column(
 		modifier = Modifier.fillMaxWidth()

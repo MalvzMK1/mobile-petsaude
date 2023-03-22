@@ -18,10 +18,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.AlignmentLine
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import br.senai.sp.jandira.petsaudeapp.R
 import br.senai.sp.jandira.petsaudeapp.components.UserConfigHeader
 import br.senai.sp.jandira.petsaudeapp.ui.theme.PetSaudeAppTheme
 
@@ -49,10 +51,9 @@ fun GlobalUserConfig() {
 			.fillMaxSize()
 			.padding(12.dp)
 	) {
-		UserConfigHeader()
+		UserConfigHeader(headline = stringResource(id = R.string.user_config_profile))
 		UserProfile()
 		UserPreferences()
-
 	}
 }
 
@@ -61,23 +62,42 @@ fun UserProfile() {
 	Row(
 		modifier = Modifier
 			.fillMaxWidth()
-			.padding(10.dp)
+			.padding(10.dp),
+		verticalAlignment = Alignment.CenterVertically
 	) {
-//		Card(
+		Card(
+			modifier = Modifier
+				.width(70.dp)
+				.height(70.dp),
+			shape = RoundedCornerShape(35.dp),
+			elevation = 2.dp
+		) {
+			
+			//---------- COLOCAR IMAGEM DE PERFIL DO USUARIO ----------//
 
-//		) {
-//			Image(
-//				painter = ,
-//				contentDescription =
-//			)
-//		}
-		Spacer(modifier = Modifier.width(10.dp))
+		}
+		Spacer(modifier = Modifier.width(16.dp))
 		Column(
 			modifier = Modifier
 				.fillMaxWidth()
 		) {
-			Text(text = "Name")
-			Text(text = "E-mail")
+			Text(
+
+				//---------- COLOCAR NOME DE PERFIL DO USUARIO ----------//
+
+				text = "Hayley Williams",
+				fontSize = 22.sp,
+				fontWeight = FontWeight.W400
+			)
+			Text(
+
+				//---------- COLOCAR EMAIL DE CADASTRO DO USUARIO ----------//
+
+				text = "hayley.williams@useremail.com",
+				color = Color(169,169,169),
+				fontSize = 12.sp,
+				fontWeight = FontWeight.W400
+			)
 		}
 	}
 }

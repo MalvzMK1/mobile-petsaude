@@ -35,6 +35,21 @@
     <string name="message_professional_register_header">Por favor, insira as informações abaixo e aproveite a plataforma!</string>
     <string name="attended_animals">Animais que atende</string>
 
+    // USER CONFIG ACTIVITY
+    <string name="user_config_settings">Configurações</string>
+    <string name="user_config_additional">Adicionais</string>
+    <string name="user_config_personal_information">Informações pessoais</string>
+    <string name="user_config_security">Segurança</string>
+    <string name="user_config_location">Localização</string>
+    <string name="user_config_queries">Consultas</string>
+    <string name="user_config_professional_information">Informações profissionais</string>
+    <string name="user_config_logout">Sair</string>
+    <string name="user_config_pets">Pets</string>
+    <string name="user_config_profile">Perfil</string>
+    <string name="user_config_change_email">Mudar E-mail</string>
+    <string name="user_config_change_password">Mudar senha</string>
+    <string name="user_config_save_edit_user">Salvar</string>
+
     // GENERIC STRINGS
 
     <string name="email_string_resource">E-mail</string>
