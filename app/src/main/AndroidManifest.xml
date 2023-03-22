@@ -54,9 +54,15 @@
             android:theme="@style/Theme.PetSaudeApp" />
         <activity
             android:name=".ui.authentication.RegisterAddressActivity"
-            android:exported="false"
+            android:exported="true"
             android:label="@string/title_activity_register_address"
-            android:theme="@style/Theme.PetSaudeApp" />
+            android:theme="@style/Theme.PetSaudeApp">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".ui.authentication.RegisterActivity"
             android:exported="false"
@@ -66,11 +72,6 @@
             android:name=".ui.authentication.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.PetSaudeApp">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 
