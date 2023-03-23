@@ -10,4 +10,4 @@ data class UserRegister(
 	val cellphoneNumber: String,
 	val phoneNumber: String,
 	val address: Address
-	): java.io.Serializable
+): java.io.Serializable

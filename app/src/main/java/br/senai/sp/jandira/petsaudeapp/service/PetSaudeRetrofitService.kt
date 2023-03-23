@@ -3,10 +3,12 @@ package br.senai.sp.jandira.petsaudeapp.service
 import br.senai.sp.jandira.petsaudeapp.model.Token
 import br.senai.sp.jandira.petsaudeapp.model.UserLogin
 import br.senai.sp.jandira.petsaudeapp.model.UserRegister
+import br.senai.sp.jandira.petsaudeapp.model.VetInfos
 import br.senai.sp.jandira.petsaudeapp.service.response.PostUserResponse
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.POST
+import retrofit2.http.Query
 
 interface PetSaudeRetrofitService {
 
@@ -23,4 +25,7 @@ interface PetSaudeRetrofitService {
 	fun saveUserRegister(@Body register: UserRegister): Call<PostUserResponse>
 
 //-----------------------------------RegisterAdressActivity---------------------------------------//
+
+	@POST("veterinarian/user")
+	fun createVetInfosInAnExistingUser(@Query("userId") userId: Number, @Body vetInfos: VetInfos): Call<VetInfos>
 }

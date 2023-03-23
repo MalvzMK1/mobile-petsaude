@@ -270,7 +270,7 @@ fun LocalizationForm(user: UserInfos) {
 						)
 						// TODO: CADASTRO DE USUÁRIO PADRÃO
 						val response = saveUserRegister(saveUserAddress) {
-							Log.i("ds3m", it)
+							Log.i("ds3m", it.toString())
 						}
 //						Toast.makeText(context, saveUserAddress.toString(), Toast.LENGTH_SHORT).show()
 						val openMainActivity = Intent(context, MainActivity::class.java)

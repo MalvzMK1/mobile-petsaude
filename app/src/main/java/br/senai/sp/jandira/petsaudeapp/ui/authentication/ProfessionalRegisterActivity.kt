@@ -3,6 +3,7 @@ package br.senai.sp.jandira.petsaudeapp.ui.authentication
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.DatePicker
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -36,6 +37,11 @@ import androidx.core.content.ContextCompat.startActivity
 import br.senai.sp.jandira.petsaudeapp.R
 import br.senai.sp.jandira.petsaudeapp.components.AuthHeaderTitle
 import br.senai.sp.jandira.petsaudeapp.components.TextFieldInput
+import br.senai.sp.jandira.petsaudeapp.model.Address
+import br.senai.sp.jandira.petsaudeapp.model.UserRegister
+import br.senai.sp.jandira.petsaudeapp.model.VetInfos
+import br.senai.sp.jandira.petsaudeapp.service.integrations.createVetInfos
+import br.senai.sp.jandira.petsaudeapp.service.saveUserRegister
 import br.senai.sp.jandira.petsaudeapp.ui.HomePetActivity
 import br.senai.sp.jandira.petsaudeapp.ui.theme.PetSaudeAppTheme
 import br.senai.sp.jandira.petsaudeapp.utils.validateEmptyInput
@@ -43,6 +49,9 @@ import java.util.*
 
 class ProfessionalRegisterActivity : ComponentActivity() {
 	override fun onCreate(savedInstanceState: Bundle?) {
+
+		val userInfos: UserRegister = intent.getSerializableExtra("userInfos") as UserRegister
+
 		super.onCreate(savedInstanceState)
 		setContent {
 			PetSaudeAppTheme {
@@ -52,7 +61,7 @@ class ProfessionalRegisterActivity : ComponentActivity() {
 						.verticalScroll(rememberScrollState()),
 					color = MaterialTheme.colors.background
 				) {
-					ProfessionalRegisterGlobal()
+					ProfessionalRegisterGlobal(userInfos)
 				}
 			}
 		}
@@ -60,7 +69,7 @@ class ProfessionalRegisterActivity : ComponentActivity() {
 }
 
 @Composable
-fun ProfessionalRegisterGlobal() {
+fun ProfessionalRegisterGlobal(userInfos: UserRegister) {
 	val context = LocalContext.current
 
 	Column(
@@ -69,7 +78,7 @@ fun ProfessionalRegisterGlobal() {
 			.padding(12.dp)
 	) {
 		ProfessionalRegisterHeader()
-		ProfessionalRegisterForm()
+		ProfessionalRegisterForm(userInfos)
 		Box(
 			modifier = Modifier
 				.fillMaxWidth(),
@@ -114,7 +123,7 @@ fun ProfessionalRegisterHeader() {
 }
 
 @Composable
-fun ProfessionalRegisterForm() {
+fun ProfessionalRegisterForm(userInfos: UserRegister) {
 	val context = LocalContext.current
 
 	var surgeonCheckState by rememberSaveable {
@@ -310,7 +319,7 @@ fun ProfessionalRegisterForm() {
 		placeholderColor = MaterialTheme.colors.onBackground
 	)
 
-	var atuationAreaState = ""
+	var occupationAreaState = ""
 	var isErrorAtuationAreaState by rememberSaveable {
 		mutableStateOf(false)
 	}
@@ -331,7 +340,7 @@ fun ProfessionalRegisterForm() {
 	}
 
 	Spacer(modifier = Modifier.height(16.dp))
-	atuationAreaState = TextFieldInput(
+	occupationAreaState = TextFieldInput(
 		label = stringResource(id = R.string.atuation_area_professional),
 		type = KeyboardType.Text,
 		errorState = isErrorAtuationAreaState
@@ -445,7 +454,7 @@ fun ProfessionalRegisterForm() {
 	Spacer(modifier = Modifier.height(32.dp))
 	Button(
 		onClick = {
-			isErrorAtuationAreaState = validateEmptyInput(atuationAreaState)
+			isErrorAtuationAreaState = validateEmptyInput(occupationAreaState)
 			isErrorCrmvState = validateEmptyInput(crmvState)
 			isErrorFormationState = validateEmptyInput(formationState)
 			isErrorInstitutionState = validateEmptyInput(institutionState)
@@ -463,8 +472,23 @@ fun ProfessionalRegisterForm() {
 			) {
 				Toast.makeText(context, "Campos vazios", Toast.LENGTH_SHORT).show()
 			} else {
-				val openHomePetActivity = Intent(context, HomePetActivity::class.java)
-				startActivity(context, openHomePetActivity, null)
+				val vetInfos = VetInfos(
+					crmv = crmvState,
+					formation = formationState,
+					formationDate = formationDateState,
+					institution = institutionState,
+					occupationArea = occupationAreaState,
+					startActingDate = startAtuatingDateState
+				)
+				val saveUserResponse = saveUserRegister(userInfos, {
+					Log.i("CREATE USER RESPONSE", it.toString())
+					val id = it.id
+					val createVetInfos = createVetInfos(id, vetInfos, {
+						Toast.makeText(context, "Usuário criado com sucesso", Toast.LENGTH_SHORT).show()
+						val openHomePetActivity = Intent(context, HomePetActivity::class.java)
+						startActivity(context, openHomePetActivity, null)
+					})
+				})
 			}
 		},
 		modifier = Modifier.fillMaxWidth(),
@@ -485,6 +509,22 @@ fun ProfessionalRegisterForm() {
 @Composable
 fun DefaultPreview4() {
 	PetSaudeAppTheme {
-		ProfessionalRegisterGlobal()
+		ProfessionalRegisterGlobal(userInfos = UserRegister(
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			Address(
+				"",
+				"",
+				"",
+				"",
+				"",
+				"",
+				""
+			),
+		))
 	}
 }
