@@ -7,8 +7,10 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CalendarMonth
@@ -17,17 +19,19 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.senai.sp.jandira.petsaudeapp.R
+import br.senai.sp.jandira.petsaudeapp.components.ConfigHeader
 import br.senai.sp.jandira.petsaudeapp.components.OutlinedTextFieldInput
-import br.senai.sp.jandira.petsaudeapp.components.UserConfigHeader
 import br.senai.sp.jandira.petsaudeapp.ui.theme.PetSaudeAppTheme
 import br.senai.sp.jandira.petsaudeapp.utils.validateEmptyInput
 import java.util.*
@@ -39,7 +43,9 @@ class UserProfessionalActivity : ComponentActivity() {
 			PetSaudeAppTheme {
 				// A surface container using the 'background' color from the theme
 				Surface(
-					modifier = Modifier.fillMaxSize(),
+					modifier = Modifier
+						.fillMaxSize()
+						.verticalScroll(rememberScrollState()),
 					color = MaterialTheme.colors.background
 				) {
 					GlobalUserProfessional()
@@ -55,7 +61,7 @@ fun GlobalUserProfessional() {
 			.fillMaxSize()
 			.padding(12.dp)
 	) {
-		UserConfigHeader(headline = stringResource(id = R.string.user_config_professional_information))
+		ConfigHeader(headline = stringResource(id = R.string.user_config_professional_information))
 		ProfessionalPreferences()
 	}
 }
@@ -209,8 +215,176 @@ fun ProfessionalPreferences() {
 			colors = customColors
 		)
 
-		//---------- IMPLEMENTAR INPUTS PARA ANIMAIS E ESPECIALIDADES ----------//
+		var dogCheckState by rememberSaveable {
+			mutableStateOf(false)
+		}
 
+		var catCheckState by rememberSaveable {
+			mutableStateOf(false)
+		}
+
+		var reptileCheckState by rememberSaveable {
+			mutableStateOf(false)
+		}
+
+		var birdCheckState by rememberSaveable {
+			mutableStateOf(false)
+		}
+
+		var exoticCheckState by rememberSaveable {
+			mutableStateOf(false)
+		}
+
+		var surgeonCheckState by rememberSaveable {
+			mutableStateOf(false)
+		}
+
+		var clinicCheckState by rememberSaveable {
+			mutableStateOf(false)
+		}
+
+		var researchCheckState by rememberSaveable {
+			mutableStateOf(false)
+		}
+
+		var laboratoryCheckState by rememberSaveable {
+			mutableStateOf(false)
+		}
+
+		var anesthetistCheckState by rememberSaveable {
+			mutableStateOf(false)
+		}
+
+		var veterinaryPharmacyCheckState by rememberSaveable {
+			mutableStateOf(false)
+		}
+
+		Spacer(modifier = Modifier.height(4.dp))
+		Text(
+			text = stringResource(id = R.string.attended_animals),
+			fontSize = 18.sp,
+			fontWeight = FontWeight.W500,
+			color = MaterialTheme.colors.onBackground
+		)
+		Row(
+			modifier = Modifier.fillMaxWidth(),
+			horizontalArrangement = Arrangement.Start
+		) {
+			Row(
+				horizontalArrangement = Arrangement.Start,
+				verticalAlignment = Alignment.CenterVertically
+			) {
+				Checkbox(
+					checked = dogCheckState,
+					onCheckedChange = { dogCheckState = it },
+					colors = CheckboxDefaults.colors(
+						checkedColor = MaterialTheme.colors.secondary
+					)
+				)
+				Text(text = stringResource(id = R.string.dog_animal_type))
+			}
+			Row(
+				horizontalArrangement = Arrangement.Start,
+				verticalAlignment = Alignment.CenterVertically
+			) {
+				Checkbox(
+					checked = catCheckState,
+					onCheckedChange = { catCheckState = it }
+				)
+				Text(text = stringResource(id = R.string.cat_animal_type))
+			}
+			Row(
+				horizontalArrangement = Arrangement.Start,
+				verticalAlignment = Alignment.CenterVertically
+			) {
+				Checkbox(
+					checked = reptileCheckState,
+					onCheckedChange = { reptileCheckState = it }
+				)
+				Text(text = stringResource(id = R.string.reptiles_animal_type))
+			}
+		}
+		Row(
+			horizontalArrangement = Arrangement.Start,
+			verticalAlignment = Alignment.CenterVertically
+		) {
+			Checkbox(
+				checked = birdCheckState,
+				onCheckedChange = { birdCheckState = it }
+			)
+			Text(text = stringResource(id = R.string.birds_animal_type))
+
+			Checkbox(
+				checked = exoticCheckState,
+				onCheckedChange = { exoticCheckState = it }
+			)
+			Text(text = stringResource(id = R.string.exotic_animal_type))
+		}
+		Spacer(modifier = Modifier.height(4.dp))
+		Column(
+			modifier = Modifier.fillMaxWidth()
+		) {
+			Text(
+				text = stringResource(id = R.string.specialities_string_resource),
+				fontSize = 18.sp,
+				fontWeight = FontWeight.W500,
+				color = MaterialTheme.colors.onBackground
+			)
+			Row(
+				modifier = Modifier.fillMaxWidth(),
+				horizontalArrangement = Arrangement.Start
+			) {
+				Row(
+					horizontalArrangement = Arrangement.Start,
+					verticalAlignment = Alignment.CenterVertically
+				) {
+					Checkbox(checked = surgeonCheckState, onCheckedChange = { surgeonCheckState = it })
+					Text(text = stringResource(id = R.string.surgeon_speciality))
+				}
+				Row(
+					horizontalArrangement = Arrangement.Start,
+					verticalAlignment = Alignment.CenterVertically
+				) {
+					Checkbox(checked = clinicCheckState, onCheckedChange = { clinicCheckState = it })
+					Text(text = stringResource(id = R.string.clinic_speciality))
+				}
+				Row(
+					horizontalArrangement = Arrangement.Start,
+					verticalAlignment = Alignment.CenterVertically
+				) {
+					Checkbox(checked = researchCheckState, onCheckedChange = { researchCheckState = it })
+					Text(text = stringResource(id = R.string.research_speciality))
+				}
+			}
+			Row(
+				modifier = Modifier.fillMaxWidth(),
+				horizontalArrangement = Arrangement.Start
+			) {
+				Row(
+					horizontalArrangement = Arrangement.Start,
+					verticalAlignment = Alignment.CenterVertically
+				) {
+					Checkbox(checked = laboratoryCheckState, onCheckedChange = { laboratoryCheckState = it })
+					Text(text = stringResource(id = R.string.laboratory_speciality))
+				}
+				Row(
+					horizontalArrangement = Arrangement.Start,
+					verticalAlignment = Alignment.CenterVertically
+				) {
+					Checkbox(checked = anesthetistCheckState, onCheckedChange = { anesthetistCheckState = it })
+					Text(text = stringResource(id = R.string.anhestetist_speciality))
+				}
+			}
+			Row(
+				horizontalArrangement = Arrangement.Start,
+				verticalAlignment = Alignment.CenterVertically
+			) {
+				Checkbox(
+					checked = veterinaryPharmacyCheckState,
+					onCheckedChange = { veterinaryPharmacyCheckState = it })
+				Text(text = stringResource(id = R.string.pharmacy_speciality))
+			}
+		}
 		Spacer(modifier = Modifier.height(24.dp))
 		Button(
 			onClick = {

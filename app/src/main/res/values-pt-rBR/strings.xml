@@ -38,6 +38,8 @@
     // USER CONFIG ACTIVITY
     <string name="user_config_settings">Configurações</string>
     <string name="user_config_additional">Adicionais</string>
+    <string name="user_config_cover_photo">Foto de capa</string>
+    <string name="user_config_profile_picture">Foto de perfil</string>
     <string name="user_config_personal_information">Informações pessoais</string>
     <string name="user_config_security">Segurança</string>
     <string name="user_config_location">Localização</string>
@@ -49,6 +51,7 @@
     <string name="user_config_change_email">Mudar E-mail</string>
     <string name="user_config_change_password">Mudar senha</string>
     <string name="user_config_save_edit_user">Salvar</string>
+    <string name="user_config_delete_photo">Deletar</string>
 
     // GENERIC STRINGS
 
@@ -77,6 +80,7 @@
     <string name="institution_professional">Instituição</string>
     <string name="formation_date_professional">Data de formação</string>
     <string name="start_atuating_date_professional">Início de atuação</string>
+    <string name="user_config_rg_id_card">RG</string>
 
     // SPECIALITIES
 

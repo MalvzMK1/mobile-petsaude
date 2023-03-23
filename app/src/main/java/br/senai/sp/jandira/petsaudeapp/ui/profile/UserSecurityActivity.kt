@@ -6,7 +6,9 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -21,7 +23,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.senai.sp.jandira.petsaudeapp.R
-import br.senai.sp.jandira.petsaudeapp.components.UserConfigHeader
+import br.senai.sp.jandira.petsaudeapp.components.ConfigHeader
 import br.senai.sp.jandira.petsaudeapp.ui.theme.PetSaudeAppTheme
 
 
@@ -32,7 +34,9 @@ class UserSecurityActivity : ComponentActivity() {
 			PetSaudeAppTheme {
 				// A surface container using the 'background' color from the theme
 				Surface(
-					modifier = Modifier.fillMaxSize(),
+					modifier = Modifier
+						.fillMaxSize()
+						.verticalScroll(rememberScrollState()),
 					color = MaterialTheme.colors.background
 				) {
 					GlobarUserSecurity()
@@ -49,7 +53,7 @@ fun GlobarUserSecurity() {
 			.fillMaxSize()
 			.padding(12.dp)
 	) {
-		UserConfigHeader(headline = stringResource(id = R.string.user_config_security))
+		ConfigHeader(headline = stringResource(id = R.string.user_config_security))
 		UserSecurityPreferences()
 	}
 }

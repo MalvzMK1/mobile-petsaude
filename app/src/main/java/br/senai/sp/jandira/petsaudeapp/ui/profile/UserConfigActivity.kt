@@ -1,11 +1,10 @@
 package br.senai.sp.jandira.petsaudeapp.ui.profile
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -23,8 +22,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat
 import br.senai.sp.jandira.petsaudeapp.R
-import br.senai.sp.jandira.petsaudeapp.components.UserConfigHeader
+import br.senai.sp.jandira.petsaudeapp.components.ConfigHeader
+import br.senai.sp.jandira.petsaudeapp.ui.authentication.RegisterActivity
 import br.senai.sp.jandira.petsaudeapp.ui.theme.PetSaudeAppTheme
 
 class UserConfigActivity : ComponentActivity() {
@@ -34,7 +35,9 @@ class UserConfigActivity : ComponentActivity() {
 			PetSaudeAppTheme {
 				// A surface container using the 'background' color from the theme
 				Surface(
-					modifier = Modifier.fillMaxSize(),
+					modifier = Modifier
+						.fillMaxSize()
+						.verticalScroll(rememberScrollState()),
 					color = MaterialTheme.colors.background
 				) {
 					GlobalUserConfig()
@@ -51,7 +54,7 @@ fun GlobalUserConfig() {
 			.fillMaxSize()
 			.padding(12.dp)
 	) {
-		UserConfigHeader(headline = stringResource(id = R.string.user_config_profile))
+		ConfigHeader(headline = stringResource(id = R.string.user_config_profile))
 		UserProfile()
 		UserPreferences()
 	}
@@ -110,14 +113,15 @@ fun UserPreferences() {
 	) {
 		//-------------------------------------------------- CONFIGURACOES ---------------------------------------------------//
 		Text(
-			text = "Configurações",
+			text = stringResource(id = R.string.user_config_settings),
 			fontSize = 16.sp,
 			fontWeight = FontWeight.Bold
 		)
 		Spacer(modifier = Modifier.height(4.dp))
 		Button(
 			onClick = {
-				/*TODO*/
+				val openInfoPersonalActivity = Intent(context, UserInfoPersonalActivity::class.java)
+				ContextCompat.startActivity(context, openInfoPersonalActivity, null)
 			},
 			modifier = Modifier
 				.fillMaxWidth()
@@ -143,11 +147,11 @@ fun UserPreferences() {
 					) {
 						Icon(
 							imageVector = Icons.Filled.Person,
-							contentDescription = "Informacoes Pessoais",
+							contentDescription = "Person",
 							modifier = Modifier.size(30.dp)
 						)
 						Text(
-							text = "Informações pessoais",
+							text = stringResource(id = R.string.user_config_personal_information),
 							modifier = Modifier.padding(start = 16.dp),
 							color = Color(28,27,31),
 							fontSize = 16.sp,
@@ -156,14 +160,15 @@ fun UserPreferences() {
 					}
 				Icon(
 					imageVector = Icons.Default.ArrowForwardIos,
-					contentDescription = "Seguinte",
+					contentDescription = "ArrowForwardIos",
 					modifier = Modifier.size(25.dp)
 				)
 			}
 		}
 		Button(
 			onClick = {
-				/*TODO*/
+				val openSecurityActivity = Intent(context, UserSecurityActivity::class.java)
+				ContextCompat.startActivity(context, openSecurityActivity, null)
 			},
 			modifier = Modifier
 				.fillMaxWidth()
@@ -189,11 +194,11 @@ fun UserPreferences() {
 				) {
 					Icon(
 						imageVector = Icons.Filled.Lock,
-						contentDescription = "Segurança",
+						contentDescription = "Lock",
 						modifier = Modifier.size(30.dp)
 					)
 					Text(
-						text = "Segurança",
+						text = stringResource(id = R.string.user_config_security),
 						modifier = Modifier.padding(start = 16.dp),
 						color = Color(28,27,31),
 						fontSize = 16.sp,
@@ -202,14 +207,15 @@ fun UserPreferences() {
 				}
 				Icon(
 					imageVector = Icons.Default.ArrowForwardIos,
-					contentDescription = "Seguinte",
+					contentDescription = "ArrowForwardIos",
 					modifier = Modifier.size(25.dp)
 				)
 			}
 		}
 		Button(
 			onClick = {
-				/*TODO*/
+				val openLocationActivity = Intent(context, UserLocationActivity::class.java)
+				ContextCompat.startActivity(context, openLocationActivity, null)
 			},
 			modifier = Modifier
 				.fillMaxWidth()
@@ -235,11 +241,11 @@ fun UserPreferences() {
 				) {
 					Icon(
 						imageVector = Icons.Filled.LocationOn,
-						contentDescription = "Localização",
+						contentDescription = "LocationOn",
 						modifier = Modifier.size(30.dp)
 					)
 					Text(
-						text = "Localização",
+						text = stringResource(id = R.string.user_config_location),
 						modifier = Modifier.padding(start = 16.dp),
 						color = Color(28,27,31),
 						fontSize = 16.sp,
@@ -248,7 +254,7 @@ fun UserPreferences() {
 				}
 				Icon(
 					imageVector = Icons.Default.ArrowForwardIos,
-					contentDescription = "Seguinte",
+					contentDescription = "ArrowForwardIos",
 					modifier = Modifier.size(25.dp)
 				)
 			}
@@ -256,7 +262,7 @@ fun UserPreferences() {
 		Spacer(modifier = Modifier.height(10.dp))
 		//-------------------------------------------------- ADICIONAIS ---------------------------------------------------//
 		Text(
-			text = "Adicionais",
+			text = stringResource(id = R.string.user_config_additional),
 			fontSize = 16.sp,
 			fontWeight = FontWeight.Bold
 		)
@@ -289,11 +295,11 @@ fun UserPreferences() {
 				) {
 					Icon(
 						imageVector = Icons.Filled.PermContactCalendar,
-						contentDescription = "Consultas",
+						contentDescription = "PermContactCalendar",
 						modifier = Modifier.size(30.dp)
 					)
 					Text(
-						text = "Consultas",
+						text = stringResource(id = R.string.user_config_queries),
 						modifier = Modifier.padding(start = 16.dp),
 						color = Color(28,27,31),
 						fontSize = 16.sp,
@@ -302,11 +308,17 @@ fun UserPreferences() {
 				}
 				Icon(
 					imageVector = Icons.Default.ArrowForwardIos,
-					contentDescription = "Seguinte",
+					contentDescription = "ArrowForwardIos",
 					modifier = Modifier.size(25.dp)
 				)
 			}
 		}
+
+
+		////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+												//CRIAR UM IF() PARA QUE O BUTTON MUDE A FUNCAO DE ABERTURA DE TELA
+												//E O TEXTO, QUANDO O PERFIL FOR DE PROFISSIONAIS OU DE TUTORES !!
+
 		Button(
 			onClick = {
 				/*TODO*/
@@ -335,11 +347,11 @@ fun UserPreferences() {
 				) {
 					Icon(
 						imageVector = Icons.Filled.Work,
-						contentDescription = "Informacoes Profissionais",
+						contentDescription = "Work",
 						modifier = Modifier.size(30.dp)
 					)
 					Text(
-						text = "Informações profissionais",
+						text = stringResource(id = R.string.user_config_professional_information),
 						modifier = Modifier.padding(start = 16.dp),
 						color = Color(28,27,31),
 						fontSize = 16.sp,
@@ -348,11 +360,15 @@ fun UserPreferences() {
 				}
 				Icon(
 					imageVector = Icons.Default.ArrowForwardIos,
-					contentDescription = "Seguinte",
+					contentDescription = "ArrowForwardIos",
 					modifier = Modifier.size(25.dp)
 				)
 			}
 		}
+
+		////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 		//-------------------------------------------------- SAIR ---------------------------------------------------//
 		Spacer(modifier = Modifier.height(32.dp))
 		Button(
@@ -383,12 +399,12 @@ fun UserPreferences() {
 				) {
 					Icon(
 						imageVector = Icons.Filled.Logout,
-						contentDescription = "Sair",
+						contentDescription = "Logout",
 						modifier = Modifier.size(30.dp),
 						tint = Color(179,38,30)
 					)
 					Text(
-						text = "Sair",
+						text = stringResource(id = R.string.user_config_logout),
 						modifier = Modifier.padding(start = 16.dp),
 						color = Color(179,38,30),
 						fontSize = 16.sp,
@@ -397,7 +413,7 @@ fun UserPreferences() {
 				}
 				Icon(
 					imageVector = Icons.Default.ArrowForwardIos,
-					contentDescription = "Seguinte",
+					contentDescription = "ArrowForwardIos",
 					modifier = Modifier.size(25.dp),
 					tint = Color(179,39,30)
 				)

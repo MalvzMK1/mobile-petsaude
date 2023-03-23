@@ -5,7 +5,9 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -32,7 +34,9 @@ class UserLocationActivity : ComponentActivity() {
 			PetSaudeAppTheme {
 				// A surface container using the 'background' color from the theme
 				Surface(
-					modifier = Modifier.fillMaxSize(),
+					modifier = Modifier
+						.fillMaxSize()
+						.verticalScroll(rememberScrollState()),
 					color = MaterialTheme.colors.background
 				) {
 					GlobalUserLocation()
@@ -49,7 +53,7 @@ fun GlobalUserLocation() {
 			.fillMaxSize()
 			.padding(12.dp)
 	) {
-		UserConfigHeader(headline = stringResource(id = R.string.user_config_location))
+		ConfigHeader(headline = stringResource(id = R.string.user_config_location))
 		UserLocation()
 	}
 }
