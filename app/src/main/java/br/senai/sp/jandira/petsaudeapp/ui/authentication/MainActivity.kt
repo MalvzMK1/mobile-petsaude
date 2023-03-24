@@ -205,6 +205,7 @@ fun LoginForm() {
 				} else {
 					if (loginEmailState.indexOf("@") != -1) {
 						loginState = loginUser(loginEmailState, loginPasswordState) {
+							Log.i("DS", it)
 							loginState = it
 							if (loginState.isNotEmpty()) {
 								val openHomePetActivity = Intent(context, HomePetActivity::class.java)

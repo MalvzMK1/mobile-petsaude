@@ -51,15 +51,15 @@ import retrofit2.http.Path
 class RegisterAddressActivity : ComponentActivity() {
 	override fun onCreate(savedInstanceState: Bundle?) {
 
-//		val userInfos: UserInfos = intent.getSerializableExtra("userInfos") as UserInfos
-		val userInfos = UserInfos(
-			"",
-			"",
-			"",
-			"",
-			"",
-			""
-		)
+		val userInfos: UserInfos = intent.getSerializableExtra("userInfos") as UserInfos
+//		val userInfos = UserInfos(
+//			"",
+//			"",
+//			"",
+//			"",
+//			"",
+//			""
+//		)
 
 		super.onCreate(savedInstanceState)
 		setContent {
