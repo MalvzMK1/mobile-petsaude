@@ -1,5 +1,6 @@
 package br.senai.sp.jandira.petsaudeapp.ui
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -22,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import br.senai.sp.jandira.petsaudeapp.R
+import br.senai.sp.jandira.petsaudeapp.components.ConfigHeader
 import br.senai.sp.jandira.petsaudeapp.ui.theme.PetSaudeAppTheme
 
 class HomePetActivity : ComponentActivity() {
@@ -31,7 +33,7 @@ class HomePetActivity : ComponentActivity() {
 			PetSaudeAppTheme {
 				// A surface container using the 'background' color from the theme
 				Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
-					GlobalHomePet()
+					GlobalHomePet(this)
 				}
 			}
 		}
@@ -39,52 +41,13 @@ class HomePetActivity : ComponentActivity() {
 }
 
 @Composable
-fun GlobalHomePet() {
-	val context = LocalContext.current
-
+fun GlobalHomePet(context: Context) {
 	Column(
 		modifier = Modifier
 			.fillMaxSize()
 			.padding(16.dp)
 	) {
-		HomeHeader()
-	}
-}
-
-@Composable
-fun HomeHeader() {
-	Column(
-		modifier = Modifier.fillMaxSize()
-	) {
-		Row(
-			modifier = Modifier
-				.fillMaxWidth(),
-			horizontalArrangement = Arrangement.SpaceBetween,
-			verticalAlignment = Alignment.CenterVertically
-		) {
-				IconButton(
-					onClick = { /*TODO*/ }
-				) {
-					Icon(
-						imageVector = Icons.Filled.Menu,
-						contentDescription = "Menu",
-						modifier = Modifier.size(32.dp)
-					)
-				}
-			Text(
-				text = "Pet Saúde",
-				fontSize = 22.sp
-			)
-			IconButton(
-				onClick = { /*TODO*/ }
-			) {
-				Icon(
-					imageVector = Icons.Filled.Person,
-					contentDescription = "Menu",
-					modifier = Modifier.size(30.dp)
-				)
-			}
-		}
+		ConfigHeader(headline = stringResource(id = R.string.user_config_profile), context)
 	}
 }
 
@@ -92,6 +55,6 @@ fun HomeHeader() {
 @Composable
 fun DefaultPreview5() {
 	PetSaudeAppTheme {
-		GlobalHomePet()
+		GlobalHomePet(LocalContext.current)
 	}
 }

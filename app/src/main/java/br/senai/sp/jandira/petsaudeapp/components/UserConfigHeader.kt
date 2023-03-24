@@ -1,5 +1,6 @@
 package br.senai.sp.jandira.petsaudeapp.components
 
+import android.content.Context
 import android.content.Intent
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
@@ -23,7 +24,7 @@ import br.senai.sp.jandira.petsaudeapp.ui.profile.UserInfoPersonalActivity
 import br.senai.sp.jandira.petsaudeapp.ui.theme.PetSaudeAppTheme
 
 @Composable
-fun ConfigHeader(headline: String) {
+fun ConfigHeader(headline: String, context: Context) {
 	Column(
 		modifier = Modifier.fillMaxWidth()
 	) {
@@ -48,15 +49,22 @@ fun ConfigHeader(headline: String) {
 			Text(
 				text = headline,
 				modifier = Modifier.width(200.dp),
-				fontSize = 22.sp,
+				fontSize = 24.sp,
 				fontWeight = FontWeight.W500,
 				textAlign = TextAlign.Center
 			)
-			Icon(
-				imageVector = Icons.Filled.Settings,
-				contentDescription = "Settings",
-				modifier = Modifier.size(30.dp)
-			)
+			IconButton(
+				onClick = {
+					val openUserConfigActivity = Intent(context, UserConfigActivity::class.java)
+					ContextCompat.startActivity(context, openUserConfigActivity, null)
+				}
+			) {
+				Icon(
+					imageVector = Icons.Filled.Settings,
+					contentDescription = "Settings",
+					modifier = Modifier.size(30.dp)
+				)
+			}
 		}
 	}
 }

@@ -1,6 +1,7 @@
 package br.senai.sp.jandira.petsaudeapp.ui.profile
 
 import android.app.DatePickerDialog
+import android.content.Context
 import android.os.Bundle
 import android.widget.DatePicker
 import android.widget.Toast
@@ -48,20 +49,20 @@ class UserProfessionalActivity : ComponentActivity() {
 						.verticalScroll(rememberScrollState()),
 					color = MaterialTheme.colors.background
 				) {
-					GlobalUserProfessional()
+					GlobalUserProfessional(this)
 				}
 			}
 		}
 	}
 }
 @Composable
-fun GlobalUserProfessional() {
+fun GlobalUserProfessional(context: Context) {
 	Column(
 		modifier = Modifier
 			.fillMaxSize()
 			.padding(12.dp)
 	) {
-		ConfigHeader(headline = stringResource(id = R.string.user_config_professional_information))
+		ConfigHeader(headline = stringResource(id = R.string.user_config_professional_information), context)
 		ProfessionalPreferences()
 	}
 }
@@ -424,6 +425,6 @@ fun ProfessionalPreferences() {
 @Composable
 fun DefaultPreview9() {
 	PetSaudeAppTheme {
-		GlobalUserProfessional()
+		GlobalUserProfessional(LocalContext.current)
 	}
 }

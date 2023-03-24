@@ -1,5 +1,6 @@
 package br.senai.sp.jandira.petsaudeapp.ui.profile
 
+import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -45,20 +46,20 @@ class UserInfoPersonalActivity : ComponentActivity() {
 						.verticalScroll(rememberScrollState()),
 					color = MaterialTheme.colors.background
 				) {
-					GlobalUserPersonal()
+					GlobalUserPersonal(this)
 				}
 			}
 		}
 	}
 }
 @Composable
-fun GlobalUserPersonal() {
+fun GlobalUserPersonal(context: Context) {
 	Column(
 		modifier = Modifier
 			.fillMaxSize()
 			.padding(12.dp)
 	) {
-		ConfigHeader(headline = stringResource(id = R.string.user_config_personal_information))
+		ConfigHeader(headline = stringResource(id = R.string.user_config_personal_information), context)
 		PersonalPreferences()
 	}
 }
@@ -271,6 +272,6 @@ fun PersonalPreferences() {
 @Composable
 fun DefaultPreview10() {
 	PetSaudeAppTheme {
-		GlobalUserPersonal()
+		GlobalUserPersonal(LocalContext.current)
 	}
 }

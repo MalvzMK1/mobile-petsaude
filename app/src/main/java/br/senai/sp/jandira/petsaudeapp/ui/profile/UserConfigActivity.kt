@@ -1,5 +1,6 @@
 package br.senai.sp.jandira.petsaudeapp.ui.profile
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -31,6 +32,10 @@ import br.senai.sp.jandira.petsaudeapp.ui.theme.PetSaudeAppTheme
 class UserConfigActivity : ComponentActivity() {
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
+
+		//CRIAR UM IF() PARA QUE O BUTTON MUDE A FUNCAO DE ABERTURA DE TELA
+		//E O TEXTO, QUANDO O PERFIL FOR DE PROFISSIONAIS OU DE TUTORES !!
+
 		setContent {
 			PetSaudeAppTheme {
 				// A surface container using the 'background' color from the theme
@@ -40,7 +45,7 @@ class UserConfigActivity : ComponentActivity() {
 						.verticalScroll(rememberScrollState()),
 					color = MaterialTheme.colors.background
 				) {
-					GlobalUserConfig()
+					GlobalUserConfig(this)
 				}
 			}
 		}
@@ -48,13 +53,13 @@ class UserConfigActivity : ComponentActivity() {
 }
 
 @Composable
-fun GlobalUserConfig() {
+fun GlobalUserConfig(context: Context) {
 	Column(
 		modifier = Modifier
 			.fillMaxSize()
 			.padding(12.dp)
 	) {
-		ConfigHeader(headline = stringResource(id = R.string.user_config_profile))
+		ConfigHeader(headline = stringResource(id = R.string.user_config_profile), context)
 		UserProfile()
 		UserPreferences()
 	}
@@ -321,7 +326,9 @@ fun UserPreferences() {
 
 		Button(
 			onClick = {
-				/*TODO*/
+
+				val openProfessionalActivity = Intent(context, UserProfessionalActivity::class.java)
+				ContextCompat.startActivity(context, openProfessionalActivity, null)
 			},
 			modifier = Modifier
 				.fillMaxWidth()
@@ -426,6 +433,6 @@ fun UserPreferences() {
 @Composable
 fun DefaultPreview6() {
 	PetSaudeAppTheme {
-		GlobalUserConfig()
+		GlobalUserConfig(LocalContext.current)
 	}
 }

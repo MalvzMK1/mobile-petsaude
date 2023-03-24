@@ -1,5 +1,6 @@
 package br.senai.sp.jandira.petsaudeapp.ui.profile
 
+import android.content.Context
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -39,7 +40,7 @@ class UserLocationActivity : ComponentActivity() {
 						.verticalScroll(rememberScrollState()),
 					color = MaterialTheme.colors.background
 				) {
-					GlobalUserLocation()
+					GlobalUserLocation(this)
 				}
 			}
 		}
@@ -47,13 +48,13 @@ class UserLocationActivity : ComponentActivity() {
 }
 
 @Composable
-fun GlobalUserLocation() {
+fun GlobalUserLocation(context: Context) {
 	Column(
 		modifier = Modifier
 			.fillMaxSize()
 			.padding(12.dp)
 	) {
-		ConfigHeader(headline = stringResource(id = R.string.user_config_location))
+		ConfigHeader(headline = stringResource(id = R.string.user_config_location), context)
 		UserLocation()
 	}
 }
@@ -174,6 +175,6 @@ fun UserLocation() {
 	@Composable
 	fun DefaultPreview8() {
 		PetSaudeAppTheme {
-			GlobalUserLocation()
+			GlobalUserLocation(LocalContext.current)
 		}
 	}

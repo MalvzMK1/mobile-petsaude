@@ -1,5 +1,6 @@
 package br.senai.sp.jandira.petsaudeapp.ui.profile
 
+import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -16,6 +17,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -39,7 +41,7 @@ class UserSecurityActivity : ComponentActivity() {
 						.verticalScroll(rememberScrollState()),
 					color = MaterialTheme.colors.background
 				) {
-					GlobarUserSecurity()
+					GlobarUserSecurity(this)
 				}
 			}
 		}
@@ -47,13 +49,13 @@ class UserSecurityActivity : ComponentActivity() {
 }
 
 @Composable
-fun GlobarUserSecurity() {
+fun GlobarUserSecurity(context: Context) {
 	Column(
 		modifier = Modifier
 			.fillMaxSize()
 			.padding(12.dp)
 	) {
-		ConfigHeader(headline = stringResource(id = R.string.user_config_security))
+		ConfigHeader(headline = stringResource(id = R.string.user_config_security), context)
 		UserSecurityPreferences()
 	}
 }
@@ -165,6 +167,6 @@ fun UserSecurityPreferences() {
 @Composable
 fun DefaultPreview7() {
 	PetSaudeAppTheme {
-		GlobarUserSecurity()
+		GlobarUserSecurity(LocalContext.current)
 	}
 }
