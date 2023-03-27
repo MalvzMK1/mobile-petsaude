@@ -185,7 +185,6 @@ fun LocalizationForm(user: UserInfos) {
 				val viacepAddress = getAddressByZipCode(zipCodeState, {
 					Log.i("VIACEP RESPONSE", it.toString())
 				})
-				Log.i("TESTE FOCO", viacepAddress.toString())
 			}
 		)
 		Spacer(Modifier.height(16.dp))
@@ -272,7 +271,6 @@ fun LocalizationForm(user: UserInfos) {
 						val response = saveUserRegister(saveUserAddress) {
 							Log.i("ds3m", it.toString())
 						}
-//						Toast.makeText(context, saveUserAddress.toString(), Toast.LENGTH_SHORT).show()
 						val openMainActivity = Intent(context, MainActivity::class.java)
 						startActivity(context, openMainActivity, null)
 					}
