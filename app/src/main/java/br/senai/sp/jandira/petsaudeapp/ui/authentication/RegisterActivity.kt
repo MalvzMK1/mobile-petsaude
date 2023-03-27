@@ -264,7 +264,6 @@ fun RegisterForm() {
 				isErrorPasswordState = validateEmptyInput(passwordState)
 				isErrorCheckPasswordState = validateEmptyInput(checkPassState)
 				isErrorCellphoneNumberState = validateEmptyInput(cellphoneNumberState)
-				isErrorPhoneNumberState = validateEmptyInput(phoneNumberState)
 
 				if (
 					isErrorNameState ||

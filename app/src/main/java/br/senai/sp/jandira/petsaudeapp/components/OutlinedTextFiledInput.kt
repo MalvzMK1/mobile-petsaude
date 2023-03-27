@@ -65,6 +65,48 @@ fun OutlinedTextFieldInput(label: String, type: KeyboardType, errorState: Boolea
 }
 
 @Composable
+fun OutlinedTextFieldAddressInput(textPut: String, label: String, type: KeyboardType, errorState: Boolean): String {
+	val customColors = TextFieldDefaults.textFieldColors(
+		textColor = MaterialTheme.colors.onBackground,
+		disabledTextColor = MaterialTheme.colors.onBackground,
+		backgroundColor = Color.Transparent,
+		cursorColor = MaterialTheme.colors.onBackground,
+		errorCursorColor = MaterialTheme.colors.error,
+		focusedIndicatorColor = MaterialTheme.colors.primaryVariant,
+		unfocusedIndicatorColor = MaterialTheme.colors.onBackground,
+		disabledIndicatorColor = MaterialTheme.colors.onBackground,
+		errorIndicatorColor = MaterialTheme.colors.error,
+		focusedLabelColor = MaterialTheme.colors.primary,
+		unfocusedLabelColor = MaterialTheme.colors.onBackground,
+		disabledLabelColor = MaterialTheme.colors.onBackground,
+		trailingIconColor = MaterialTheme.colors.onBackground,
+		placeholderColor = MaterialTheme.colors.onBackground
+	)
+
+	var error = errorState
+
+	var thisInputState by rememberSaveable {
+		mutableStateOf("")
+	}
+
+	OutlinedTextField(
+		value = textPut,
+		onValueChange = {
+			thisInputState = it
+			error = false
+		},
+		modifier = Modifier.fillMaxWidth(),
+		label = { Text(text = label) },
+		isError = error,
+		keyboardOptions = KeyboardOptions(keyboardType = type),
+		singleLine = true,
+		colors = customColors
+	)
+
+	return thisInputState
+}
+
+@Composable
 fun PasswordOutlinedInputHideShowIcon(label: String, errorState: Boolean): String {
 	val customColors = TextFieldDefaults.textFieldColors(
 		textColor = MaterialTheme.colors.onBackground,

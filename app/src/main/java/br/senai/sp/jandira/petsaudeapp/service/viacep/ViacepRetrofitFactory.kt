@@ -11,7 +11,7 @@ class ViacepRetrofitFactory {
 			if (!Companion::instance.isInitialized) {
 				instance = Retrofit
 					.Builder()
-					.baseUrl("https://viacep.com.br/ws/")
+					.baseUrl("https://opencep.com/v1/")
 					.addConverterFactory(GsonConverterFactory.create())
 					.build()
 			}

@@ -101,24 +101,28 @@ fun UserLocation() {
 	) {
 		zipCodeState = MaskedZipCodeOutlinedInput(
 			label = stringResource(id = R.string.zip_code_string_resource),
-			errorState = isErrorZipCodeState
+			errorState = isErrorZipCodeState,
 		)
-		cityState = OutlinedTextFieldInput(
+		cityState = OutlinedTextFieldAddressInput(
+			textPut = cityState,
 			label = stringResource(id = R.string.city_string_resource),
 			type = KeyboardType.Text,
 			errorState = isErrorCityState
 		)
-		stateState = OutlinedTextFieldInput(
+		stateState = OutlinedTextFieldAddressInput(
+			textPut = stateState,
 			label = stringResource(id = R.string.state_string_resource),
 			type = KeyboardType.Text,
 			errorState = isErrorStateState
 		)
-		streetState = OutlinedTextFieldInput(
+		streetState = OutlinedTextFieldAddressInput(
+			textPut = streetState,
 			label = stringResource(id = R.string.street_string_resource),
 			type = KeyboardType.Text,
 			errorState = isErrorStreetState
 		)
-		neighborhoodState = OutlinedTextFieldInput(
+		neighborhoodState = OutlinedTextFieldAddressInput(
+			textPut = neighborhoodState,
 			label = stringResource(id = R.string.neighborhood_string_resource),
 			type = KeyboardType.Text,
 			errorState = isErrorNeighborhoodState

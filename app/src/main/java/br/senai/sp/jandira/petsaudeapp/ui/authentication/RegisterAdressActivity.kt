@@ -13,10 +13,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.setValue
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -33,6 +30,7 @@ import androidx.core.content.ContextCompat.startActivity
 import br.senai.sp.jandira.petsaudeapp.R
 import br.senai.sp.jandira.petsaudeapp.components.AuthHeaderTitle
 import br.senai.sp.jandira.petsaudeapp.components.MaskedZipCodeInput
+import br.senai.sp.jandira.petsaudeapp.components.TextFieldAddressInput
 import br.senai.sp.jandira.petsaudeapp.components.TextFieldInput
 import br.senai.sp.jandira.petsaudeapp.model.Address
 import br.senai.sp.jandira.petsaudeapp.model.UserInfos
@@ -148,6 +146,12 @@ fun LocalizationForm(user: UserInfos) {
 			mutableStateOf(false)
 		}
 
+//		var cityState by rememberSaveable() {
+//			mutableStateOf("")
+//		}
+//  	var isErrorCityState by rememberSaveable {
+//				mutableStateOf(false)
+//  	}
 		var cityState = ""
 		var isErrorCityState by rememberSaveable {
 			mutableStateOf(false)
@@ -180,33 +184,51 @@ fun LocalizationForm(user: UserInfos) {
 	) {
 		zipCodeState = MaskedZipCodeInput(
 			label = stringResource(id = R.string.zip_code_string_resource),
-			errorState = isErrorZipCodeState,
-			onFocusChange = {
-				val viacepAddress = getAddressByZipCode(zipCodeState, {
-					Log.i("VIACEP RESPONSE", it.toString())
-				})
-			}
-		)
+			errorState = isErrorZipCodeState
+		) { }
+//			onFocusChange = {
+//				getAddressByZipCode(zipCodeState) {
+//					Log.i("VIACEP RESPONSE", it.toString())
+//					cityState = it.city
+//					stateState = it.state
+//					neighborhoodState = it.neighborhood
+//					streetState = it.street
+//				}
+//			}
+//			onFocusChange = {
+//				val viacepAddress = getAddressByZipCode(zipCodeState, {
+//					Log.i("VIACEP RESPONSE", it.toString())
+//					cityState = it.city
+//					stateState = it.state
+//					neighborhoodState = it.neighborhood
+//					streetState = it.street
+//				})
+//			}
+//		)
 		Spacer(Modifier.height(16.dp))
-		cityState = TextFieldInput(
+		cityState = TextFieldAddressInput(
+			textPut = cityState,
 			label = stringResource(id = R.string.city_string_resource),
 			type = KeyboardType.Text,
 			errorState = isErrorCityState
 		)
 		Spacer(Modifier.height(16.dp))
-		stateState = TextFieldInput(
+		stateState = TextFieldAddressInput(
+			textPut = stateState,
 			label = stringResource(id = R.string.state_string_resource),
 			type = KeyboardType.Text,
 			errorState = isErrorStateState
 		)
 		Spacer(Modifier.height(16.dp))
-		streetState = TextFieldInput(
+		streetState = TextFieldAddressInput(
+			textPut = streetState,
 			label = stringResource(id = R.string.street_string_resource),
 			type = KeyboardType.Text,
 			errorState = isErrorStreetState
 		)
 		Spacer(Modifier.height(16.dp))
-		neighborhoodState = TextFieldInput(
+		neighborhoodState = TextFieldAddressInput(
+			textPut = neighborhoodState,
 			label = stringResource(id = R.string.neighborhood_string_resource),
 			type = KeyboardType.Text,
 			errorState = isErrorNeighborhoodState
@@ -232,6 +254,12 @@ fun LocalizationForm(user: UserInfos) {
 
 			Button(
 				onClick = {
+//					getAddressByZipCode(zipCodeState) {
+//						cityState = it.city
+//						stateState = it.state
+//						neighborhoodState = it.neighborhood
+//						streetState = it.street
+//					}
 					isErrorZipCodeState = validateEmptyInput(zipCodeState)
 					isErrorCityState = validateEmptyInput(cityState)
 					isErrorStateState = validateEmptyInput(stateState)
