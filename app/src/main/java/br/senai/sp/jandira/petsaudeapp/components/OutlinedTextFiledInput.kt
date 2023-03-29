@@ -10,6 +10,7 @@ import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onKeyEvent
@@ -249,7 +250,7 @@ fun MaskedCellphoneNumberOutlinedInput(label: String, errorState: Boolean): Stri
 
 
 @Composable
-fun MaskedZipCodeOutlinedInput(label: String, errorState: Boolean): String {
+fun MaskedZipCodeOutlinedInput(label: String, errorState: Boolean, onFocusChange: () -> Unit): String {
 	val customColors = TextFieldDefaults.textFieldColors(
 		textColor = MaterialTheme.colors.onBackground,
 		disabledTextColor = MaterialTheme.colors.onBackground,
@@ -280,7 +281,8 @@ fun MaskedZipCodeOutlinedInput(label: String, errorState: Boolean): String {
 				Log.i("key", it.key.toString())
 				true
 
-			},
+			}
+			.onFocusChanged { onFocusChange() },
 		label = { Text(text = label) },
 		isError = errorState,
 		visualTransformation = ZipCodeTransformation(),

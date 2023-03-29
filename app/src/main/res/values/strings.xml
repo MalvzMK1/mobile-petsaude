@@ -48,6 +48,7 @@
     <string name="user_config_location">Location</string>
     <string name="user_config_queries">Queries</string>
     <string name="user_config_professional_information">Professional information</string>
+    <string name="user_config_academic_information">Academic information</string>
     <string name="user_config_logout">Logout</string>
     <string name="user_config_pets">Pets</string>
     <string name="user_config_profile">Profile</string>
@@ -58,6 +59,7 @@
 
     // GENERIC STRINGS
 
+    <string name="name_app_petsaude">PetSaúde</string>
     <string name="email_string_resource">E-mail</string>
     <string name="password_string_resource">Password</string>
     <string name="hide_pass_alt">Hide password</string>
@@ -80,6 +82,7 @@
     <string name="formation_date_professional">Formation date</string>
     <string name="start_atuating_date_professional">Atuation beginning</string>
     <string name="user_config_rg_id_card">ID Card</string>
+    <string name="reviews_professional">Reviews</string>
 
     // SPECIALITIES
 
@@ -107,5 +110,6 @@
     <string name="title_activity_user_security">UserSecurityActivity</string>
     <string name="title_activity_user_professional">UserProfessionalActivity</string>
     <string name="title_activity_user_info_personal">UserInfoPersonalActivity</string>
+    <string name="title_activity_profile_visity">ProfileVisityActivity</string>
 
 </resources>

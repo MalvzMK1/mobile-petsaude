@@ -41,6 +41,10 @@ import br.senai.sp.jandira.petsaudeapp.service.viacep.getAddressByZipCode
 import br.senai.sp.jandira.petsaudeapp.ui.theme.PetSaudeAppTheme
 import br.senai.sp.jandira.petsaudeapp.utils.validateEmptyInput
 import com.google.android.gms.common.internal.safeparcel.SafeParcelable.Param
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
@@ -49,15 +53,15 @@ import retrofit2.http.Path
 class RegisterAddressActivity : ComponentActivity() {
 	override fun onCreate(savedInstanceState: Bundle?) {
 
-		val userInfos: UserInfos = intent.getSerializableExtra("userInfos") as UserInfos
-//		val userInfos = UserInfos(
-//			"",
-//			"",
-//			"",
-//			"",
-//			"",
-//			""
-//		)
+//		val userInfos: UserInfos = intent.getSerializableExtra("userInfos") as UserInfos
+		val userInfos = UserInfos(
+			"",
+			"",
+			"",
+			"",
+			"",
+			""
+		)
 
 		super.onCreate(savedInstanceState)
 		setContent {
@@ -141,10 +145,10 @@ fun LocalizationHeader() {
 fun LocalizationForm(user: UserInfos) {
 	val context = LocalContext.current
 
-		var zipCodeState = ""
-		var isErrorZipCodeState by rememberSaveable {
-			mutableStateOf(false)
-		}
+	var zipCodeState = ""
+	var isErrorZipCodeState by rememberSaveable {
+		mutableStateOf(false)
+	}
 
 //		var cityState by rememberSaveable() {
 //			mutableStateOf("")
@@ -152,183 +156,138 @@ fun LocalizationForm(user: UserInfos) {
 //  	var isErrorCityState by rememberSaveable {
 //				mutableStateOf(false)
 //  	}
-		var cityState = ""
-		var isErrorCityState by rememberSaveable {
-			mutableStateOf(false)
-		}
 
-		var stateState = ""
-		var isErrorStateState by rememberSaveable {
-			mutableStateOf(false)
-		}
 
-		var streetState = ""
-		var isErrorStreetState by rememberSaveable {
-			mutableStateOf(false)
-		}
+	var cityState = ""
+	var cityStateValue by rememberSaveable {
+		mutableStateOf("")
+	}
+	var isErrorCityState by rememberSaveable {
+		mutableStateOf(false)
+	}
 
-		var neighborhoodState = ""
-		var isErrorNeighborhoodState by rememberSaveable {
-			mutableStateOf(false)
-		}
+	var stateState = ""
+	var stateStateValue by rememberSaveable {
+		mutableStateOf("")
+	}
+	var isErrorStateState by rememberSaveable {
+		mutableStateOf(false)
+	}
 
-		var numberState = ""
-		var isErrorNumberState by rememberSaveable {
-			mutableStateOf(false)
-		}
+	var streetState = ""
+	var streetStateValue by rememberSaveable {
+		mutableStateOf("")
+	}
+	var isErrorStreetState by rememberSaveable {
+		mutableStateOf(false)
+	}
 
-		var complementState = ""
+	var neighborhoodState = ""
+	var neighborhoodStateValue by rememberSaveable {
+		mutableStateOf("")
+	}
+	var isErrorNeighborhoodState by rememberSaveable {
+		mutableStateOf(false)
+	}
+
+	var numberState = ""
+	var isErrorNumberState by rememberSaveable {
+		mutableStateOf(false)
+	}
+
+	var complementState = ""
 
 	Column(
 		modifier = Modifier.fillMaxWidth()
 	) {
 		zipCodeState = MaskedZipCodeInput(
 			label = stringResource(id = R.string.zip_code_string_resource),
-			errorState = isErrorZipCodeState
-		) { }
-//			onFocusChange = {
-//				getAddressByZipCode(zipCodeState) {
-//					Log.i("VIACEP RESPONSE", it.toString())
-//					cityState = it.city
-//					stateState = it.state
-//					neighborhoodState = it.neighborhood
-//					streetState = it.street
-//				}
-//			}
-//			onFocusChange = {
-//				val viacepAddress = getAddressByZipCode(zipCodeState, {
-//					Log.i("VIACEP RESPONSE", it.toString())
-//					cityState = it.city
-//					stateState = it.state
-//					neighborhoodState = it.neighborhood
-//					streetState = it.street
-//				})
-//			}
-//		)
-		Spacer(Modifier.height(16.dp))
-		cityState = TextFieldAddressInput(
-			textPut = cityState,
-			label = stringResource(id = R.string.city_string_resource),
-			type = KeyboardType.Text,
-			errorState = isErrorCityState
-		)
-		Spacer(Modifier.height(16.dp))
-		stateState = TextFieldAddressInput(
-			textPut = stateState,
-			label = stringResource(id = R.string.state_string_resource),
-			type = KeyboardType.Text,
-			errorState = isErrorStateState
-		)
-		Spacer(Modifier.height(16.dp))
-		streetState = TextFieldAddressInput(
-			textPut = streetState,
-			label = stringResource(id = R.string.street_string_resource),
-			type = KeyboardType.Text,
-			errorState = isErrorStreetState
-		)
-		Spacer(Modifier.height(16.dp))
-		neighborhoodState = TextFieldAddressInput(
-			textPut = neighborhoodState,
-			label = stringResource(id = R.string.neighborhood_string_resource),
-			type = KeyboardType.Text,
-			errorState = isErrorNeighborhoodState
-		)
-		Spacer(Modifier.height(16.dp))
-		numberState = TextFieldInput(
-			label = stringResource(id = R.string.house_number_string_resource),
-			type = KeyboardType.Text,
-			errorState = isErrorNumberState
-		)
-		Spacer(Modifier.height(16.dp))
-		complementState = TextFieldInput(
-			label = stringResource(id = R.string.complement_string_resource),
-			type = KeyboardType.Text,
-			errorState = false
-		)
-		Spacer(Modifier.height(32.dp))
-		Row(
-			modifier = Modifier.padding(bottom = 32.dp),
-			horizontalArrangement = Arrangement.SpaceBetween
-		) {
-			val userInfos = user
-
-			Button(
-				onClick = {
-//					getAddressByZipCode(zipCodeState) {
-//						cityState = it.city
-//						stateState = it.state
-//						neighborhoodState = it.neighborhood
-//						streetState = it.street
-//					}
-					isErrorZipCodeState = validateEmptyInput(zipCodeState)
-					isErrorCityState = validateEmptyInput(cityState)
-					isErrorStateState = validateEmptyInput(stateState)
-					isErrorStreetState = validateEmptyInput(streetState)
-					isErrorNeighborhoodState = validateEmptyInput(neighborhoodState)
-					isErrorNumberState = validateEmptyInput(numberState)
-
-					if (
-						isErrorZipCodeState ||
-						isErrorCityState ||
-						isErrorStateState ||
-						isErrorStreetState ||
-						isErrorNeighborhoodState ||
-						isErrorNumberState
-					) {
-						Toast.makeText(context, "Campos vazios!", Toast.LENGTH_SHORT).show()
-					} else {
-						val address = Address(
-							zipCode = zipCodeState,
-							city = cityState,
-							state = stateState,
-							street = streetState,
-							neighborhood = neighborhoodState,
-							number = numberState,
-							complement = complementState
-						)
-						val saveUserAddress = UserRegister(
-							name = userInfos.name,
-							itp = userInfos.itp,
-							email = userInfos.email,
-							password = userInfos.password,
-							cellphoneNumber = userInfos.cellphoneNumber,
-							phoneNumber = userInfos.phoneNumber,
-							address = address
-						)
-						// TODO: CADASTRO DE USUÁRIO PADRÃO
-						val response = saveUserRegister(saveUserAddress) {
-							Log.i("ds3m", it.toString())
-						}
-						val openMainActivity = Intent(context, MainActivity::class.java)
-						startActivity(context, openMainActivity, null)
-					}
-				},
-				modifier = Modifier
-					.fillMaxWidth(0.5f)
-					.defaultMinSize(minHeight = 50.dp),
-				shape = RoundedCornerShape(size = 5.dp),
-				colors = ButtonDefaults.buttonColors(MaterialTheme.colors.secondary)
-			) {
-				Text(
-					text = stringResource(id = R.string.im_client_button_string),
-					fontSize = 18.sp,
-					fontWeight = FontWeight.Bold,
-					color = MaterialTheme.colors.onSecondary
-				)
+			errorState = isErrorZipCodeState,
+			onFocusChange = { getAddressByZipCode(zipCodeState) {
+					cityStateValue = it.city
+					stateStateValue = it.state
+					streetStateValue = it.street
+					neighborhoodStateValue = it.neighborhood
+				}
 			}
-			Spacer(Modifier.width(4.dp))
-			Button(
-				onClick = {
+		)
+	}
+	Spacer(Modifier.height(16.dp))
+	cityState = TextFieldAddressInput(
+		textPut = cityStateValue,
+		label = stringResource(id = R.string.city_string_resource),
+		type = KeyboardType.Text,
+		errorState = isErrorCityState
+	)
+	Spacer(Modifier.height(16.dp))
+	stateState = TextFieldAddressInput(
+		textPut = stateStateValue,
+		label = stringResource(id = R.string.state_string_resource),
+		type = KeyboardType.Text,
+		errorState = isErrorStateState
+	)
+	Spacer(Modifier.height(16.dp))
+	streetState = TextFieldAddressInput(
+		textPut = streetStateValue,
+		label = stringResource(id = R.string.street_string_resource),
+		type = KeyboardType.Text,
+		errorState = isErrorStreetState
+	)
+	Spacer(Modifier.height(16.dp))
+	neighborhoodState = TextFieldAddressInput(
+		textPut = neighborhoodStateValue,
+		label = stringResource(id = R.string.neighborhood_string_resource),
+		type = KeyboardType.Text,
+		errorState = isErrorNeighborhoodState
+	)
+	Spacer(Modifier.height(16.dp))
+	numberState = TextFieldInput(
+		label = stringResource(id = R.string.house_number_string_resource),
+		type = KeyboardType.Text,
+		errorState = isErrorNumberState
+	)
+	Spacer(Modifier.height(16.dp))
+	complementState = TextFieldInput(
+		label = stringResource(id = R.string.complement_string_resource),
+		type = KeyboardType.Text,
+		errorState = false
+	)
+	Spacer(Modifier.height(32.dp))
+	Row(
+		modifier = Modifier.padding(bottom = 32.dp),
+		horizontalArrangement = Arrangement.SpaceBetween
+	) {
+		val userInfos = user
+
+		Button(
+			onClick = {
+				isErrorZipCodeState = validateEmptyInput(zipCodeState)
+				isErrorCityState = validateEmptyInput(cityState)
+				isErrorStateState = validateEmptyInput(stateState)
+				isErrorStreetState = validateEmptyInput(streetState)
+				isErrorNeighborhoodState = validateEmptyInput(neighborhoodState)
+				isErrorNumberState = validateEmptyInput(numberState)
+
+				if (
+					isErrorZipCodeState ||
+					isErrorCityState ||
+					isErrorStateState ||
+					isErrorStreetState ||
+					isErrorNeighborhoodState ||
+					isErrorNumberState
+				) {
+					Toast.makeText(context, "Campos vazios!", Toast.LENGTH_SHORT).show()
+				} else {
 					val address = Address(
-						zipCodeState,
-						cityState,
-						stateState,
-						streetState,
-						neighborhoodState,
-						numberState,
-						complementState
+						zipCode = zipCodeState,
+						city = cityState,
+						state = stateState,
+						street = streetState,
+						neighborhood = neighborhoodState,
+						number = numberState,
+						complement = complementState
 					)
-					val saveUserRegister = UserRegister(
+					val saveUserAddress = UserRegister(
 						name = userInfos.name,
 						itp = userInfos.itp,
 						email = userInfos.email,
@@ -337,24 +296,66 @@ fun LocalizationForm(user: UserInfos) {
 						phoneNumber = userInfos.phoneNumber,
 						address = address
 					)
-					val openProfessionalRegisterActivity = Intent(context, ProfessionalRegisterActivity::class.java)
-					openProfessionalRegisterActivity.putExtra("userInfos", saveUserRegister)
-					startActivity(context, openProfessionalRegisterActivity, null)
-				},
-				modifier = Modifier
-					.fillMaxWidth()
-					.defaultMinSize(minHeight = 50.dp),
-				shape = RoundedCornerShape(size = 5.dp),
-				colors = ButtonDefaults.buttonColors(MaterialTheme.colors.secondary)
-			) {
-				Text(
-					text = stringResource(id = R.string.im_professional_button_string),
-					color = MaterialTheme.colors.onSecondary,
-					fontSize = 18.sp,
-					fontWeight = FontWeight.Bold,
-					textAlign = TextAlign.Center
+					// TODO: CADASTRO DE USUÁRIO PADRÃO
+					val response = saveUserRegister(saveUserAddress) {
+						Log.i("ds3m", it.toString())
+					}
+					val openMainActivity = Intent(context, MainActivity::class.java)
+					startActivity(context, openMainActivity, null)
+				}
+			},
+			modifier = Modifier
+				.fillMaxWidth(0.5f)
+				.defaultMinSize(minHeight = 50.dp),
+			shape = RoundedCornerShape(size = 5.dp),
+			colors = ButtonDefaults.buttonColors(MaterialTheme.colors.secondary)
+		) {
+			Text(
+				text = stringResource(id = R.string.im_client_button_string),
+				fontSize = 18.sp,
+				fontWeight = FontWeight.Bold,
+				color = MaterialTheme.colors.onSecondary
+			)
+		}
+		Spacer(Modifier.width(4.dp))
+		Button(
+			onClick = {
+				val address = Address(
+					zipCodeState,
+					cityState,
+					stateState,
+					streetState,
+					neighborhoodState,
+					numberState,
+					complementState
 				)
-			}
+				val saveUserRegister = UserRegister(
+					name = userInfos.name,
+					itp = userInfos.itp,
+					email = userInfos.email,
+					password = userInfos.password,
+					cellphoneNumber = userInfos.cellphoneNumber,
+					phoneNumber = userInfos.phoneNumber,
+					address = address
+				)
+				val openProfessionalRegisterActivity =
+					Intent(context, ProfessionalRegisterActivity::class.java)
+				openProfessionalRegisterActivity.putExtra("userInfos", saveUserRegister)
+				startActivity(context, openProfessionalRegisterActivity, null)
+			},
+			modifier = Modifier
+				.fillMaxWidth()
+				.defaultMinSize(minHeight = 50.dp),
+			shape = RoundedCornerShape(size = 5.dp),
+			colors = ButtonDefaults.buttonColors(MaterialTheme.colors.secondary)
+		) {
+			Text(
+				text = stringResource(id = R.string.im_professional_button_string),
+				color = MaterialTheme.colors.onSecondary,
+				fontSize = 18.sp,
+				fontWeight = FontWeight.Bold,
+				textAlign = TextAlign.Center
+			)
 		}
 	}
 }
@@ -363,13 +364,15 @@ fun LocalizationForm(user: UserInfos) {
 @Composable
 fun DefaultPreview3() {
 	PetSaudeAppTheme {
-		GlobalLocalization(userInfos = UserInfos(
-			"",
-			"",
-			"",
-			"",
-			"",
-			""
-		))
+		GlobalLocalization(
+			userInfos = UserInfos(
+				"",
+				"",
+				"",
+				"",
+				"",
+				""
+			)
+		)
 	}
 }

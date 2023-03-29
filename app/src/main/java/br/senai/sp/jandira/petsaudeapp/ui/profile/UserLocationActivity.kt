@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.senai.sp.jandira.petsaudeapp.R
 import br.senai.sp.jandira.petsaudeapp.components.*
+import br.senai.sp.jandira.petsaudeapp.service.viacep.getAddressByZipCode
 import br.senai.sp.jandira.petsaudeapp.ui.theme.PetSaudeAppTheme
 import br.senai.sp.jandira.petsaudeapp.utils.validateEmptyInput
 
@@ -69,21 +70,33 @@ fun UserLocation() {
 	}
 
 	var cityState = ""
+	var cityStateValue by rememberSaveable {
+		mutableStateOf("")
+	}
 	var isErrorCityState by rememberSaveable {
 		mutableStateOf(false)
 	}
 
 	var stateState = ""
+	var stateStateValue by rememberSaveable {
+		mutableStateOf("")
+	}
 	var isErrorStateState by rememberSaveable {
 		mutableStateOf(false)
 	}
 
 	var streetState = ""
+	var streetStateValue by rememberSaveable {
+		mutableStateOf("")
+	}
 	var isErrorStreetState by rememberSaveable {
 		mutableStateOf(false)
 	}
 
 	var neighborhoodState = ""
+	var neighborhoodStateValue by rememberSaveable {
+		mutableStateOf("")
+	}
 	var isErrorNeighborhoodState by rememberSaveable {
 		mutableStateOf(false)
 	}
@@ -102,27 +115,35 @@ fun UserLocation() {
 		zipCodeState = MaskedZipCodeOutlinedInput(
 			label = stringResource(id = R.string.zip_code_string_resource),
 			errorState = isErrorZipCodeState,
+			onFocusChange = {
+				getAddressByZipCode(zipCodeState) {
+					cityStateValue = it.city
+					stateStateValue = it.state
+					streetStateValue = it.street
+					neighborhoodStateValue = it.neighborhood
+				}
+			}
 		)
 		cityState = OutlinedTextFieldAddressInput(
-			textPut = cityState,
+			textPut = cityStateValue,
 			label = stringResource(id = R.string.city_string_resource),
 			type = KeyboardType.Text,
 			errorState = isErrorCityState
 		)
 		stateState = OutlinedTextFieldAddressInput(
-			textPut = stateState,
+			textPut = stateStateValue,
 			label = stringResource(id = R.string.state_string_resource),
 			type = KeyboardType.Text,
 			errorState = isErrorStateState
 		)
 		streetState = OutlinedTextFieldAddressInput(
-			textPut = streetState,
+			textPut = streetStateValue,
 			label = stringResource(id = R.string.street_string_resource),
 			type = KeyboardType.Text,
 			errorState = isErrorStreetState
 		)
 		neighborhoodState = OutlinedTextFieldAddressInput(
-			textPut = neighborhoodState,
+			textPut = neighborhoodStateValue,
 			label = stringResource(id = R.string.neighborhood_string_resource),
 			type = KeyboardType.Text,
 			errorState = isErrorNeighborhoodState
