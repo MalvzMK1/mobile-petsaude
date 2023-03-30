@@ -10,6 +10,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -55,7 +57,11 @@ fun GlobalUserLocation(context: Context) {
 			.fillMaxSize()
 			.padding(12.dp)
 	) {
-		ConfigHeader(headline = stringResource(id = R.string.user_config_location), context)
+		ConfigHeader(
+			headline = stringResource(id = R.string.user_config_location),
+			context,
+			icon = Icons.Filled.Settings
+		)
 		UserLocation()
 	}
 }

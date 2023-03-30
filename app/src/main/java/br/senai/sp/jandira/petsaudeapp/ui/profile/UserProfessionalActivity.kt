@@ -15,6 +15,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CalendarMonth
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -62,7 +63,11 @@ fun GlobalUserProfessional(context: Context) {
 			.fillMaxSize()
 			.padding(12.dp)
 	) {
-		ConfigHeader(headline = stringResource(id = R.string.user_config_professional_information), context)
+		ConfigHeader(
+			headline = stringResource(id = R.string.user_config_professional_information),
+			context,
+			icon = Icons.Filled.Settings
+		)
 		ProfessionalPreferences()
 	}
 }

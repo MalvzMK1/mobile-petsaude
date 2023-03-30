@@ -16,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.AlignmentLine
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -59,7 +60,11 @@ fun GlobalUserConfig(context: Context) {
 			.fillMaxSize()
 			.padding(12.dp)
 	) {
-		ConfigHeader(headline = stringResource(id = R.string.user_config_profile), context)
+		ConfigHeader(
+			headline = stringResource(id = R.string.user_config_profile),
+			context,
+			icon = Icons.Filled.Settings
+		)
 		UserProfile()
 		UserPreferences()
 	}

@@ -14,6 +14,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Remove
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -59,7 +60,11 @@ fun GlobalUserPersonal(context: Context) {
 			.fillMaxSize()
 			.padding(12.dp)
 	) {
-		ConfigHeader(headline = stringResource(id = R.string.user_config_personal_information), context)
+		ConfigHeader(
+			headline = stringResource(id = R.string.user_config_personal_information),
+			context,
+			icon = Icons.Filled.Settings
+		)
 		PersonalPreferences()
 	}
 }

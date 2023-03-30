@@ -14,6 +14,8 @@ import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -55,7 +57,11 @@ fun GlobarUserSecurity(context: Context) {
 			.fillMaxSize()
 			.padding(12.dp)
 	) {
-		ConfigHeader(headline = stringResource(id = R.string.user_config_security), context)
+		ConfigHeader(
+			headline = stringResource(id = R.string.user_config_security),
+			context,
+			icon = Icons.Filled.Settings
+		)
 		UserSecurityPreferences()
 	}
 }

@@ -9,8 +9,10 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -47,7 +49,11 @@ fun GlobalHomePet(context: Context) {
 			.fillMaxSize()
 			.padding(16.dp)
 	) {
-		ConfigHeader(headline = stringResource(id = R.string.user_config_profile), context)
+		ConfigHeader(
+			headline = stringResource(id = R.string.name_app_petsaude),
+			context,
+			icon = Icons.Filled.AccountCircle
+		)
 	}
 }
 

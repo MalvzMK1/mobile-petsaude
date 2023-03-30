@@ -11,6 +11,7 @@ import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -24,7 +25,7 @@ import br.senai.sp.jandira.petsaudeapp.ui.profile.UserInfoPersonalActivity
 import br.senai.sp.jandira.petsaudeapp.ui.theme.PetSaudeAppTheme
 
 @Composable
-fun ConfigHeader(headline: String, context: Context) {
+fun ConfigHeader(headline: String, context: Context, icon: ImageVector) {
 	Column(
 		modifier = Modifier.fillMaxWidth()
 	) {
@@ -42,7 +43,7 @@ fun ConfigHeader(headline: String, context: Context) {
 			) {
 				Icon(
 					imageVector = Icons.Filled.Menu,
-					contentDescription = "Menu",
+					contentDescription = "leftSideButtonHeader",
 					modifier = Modifier.size(32.dp)
 				)
 			}
@@ -60,8 +61,8 @@ fun ConfigHeader(headline: String, context: Context) {
 				}
 			) {
 				Icon(
-					imageVector = Icons.Filled.Settings,
-					contentDescription = "Settings",
+					imageVector = icon,
+					contentDescription = "rightSideButtonHeader",
 					modifier = Modifier.size(30.dp)
 				)
 			}

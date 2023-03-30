@@ -8,10 +8,9 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Card
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionContext
 import androidx.compose.ui.Modifier
@@ -26,6 +25,8 @@ import br.senai.sp.jandira.petsaudeapp.R
 import br.senai.sp.jandira.petsaudeapp.components.ConfigHeader
 import br.senai.sp.jandira.petsaudeapp.ui.theme.PetSaudeAppTheme
 import com.google.maps.android.compose.GoogleMap
+import com.google.maps.android.compose.MapProperties
+import com.google.maps.android.compose.MapType
 
 class ProfileVisityActivity : ComponentActivity() {
 	override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,7 +54,11 @@ fun GlocalProfileVisity(context: Context) {
 			.fillMaxSize()
 			.padding(12.dp)
 	) {
-		ConfigHeader(headline = stringResource(id = R.string.name_app_petsaude), context)
+		ConfigHeader(
+			headline = stringResource(id = R.string.name_app_petsaude),
+			context,
+			icon = Icons.Filled.Settings
+		)
 //		PersonProfessional()
 //		AvaliationProfessioanl()
 		InformationAcademyProfessional()
@@ -109,22 +114,34 @@ fun InformationAcademyProfessional() {
 		) {
 			Card(
 				modifier = Modifier
-					.fillMaxWidth()
-//					.width(170.dp)
+//					.fillMaxWidth()
+					.width(170.dp)
 //					.padding(end = 6.dp)
 					.height(60.dp)
 			) {
-				
+				Text(
+					text = stringResource(id = R.string.formation_professional),
+					modifier = Modifier.fillMaxWidth(),
+					fontSize = 18.sp,
+					fontWeight = FontWeight.W600,
+					textAlign = TextAlign.Center
+				)
 			}
 			Spacer(modifier = Modifier.width(12.dp))
 			Card(
 				modifier = Modifier
-					.fillMaxWidth()
-//					.width(170.dp)
+//					.fillMaxWidth()
+					.width(170.dp)
 //					.padding(start = 6.dp)
 					.height(60.dp)
 			) {
-				
+				Text(
+					text = stringResource(id = R.string.formation_date_professional),
+					modifier = Modifier.fillMaxWidth(),
+					fontSize = 18.sp,
+					fontWeight = FontWeight.W600,
+					textAlign = TextAlign.Center
+				)
 			}
 		}
 		Spacer(modifier = Modifier.height(8.dp))
@@ -138,7 +155,13 @@ fun InformationAcademyProfessional() {
 					.width(170.dp)
 					.height(60.dp)
 			) {
-
+				Text(
+					text = stringResource(id = R.string.institution_professional),
+					modifier = Modifier.fillMaxWidth(),
+					fontSize = 18.sp,
+					fontWeight = FontWeight.W600,
+					textAlign = TextAlign.Center
+				)
 			}
 			Spacer(modifier = Modifier.width(12.dp))
 			Card(
@@ -147,7 +170,13 @@ fun InformationAcademyProfessional() {
 					.width(170.dp)
 					.height(60.dp)
 			) {
-
+				Text(
+					text = stringResource(id = R.string.start_atuating_date_professional),
+					modifier = Modifier.fillMaxWidth(),
+					fontSize = 18.sp,
+					fontWeight = FontWeight.W600,
+					textAlign = TextAlign.Center
+				)
 			}
 		}
 	}
@@ -170,12 +199,13 @@ fun LocalizationProfessioanl() {
 		Card(
 			modifier = Modifier
 				.fillMaxWidth()
-				.height(200.dp),
+				.height(220.dp),
 			shape = RoundedCornerShape(5.dp)
 		) {
-//			GoogleMap(
-//			INSERIR O MAPA FUNCIONAL
-//			)
+			GoogleMap(
+				modifier = Modifier.fillMaxSize(),
+				properties = MapProperties(mapType = MapType.NORMAL)
+			)
 		}
 	}
 }

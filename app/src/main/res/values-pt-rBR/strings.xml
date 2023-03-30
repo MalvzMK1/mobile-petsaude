@@ -85,6 +85,16 @@
     <string name="user_config_rg_id_card">RG</string>
     <string name="reviews_professional">Avaliações</string>
 
+    //NAME ACTIVITY
+
+    <string name="title_activity_home_pet">HomePet</string>
+    <string name="title_activity_user_config">UserConfigActivity</string>
+    <string name="title_activity_user_location">UserLocationActivity</string>
+    <string name="title_activity_user_security">UserSecurityActivity</string>
+    <string name="title_activity_user_professional">UserProfessionalActivity</string>
+    <string name="title_activity_user_info_personal">UserInfoPersonalActivity</string>
+    <string name="title_activity_profile_visity">ProfileVisityActivity</string>
+
     // SPECIALITIES
 
     <string name="surgeon_speciality">Cirurgião</string>
