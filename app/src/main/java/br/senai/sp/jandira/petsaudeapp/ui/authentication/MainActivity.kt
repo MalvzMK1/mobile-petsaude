@@ -188,7 +188,7 @@ fun LoginForm() {
 				text = stringResource(id = R.string.forgot_password),
 				modifier = Modifier
 					.clickable(onClick = {
-//							TODO: GO TO PASSWORD RECOVER PAGE
+//							TODO: PASSWORD RECOVER PAGE
 					}),
 				color = MaterialTheme.colors.onBackground,
 				fontSize = 12.sp,

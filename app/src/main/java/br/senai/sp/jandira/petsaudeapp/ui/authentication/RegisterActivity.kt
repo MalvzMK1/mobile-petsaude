@@ -276,8 +276,9 @@ fun RegisterForm() {
 				) {
 					Toast.makeText(context, "Campos vazios", Toast.LENGTH_SHORT).show()
 				} else {
+					//VALIDAR TAMANHO DA SENHA - 6 DIGITOS//
 					if (checkPassState == passwordState) {
-						val userSaveRegister = UserInfos(
+						val userRegisterInfos = UserInfos(
 							name = "$nameState $lastNameState",
 							itpState,
 							emailState,
@@ -285,13 +286,13 @@ fun RegisterForm() {
 							cellphoneNumberState,
 							phoneNumberState
 						)
-						Toast.makeText(context, userSaveRegister.toString(), Toast.LENGTH_SHORT).show()
+						Log.i("DADOS DAS VARIAVEIS DE ESTADO", userRegisterInfos.toString())
 						val openRegisterAddressActivity = Intent(context, RegisterAddressActivity::class.java)
-						openRegisterAddressActivity.putExtra("userInfos", userSaveRegister)
+						openRegisterAddressActivity.putExtra("userInfosRegister", userRegisterInfos)
 						startActivity(context, openRegisterAddressActivity, null)
-//						}
+						Toast.makeText(context, "Usuário criado!", Toast.LENGTH_SHORT).show()
 					} else {
-						Toast.makeText(context, "As senhas não batem", Toast.LENGTH_SHORT).show()
+						Toast.makeText(context, "Suas senhas precisam ser iguais!", Toast.LENGTH_SHORT).show()
 						isErrorCheckPasswordState = true
 					}
 				}

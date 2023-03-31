@@ -7,11 +7,12 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-fun createVetInfos(userId: Number, vetInfos: VetInfos, onComplete: (VetInfos) -> Unit) {
+fun createUserVetInfos(userId: Number, vetInfos: VetInfos, onComplete: (VetInfos) -> Unit) {
 	val call = RetrofitFactory().retrofitService().createVetInfosInAnExistingUser(userId, vetInfos)
 
 	call.enqueue(object: Callback<VetInfos> {
 		override fun onResponse(call: Call<VetInfos>, response: Response<VetInfos>) {
+			Log.i("CREATE USER VET RESPONSE", response.toString())
 			onComplete.invoke(response.body()!!)
 		}
 

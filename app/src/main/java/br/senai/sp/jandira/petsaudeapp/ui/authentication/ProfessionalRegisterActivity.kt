@@ -40,9 +40,8 @@ import br.senai.sp.jandira.petsaudeapp.components.TextFieldInput
 import br.senai.sp.jandira.petsaudeapp.model.Address
 import br.senai.sp.jandira.petsaudeapp.model.UserRegister
 import br.senai.sp.jandira.petsaudeapp.model.VetInfos
-import br.senai.sp.jandira.petsaudeapp.service.integrations.createVetInfos
+import br.senai.sp.jandira.petsaudeapp.service.integrations.createUserVetInfos
 import br.senai.sp.jandira.petsaudeapp.service.saveUserRegister
-import br.senai.sp.jandira.petsaudeapp.ui.HomePetActivity
 import br.senai.sp.jandira.petsaudeapp.ui.theme.PetSaudeAppTheme
 import br.senai.sp.jandira.petsaudeapp.utils.validateEmptyInput
 import java.util.*
@@ -50,7 +49,7 @@ import java.util.*
 class ProfessionalRegisterActivity : ComponentActivity() {
 	override fun onCreate(savedInstanceState: Bundle?) {
 
-		val userInfos: UserRegister = intent.getSerializableExtra("userInfos") as UserRegister
+		val userInfosRegister: UserRegister = intent.getSerializableExtra("userInfos") as UserRegister
 
 		super.onCreate(savedInstanceState)
 		setContent {
@@ -61,7 +60,7 @@ class ProfessionalRegisterActivity : ComponentActivity() {
 						.verticalScroll(rememberScrollState()),
 					color = MaterialTheme.colors.background
 				) {
-					ProfessionalRegisterGlobal(userInfos)
+					ProfessionalRegisterGlobal(userInfosRegister)
 				}
 			}
 		}
@@ -69,7 +68,7 @@ class ProfessionalRegisterActivity : ComponentActivity() {
 }
 
 @Composable
-fun ProfessionalRegisterGlobal(userInfos: UserRegister) {
+fun ProfessionalRegisterGlobal(userInfosRegister: UserRegister) {
 	val context = LocalContext.current
 
 	Column(
@@ -78,7 +77,7 @@ fun ProfessionalRegisterGlobal(userInfos: UserRegister) {
 			.padding(12.dp)
 	) {
 		ProfessionalRegisterHeader()
-		ProfessionalRegisterForm(userInfos)
+		ProfessionalRegisterForm(userInfosRegister)
 		Box(
 			modifier = Modifier
 				.fillMaxWidth(),
@@ -123,7 +122,7 @@ fun ProfessionalRegisterHeader() {
 }
 
 @Composable
-fun ProfessionalRegisterForm(userInfos: UserRegister) {
+fun ProfessionalRegisterForm(userInfosRegister: UserRegister) {
 	val context = LocalContext.current
 
 	var surgeonCheckState by rememberSaveable {
@@ -480,15 +479,15 @@ fun ProfessionalRegisterForm(userInfos: UserRegister) {
 					occupationArea = occupationAreaState,
 					startActingDate = startAtuatingDateState
 				)
-				val saveUserResponse = saveUserRegister(userInfos, {
+				val userRegister = saveUserRegister(userInfosRegister) {
 					Log.i("CREATE USER RESPONSE", it.toString())
 					val id = it.id
-					val createVetInfos = createVetInfos(id, vetInfos, {
+					val createVetInfos = createUserVetInfos(id, vetInfos) {
 						Toast.makeText(context, "Usuário criado com sucesso", Toast.LENGTH_SHORT).show()
-						val openHomePetActivity = Intent(context, HomePetActivity::class.java)
-						startActivity(context, openHomePetActivity, null)
-					})
-				})
+						val openMainActivity = Intent(context, MainActivity::class.java)
+						startActivity(context, openMainActivity, null)
+					}
+				}
 			}
 		},
 		modifier = Modifier.fillMaxWidth(),
@@ -505,26 +504,26 @@ fun ProfessionalRegisterForm(userInfos: UserRegister) {
 	Spacer(modifier = Modifier.height(32.dp))
 }
 
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview4() {
-	PetSaudeAppTheme {
-		ProfessionalRegisterGlobal(userInfos = UserRegister(
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			Address(
-				"",
-				"",
-				"",
-				"",
-				"",
-				"",
-				""
-			),
-		))
-	}
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun DefaultPreview4() {
+//	PetSaudeAppTheme {
+//		ProfessionalRegisterGlobal(userInfos = UserRegister(
+//			"",
+//			"",
+//			"",
+//			"",
+//			"",
+//			"",
+//			Address(
+//				"",
+//				"",
+//				"",
+//				"",
+//				"",
+//				"",
+//				""
+//			),
+//		))
+//	}
+//}

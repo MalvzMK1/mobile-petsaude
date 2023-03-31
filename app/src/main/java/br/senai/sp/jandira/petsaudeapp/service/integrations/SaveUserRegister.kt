@@ -1,6 +1,7 @@
 package br.senai.sp.jandira.petsaudeapp.service
 
 import android.util.Log
+import br.senai.sp.jandira.petsaudeapp.model.Address
 import br.senai.sp.jandira.petsaudeapp.model.UserRegister
 import br.senai.sp.jandira.petsaudeapp.service.response.PostUserResponse
 //import br.senai.sp.jandira.petsaudeapp.model.PhoneNumber

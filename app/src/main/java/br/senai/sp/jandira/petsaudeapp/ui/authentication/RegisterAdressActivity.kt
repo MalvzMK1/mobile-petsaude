@@ -53,15 +53,15 @@ import retrofit2.http.Path
 class RegisterAddressActivity : ComponentActivity() {
 	override fun onCreate(savedInstanceState: Bundle?) {
 
-//		val userInfos: UserInfos = intent.getSerializableExtra("userInfos") as UserInfos
-		val userInfos = UserInfos(
-			"",
-			"",
-			"",
-			"",
-			"",
-			""
-		)
+		val userInfos: UserInfos = intent.getSerializableExtra("userInfos") as UserInfos
+//		val userInfos = UserInfos(
+//			"",
+//			"",
+//			"",
+//			"",
+//			"",
+//			""
+//		)
 
 		super.onCreate(savedInstanceState)
 		setContent {
@@ -142,21 +142,13 @@ fun LocalizationHeader() {
 }
 
 @Composable
-fun LocalizationForm(user: UserInfos) {
+fun LocalizationForm(userInfos: UserInfos) {
 	val context = LocalContext.current
 
 	var zipCodeState = ""
 	var isErrorZipCodeState by rememberSaveable {
 		mutableStateOf(false)
 	}
-
-//		var cityState by rememberSaveable() {
-//			mutableStateOf("")
-//		}
-//  	var isErrorCityState by rememberSaveable {
-//				mutableStateOf(false)
-//  	}
-
 
 	var cityState = ""
 	var cityStateValue by rememberSaveable {
@@ -257,15 +249,15 @@ fun LocalizationForm(user: UserInfos) {
 		modifier = Modifier.padding(bottom = 32.dp),
 		horizontalArrangement = Arrangement.SpaceBetween
 	) {
-		val userInfos = user
+		val userInfosNow = userInfos
 
 		Button(
 			onClick = {
 				isErrorZipCodeState = validateEmptyInput(zipCodeState)
-				isErrorCityState = validateEmptyInput(cityState)
-				isErrorStateState = validateEmptyInput(stateState)
-				isErrorStreetState = validateEmptyInput(streetState)
-				isErrorNeighborhoodState = validateEmptyInput(neighborhoodState)
+				isErrorCityState = validateEmptyInput(cityStateValue)
+				isErrorStateState = validateEmptyInput(stateStateValue)
+				isErrorStreetState = validateEmptyInput(streetStateValue)
+				isErrorNeighborhoodState = validateEmptyInput(neighborhoodStateValue)
 				isErrorNumberState = validateEmptyInput(numberState)
 
 				if (
@@ -278,27 +270,28 @@ fun LocalizationForm(user: UserInfos) {
 				) {
 					Toast.makeText(context, "Campos vazios!", Toast.LENGTH_SHORT).show()
 				} else {
-					val address = Address(
+					val userAddress = Address(
 						zipCode = zipCodeState,
-						city = cityState,
-						state = stateState,
-						street = streetState,
-						neighborhood = neighborhoodState,
+						city = cityStateValue,
+						state = stateStateValue,
+						street = streetStateValue,
+						neighborhood = neighborhoodStateValue,
 						number = numberState,
 						complement = complementState
 					)
-					val saveUserAddress = UserRegister(
-						name = userInfos.name,
-						itp = userInfos.itp,
-						email = userInfos.email,
-						password = userInfos.password,
-						cellphoneNumber = userInfos.cellphoneNumber,
-						phoneNumber = userInfos.phoneNumber,
-						address = address
+					val userRegister = UserRegister(
+						name = userInfosNow.name,
+						itp = userInfosNow.itp,
+						email = userInfosNow.email,
+						password = userInfosNow.password,
+						cellphoneNumber = userInfosNow.cellphoneNumber,
+						phoneNumber = userInfosNow.phoneNumber,
+						address = userAddress
 					)
 					// TODO: CADASTRO DE USUÁRIO PADRÃO
-					val response = saveUserRegister(saveUserAddress) {
-						Log.i("ds3m", it.toString())
+					val responseSaveUser = saveUserRegister(userRegister) {
+						Log.i("ds3m - SAVE USER", it.toString())
+
 					}
 					val openMainActivity = Intent(context, MainActivity::class.java)
 					startActivity(context, openMainActivity, null)
@@ -320,27 +313,26 @@ fun LocalizationForm(user: UserInfos) {
 		Spacer(Modifier.width(4.dp))
 		Button(
 			onClick = {
-				val address = Address(
+				val userAddress = Address(
 					zipCodeState,
-					cityState,
-					stateState,
-					streetState,
-					neighborhoodState,
+					cityStateValue,
+					stateStateValue,
+					streetStateValue,
+					neighborhoodStateValue,
 					numberState,
 					complementState
 				)
-				val saveUserRegister = UserRegister(
+				val userRegister = UserRegister(
 					name = userInfos.name,
 					itp = userInfos.itp,
 					email = userInfos.email,
 					password = userInfos.password,
 					cellphoneNumber = userInfos.cellphoneNumber,
 					phoneNumber = userInfos.phoneNumber,
-					address = address
+					address = userAddress
 				)
-				val openProfessionalRegisterActivity =
-					Intent(context, ProfessionalRegisterActivity::class.java)
-				openProfessionalRegisterActivity.putExtra("userInfos", saveUserRegister)
+				val openProfessionalRegisterActivity = Intent(context, ProfessionalRegisterActivity::class.java)
+				openProfessionalRegisterActivity.putExtra("userInfos", userRegister)
 				startActivity(context, openProfessionalRegisterActivity, null)
 			},
 			modifier = Modifier
