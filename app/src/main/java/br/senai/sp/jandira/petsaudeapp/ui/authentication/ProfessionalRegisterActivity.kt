@@ -41,7 +41,7 @@ import br.senai.sp.jandira.petsaudeapp.model.Address
 import br.senai.sp.jandira.petsaudeapp.model.UserRegister
 import br.senai.sp.jandira.petsaudeapp.model.VetInfos
 import br.senai.sp.jandira.petsaudeapp.service.integrations.createUserVetInfos
-import br.senai.sp.jandira.petsaudeapp.service.saveUserRegister
+import br.senai.sp.jandira.petsaudeapp.service.integrations.saveUserRegister
 import br.senai.sp.jandira.petsaudeapp.ui.theme.PetSaudeAppTheme
 import br.senai.sp.jandira.petsaudeapp.utils.validateEmptyInput
 import java.util.*

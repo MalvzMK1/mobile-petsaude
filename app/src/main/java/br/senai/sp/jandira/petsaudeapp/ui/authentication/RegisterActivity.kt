@@ -34,6 +34,7 @@ import br.senai.sp.jandira.petsaudeapp.model.UserInfos
 //import br.senai.sp.jandira.petsaudeapp.service.saveUserRegister
 import br.senai.sp.jandira.petsaudeapp.ui.theme.PetSaudeAppTheme
 import br.senai.sp.jandira.petsaudeapp.utils.validateEmptyInput
+import kotlin.reflect.typeOf
 
 class RegisterActivity : ComponentActivity() {
 	override fun onCreate(savedInstanceState: Bundle?) {
@@ -274,27 +275,26 @@ fun RegisterForm() {
 					isErrorCheckPasswordState ||
 					isErrorCellphoneNumberState
 				) {
-					Toast.makeText(context, "Campos vazios", Toast.LENGTH_SHORT).show()
+					Toast.makeText(context, "Campos obrigatórios não preenchidos", Toast.LENGTH_SHORT).show()
+				} else if (passwordState.length >= 6) { //VALIDAR TAMANHO DA SENHA - 6 DIGITOS//
+						if (checkPassState == passwordState) {
+							val userRegisterInfos = UserInfos(
+								name = "$nameState $lastNameState",
+								itpState,
+								emailState,
+								passwordState,
+								cellphoneNumberState,
+								phoneNumberState
+							)
+							val openRegisterAddressActivity = Intent(context, RegisterAddressActivity::class.java)
+							openRegisterAddressActivity.putExtra("userInfosRegister", userRegisterInfos)
+							startActivity(context, openRegisterAddressActivity, null)
+						} else {
+							Toast.makeText(context, "Sua senha precisa conter no minimo 6 (seis) digitos", Toast.LENGTH_SHORT).show()
+						}
 				} else {
-					//VALIDAR TAMANHO DA SENHA - 6 DIGITOS//
-					if (checkPassState == passwordState) {
-						val userRegisterInfos = UserInfos(
-							name = "$nameState $lastNameState",
-							itpState,
-							emailState,
-							passwordState,
-							cellphoneNumberState,
-							phoneNumberState
-						)
-						Log.i("DADOS DAS VARIAVEIS DE ESTADO", userRegisterInfos.toString())
-						val openRegisterAddressActivity = Intent(context, RegisterAddressActivity::class.java)
-						openRegisterAddressActivity.putExtra("userInfosRegister", userRegisterInfos)
-						startActivity(context, openRegisterAddressActivity, null)
-						Toast.makeText(context, "Usuário criado!", Toast.LENGTH_SHORT).show()
-					} else {
 						Toast.makeText(context, "Suas senhas precisam ser iguais!", Toast.LENGTH_SHORT).show()
 						isErrorCheckPasswordState = true
-					}
 				}
 			},
 			modifier = Modifier.fillMaxWidth(),

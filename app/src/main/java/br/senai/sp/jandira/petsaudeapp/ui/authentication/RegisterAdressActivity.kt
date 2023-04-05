@@ -35,9 +35,8 @@ import br.senai.sp.jandira.petsaudeapp.components.TextFieldInput
 import br.senai.sp.jandira.petsaudeapp.model.Address
 import br.senai.sp.jandira.petsaudeapp.model.UserInfos
 import br.senai.sp.jandira.petsaudeapp.model.UserRegister
-import br.senai.sp.jandira.petsaudeapp.service.saveUserRegister
+import br.senai.sp.jandira.petsaudeapp.service.integrations.saveUserRegister
 import br.senai.sp.jandira.petsaudeapp.service.viacep.getAddressByZipCode
-//import br.senai.sp.jandira.petsaudeapp.service.saveUserRegister
 import br.senai.sp.jandira.petsaudeapp.ui.theme.PetSaudeAppTheme
 import br.senai.sp.jandira.petsaudeapp.utils.validateEmptyInput
 import com.google.android.gms.common.internal.safeparcel.SafeParcelable.Param
@@ -53,7 +52,7 @@ import retrofit2.http.Path
 class RegisterAddressActivity : ComponentActivity() {
 	override fun onCreate(savedInstanceState: Bundle?) {
 
-		val userInfos: UserInfos = intent.getSerializableExtra("userInfos") as UserInfos
+		val userInfos: UserInfos = intent.getSerializableExtra("userInfosRegister") as UserInfos
 //		val userInfos = UserInfos(
 //			"",
 //			"",
@@ -150,7 +149,7 @@ fun LocalizationForm(userInfos: UserInfos) {
 		mutableStateOf(false)
 	}
 
-	var cityState = ""
+	var cityState = "ice city"
 	var cityStateValue by rememberSaveable {
 		mutableStateOf("")
 	}
@@ -158,7 +157,7 @@ fun LocalizationForm(userInfos: UserInfos) {
 		mutableStateOf(false)
 	}
 
-	var stateState = ""
+	var stateState = "god state"
 	var stateStateValue by rememberSaveable {
 		mutableStateOf("")
 	}
@@ -207,13 +206,16 @@ fun LocalizationForm(userInfos: UserInfos) {
 	Spacer(Modifier.height(16.dp))
 	cityState = TextFieldAddressInput(
 		textPut = cityStateValue,
+//		textPut = cityState,
 		label = stringResource(id = R.string.city_string_resource),
 		type = KeyboardType.Text,
 		errorState = isErrorCityState
 	)
+	Log.i("ds3m", " --------------------- $cityState")
 	Spacer(Modifier.height(16.dp))
 	stateState = TextFieldAddressInput(
 		textPut = stateStateValue,
+//		textPut = stateState,
 		label = stringResource(id = R.string.state_string_resource),
 		type = KeyboardType.Text,
 		errorState = isErrorStateState
@@ -250,7 +252,6 @@ fun LocalizationForm(userInfos: UserInfos) {
 		horizontalArrangement = Arrangement.SpaceBetween
 	) {
 		val userInfosNow = userInfos
-
 		Button(
 			onClick = {
 				isErrorZipCodeState = validateEmptyInput(zipCodeState)
@@ -268,7 +269,7 @@ fun LocalizationForm(userInfos: UserInfos) {
 					isErrorNeighborhoodState ||
 					isErrorNumberState
 				) {
-					Toast.makeText(context, "Campos vazios!", Toast.LENGTH_SHORT).show()
+					Toast.makeText(context, "Campos obrigatórios não preenchidos!", Toast.LENGTH_SHORT).show()
 				} else {
 					val userAddress = Address(
 						zipCode = zipCodeState,
@@ -291,7 +292,6 @@ fun LocalizationForm(userInfos: UserInfos) {
 					// TODO: CADASTRO DE USUÁRIO PADRÃO
 					val responseSaveUser = saveUserRegister(userRegister) {
 						Log.i("ds3m - SAVE USER", it.toString())
-
 					}
 					val openMainActivity = Intent(context, MainActivity::class.java)
 					startActivity(context, openMainActivity, null)
@@ -314,13 +314,13 @@ fun LocalizationForm(userInfos: UserInfos) {
 		Button(
 			onClick = {
 				val userAddress = Address(
-					zipCodeState,
-					cityStateValue,
-					stateStateValue,
-					streetStateValue,
-					neighborhoodStateValue,
-					numberState,
-					complementState
+					zipCode = zipCodeState,
+					city = cityStateValue,
+					state = stateStateValue,
+					street = streetStateValue,
+					neighborhood = neighborhoodStateValue,
+					number = numberState,
+					complement = complementState
 				)
 				val userRegister = UserRegister(
 					name = userInfos.name,
@@ -356,15 +356,15 @@ fun LocalizationForm(userInfos: UserInfos) {
 @Composable
 fun DefaultPreview3() {
 	PetSaudeAppTheme {
-		GlobalLocalization(
-			userInfos = UserInfos(
-				"",
-				"",
-				"",
-				"",
-				"",
-				""
-			)
-		)
+//		GlobalLocalization(
+//			userInfos = UserInfos(
+//				"",
+//				"",
+//				"",
+//				"",
+//				"",
+//				""
+//			)
+//		)
 	}
 }

@@ -15,8 +15,7 @@ fun loginUser (loginEmail: String, loginPassword: String, onComplete: (String) -
 	call.enqueue(object: Callback<Token> {
 		override fun onResponse(call: Call<Token>, response: Response<Token>) {
 			if (response.body()?.token == null) {
-				Log.i("tokenNulo", tokenJWT)
-//				onComplete.invoke(false.toString())
+//				Log.i("tokenNulo", tokenJWT)
 				onComplete.invoke(tokenJWT)
 			} else {
 				tokenJWT = response.body()!!.token

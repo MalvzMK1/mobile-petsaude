@@ -8,5 +8,5 @@ data class UserInfos(
 	val email: String,
 	val password: String,
 	val cellphoneNumber: String,
-	val phoneNumber: String,
+	val phoneNumber: String?,
 ): java.io.Serializable

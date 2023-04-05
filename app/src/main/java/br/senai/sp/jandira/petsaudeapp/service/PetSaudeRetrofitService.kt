@@ -14,17 +14,17 @@ interface PetSaudeRetrofitService {
 
 														// BASE-URL = "https://10.0.2.2:3333" //
 
-//----------------------------------------MainActivity--------------------------------------------//
+//----------------------------------------MainActivity------------------------------------------------------------------------//
 	@POST("signup")
 	fun loginUser(@Body userLogin: UserLogin): Call<Token>
 //	@GET("auth")
 //	fun validationUser(@Headers("Authorization") Token): Call<Token>
 
-//--------------------------------------RegisterActivity------------------------------------------//
+//--------------------------------------RegisterActivity and RegisterAddressActivity------------------------------------------//
 	@POST("user")
 	fun saveUserRegister(@Body register: UserRegister): Call<PostUserResponse>
 
-//-----------------------------------RegisterAdressActivity---------------------------------------//
+//-----------------------------------RegisterProfessionalActivity------------------------------------------------------------//
 
 	@POST("veterinarian/user")
 	fun createVetInfosInAnExistingUser(@Query("userId") userId: Number, @Body vetInfos: VetInfos): Call<VetInfos>
