@@ -10,17 +10,16 @@ import retrofit2.Callback
 import retrofit2.Response
 
 fun saveUserRegister(userRegister: UserRegister, onComplete: (PostUserResponse) -> Unit) {
-//	Log.i("O QUE TEM AQUI", userRegister.toString())
 	val call = RetrofitFactory().retrofitService().saveUserRegister(userRegister)
 
 	call.enqueue(object: Callback<PostUserResponse> {
 		override fun onResponse(call: Call<PostUserResponse>, response: Response<PostUserResponse>) {
-//			Log.i("RESPONSE SUCCESS", response.body().toString())
+			Log.i("RESPONSE SUCCESS - SAVE USER", response.body().toString())
 			onComplete.invoke(response.body()!!)
 		}
 
 		override fun onFailure(call: Call<PostUserResponse>, t: Throwable) {
-			Log.i("RESPONSE FAILURE", t.message.toString())
+			Log.i("RESPONSE ERROR - SAVE USER", t.message.toString())
 		}
 	})
 }

@@ -48,9 +48,7 @@ import java.util.*
 
 class ProfessionalRegisterActivity : ComponentActivity() {
 	override fun onCreate(savedInstanceState: Bundle?) {
-
 		val userInfosRegister: UserRegister = intent.getSerializableExtra("userInfos") as UserRegister
-
 		super.onCreate(savedInstanceState)
 		setContent {
 			PetSaudeAppTheme {
@@ -469,7 +467,7 @@ fun ProfessionalRegisterForm(userInfosRegister: UserRegister) {
 				isErrorFormationDateState ||
 				isErrorStartAtuatingDateState
 			) {
-				Toast.makeText(context, "Campos vazios", Toast.LENGTH_SHORT).show()
+				Toast.makeText(context, "Campos obrigatórios não preenchidos!", Toast.LENGTH_SHORT).show()
 			} else {
 				val vetInfos = VetInfos(
 					crmv = crmvState,
@@ -479,12 +477,15 @@ fun ProfessionalRegisterForm(userInfosRegister: UserRegister) {
 					occupationArea = occupationAreaState,
 					startActingDate = startAtuatingDateState
 				)
-				val userRegister = saveUserRegister(userInfosRegister) {
+				// TODO: CADASTRO DE USUÁRIO VETERINARIO - ****CONCLUIDO****
+				val userRegisterVet = saveUserRegister(userInfosRegister) {
 					Log.i("CREATE USER RESPONSE", it.toString())
 					val id = it.id
+//					Toast.makeText(context, "${it.id}", Toast.LENGTH_SHORT).show()
 					val createVetInfos = createUserVetInfos(id, vetInfos) {
 						Toast.makeText(context, "Usuário criado com sucesso", Toast.LENGTH_SHORT).show()
 						val openMainActivity = Intent(context, MainActivity::class.java)
+						openMainActivity.putExtra("userID", id)
 						startActivity(context, openMainActivity, null)
 					}
 				}
@@ -495,7 +496,7 @@ fun ProfessionalRegisterForm(userInfosRegister: UserRegister) {
 		colors = ButtonDefaults.buttonColors(MaterialTheme.colors.secondary)
 	) {
 		Text(
-			text = stringResource(id = R.string.enter_string_resource),
+			text = stringResource(id = R.string.register_string_resource),
 			fontSize = 24.sp,
 			fontWeight = FontWeight.Bold,
 			color = MaterialTheme.colors.onSecondary

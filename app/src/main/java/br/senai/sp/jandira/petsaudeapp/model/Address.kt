@@ -8,4 +8,4 @@ data class Address(
 	val neighborhood: String,
 	val number: String,
 	val complement: String?
-)
+):java.io.Serializable

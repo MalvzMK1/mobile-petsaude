@@ -17,27 +17,32 @@
         android:theme="@style/Theme.PetSaudeApp"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:name=".ui.profile.UserPetsActivity"
+            android:exported="false"
+            android:label="@string/title_activity_user_pets"
+            android:theme="@style/Theme.PetSaudeApp" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/key_maps_google"/>
+            android:value="@string/key_maps_google" />
 
         <activity
             android:name=".ui.profile.ProfileVisityActivity"
             android:exported="true"
             android:label="@string/title_activity_profile_visity"
-            android:theme="@style/Theme.PetSaudeApp" >
+            android:theme="@style/Theme.PetSaudeApp">
         </activity>
         <activity
             android:name=".ui.profile.UserInfoPersonalActivity"
             android:exported="true"
             android:label="@string/title_activity_user_info_personal"
-            android:theme="@style/Theme.PetSaudeApp"></activity>
+            android:theme="@style/Theme.PetSaudeApp" />
         <activity
             android:name=".ui.profile.UserProfessionalActivity"
             android:exported="true"
             android:label="@string/title_activity_user_professional"
-            android:theme="@style/Theme.PetSaudeApp"></activity>
+            android:theme="@style/Theme.PetSaudeApp" />
         <activity
             android:name=".ui.profile.UserSecurityActivity"
             android:exported="false"
@@ -47,18 +52,17 @@
             android:name=".ui.profile.UserLocationActivity"
             android:exported="true"
             android:label="@string/title_activity_user_location"
-            android:theme="@style/Theme.PetSaudeApp"></activity>
+            android:theme="@style/Theme.PetSaudeApp" />
         <activity
             android:name=".ui.profile.UserConfigActivity"
             android:exported="true"
             android:label="@string/title_activity_user_config"
-            android:theme="@style/Theme.PetSaudeApp">
-        </activity>
+            android:theme="@style/Theme.PetSaudeApp"></activity>
         <activity
             android:name=".ui.HomePetActivity"
             android:exported="true"
             android:label="@string/title_activity_home_pet"
-            android:theme="@style/Theme.PetSaudeApp"></activity>
+            android:theme="@style/Theme.PetSaudeApp" />
         <activity
             android:name=".ui.authentication.ProfessionalRegisterActivity"
             android:exported="false"
@@ -68,22 +72,22 @@
             android:name=".ui.authentication.RegisterAddressActivity"
             android:exported="true"
             android:label="@string/title_activity_register_address"
-            android:theme="@style/Theme.PetSaudeApp"></activity>
+            android:theme="@style/Theme.PetSaudeApp" />
         <activity
             android:name=".ui.authentication.RegisterActivity"
             android:exported="true"
             android:label="@string/title_activity_register"
-            android:theme="@style/Theme.PetSaudeApp" >
+            android:theme="@style/Theme.PetSaudeApp"></activity>
+        <activity
+            android:name=".ui.authentication.MainActivity"
+            android:exported="true"
+            android:theme="@style/Theme.PetSaudeApp">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".ui.authentication.MainActivity"
-            android:exported="true"
-            android:theme="@style/Theme.PetSaudeApp"></activity>
     </application>
 
 </manifest>

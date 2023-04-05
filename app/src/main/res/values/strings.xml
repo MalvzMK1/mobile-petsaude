@@ -65,6 +65,7 @@
     <string name="hide_pass_alt">Hide password</string>
     <string name="show_pass_alt">Show password</string>
     <string name="enter_string_resource">Enter</string>
+    <string name="register_string_resource">Resgister</string>
     <string name="or_use_email">Or use the e-mail</string>
     <string name="zip_code_string_resource">Zip Code</string>
     <string name="city_string_resource">City</string>
@@ -111,5 +112,6 @@
     <string name="title_activity_user_professional">UserProfessionalActivity</string>
     <string name="title_activity_user_info_personal">UserInfoPersonalActivity</string>
     <string name="title_activity_profile_visity">ProfileVisityActivity</string>
+    <string name="title_activity_user_pets">UserPetsActivity</string>
 
 </resources>

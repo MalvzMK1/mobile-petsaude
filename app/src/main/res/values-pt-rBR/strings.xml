@@ -60,6 +60,7 @@
     <string name="email_string_resource">E-mail</string>
     <string name="password_string_resource">Senha</string>
     <string name="enter_string_resource">Entrar</string>
+    <string name="register_string_resource">Cadastre-se</string>
     <string name="hide_pass_alt">Esconder senha</string>
     <string name="show_pass_alt">Mostrar senha</string>
     <string name="name_string_resource">Nome</string>

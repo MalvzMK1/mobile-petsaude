@@ -206,16 +206,13 @@ fun LocalizationForm(userInfos: UserInfos) {
 	Spacer(Modifier.height(16.dp))
 	cityState = TextFieldAddressInput(
 		textPut = cityStateValue,
-//		textPut = cityState,
 		label = stringResource(id = R.string.city_string_resource),
 		type = KeyboardType.Text,
 		errorState = isErrorCityState
 	)
-	Log.i("ds3m", " --------------------- $cityState")
 	Spacer(Modifier.height(16.dp))
 	stateState = TextFieldAddressInput(
 		textPut = stateStateValue,
-//		textPut = stateState,
 		label = stringResource(id = R.string.state_string_resource),
 		type = KeyboardType.Text,
 		errorState = isErrorStateState
@@ -273,8 +270,8 @@ fun LocalizationForm(userInfos: UserInfos) {
 				} else {
 					val userAddress = Address(
 						zipCode = zipCodeState,
-						city = cityStateValue,
-						state = stateStateValue,
+						city = "osasco",
+						state = "sao paulo",
 						street = streetStateValue,
 						neighborhood = neighborhoodStateValue,
 						number = numberState,
@@ -289,9 +286,9 @@ fun LocalizationForm(userInfos: UserInfos) {
 						phoneNumber = userInfosNow.phoneNumber,
 						address = userAddress
 					)
-					// TODO: CADASTRO DE USUÁRIO PADRÃO
+					// TODO: CADASTRO DE USUÁRIO PADRÃO - ****CONCLUIDO****
 					val responseSaveUser = saveUserRegister(userRegister) {
-						Log.i("ds3m - SAVE USER", it.toString())
+						Log.i("SAVE USER", it.toString())
 					}
 					val openMainActivity = Intent(context, MainActivity::class.java)
 					startActivity(context, openMainActivity, null)
@@ -315,8 +312,8 @@ fun LocalizationForm(userInfos: UserInfos) {
 			onClick = {
 				val userAddress = Address(
 					zipCode = zipCodeState,
-					city = cityStateValue,
-					state = stateStateValue,
+					city = "osasco",
+					state = "sao paulo",
 					street = streetStateValue,
 					neighborhood = neighborhoodStateValue,
 					number = numberState,

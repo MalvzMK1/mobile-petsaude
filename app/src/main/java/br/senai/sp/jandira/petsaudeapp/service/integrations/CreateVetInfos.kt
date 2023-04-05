@@ -12,12 +12,12 @@ fun createUserVetInfos(userId: Number, vetInfos: VetInfos, onComplete: (VetInfos
 
 	call.enqueue(object: Callback<VetInfos> {
 		override fun onResponse(call: Call<VetInfos>, response: Response<VetInfos>) {
-			Log.i("CREATE USER VET RESPONSE", response.toString())
+			Log.i("RESPONSE SUCCESS - VET", response.toString())
 			onComplete.invoke(response.body()!!)
 		}
 
 		override fun onFailure(call: Call<VetInfos>, t: Throwable) {
-			Log.i("DS3M", t.message.toString())
+			Log.i("RESPONSE ERROR - VET", t.message.toString())
 		}
 	})
 }

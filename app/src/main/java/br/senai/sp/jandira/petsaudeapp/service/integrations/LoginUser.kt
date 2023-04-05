@@ -1,8 +1,9 @@
-package br.senai.sp.jandira.petsaudeapp.service
+package br.senai.sp.jandira.petsaudeapp.service.integrations
 
 import android.util.Log
 import br.senai.sp.jandira.petsaudeapp.model.Token
 import br.senai.sp.jandira.petsaudeapp.model.UserLogin
+import br.senai.sp.jandira.petsaudeapp.service.RetrofitFactory
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -15,16 +16,16 @@ fun loginUser (loginEmail: String, loginPassword: String, onComplete: (String) -
 	call.enqueue(object: Callback<Token> {
 		override fun onResponse(call: Call<Token>, response: Response<Token>) {
 			if (response.body()?.token == null) {
-//				Log.i("tokenNulo", tokenJWT)
+				Log.i("RESPONSE ERR - LOGIN JWT", response.body().toString())
 				onComplete.invoke(tokenJWT)
 			} else {
 				tokenJWT = response.body()!!.token
-//				Log.i("CHEGOU", tokenJWT)
+				Log.i("RESPONSE SUCCESS - LOGIN JWT", response.body().toString())
 				onComplete.invoke(tokenJWT)
 			}
 		}
 		override fun onFailure(call: Call<Token>, t: Throwable) {
-			Log.i("ERROR DS3M", t.message.toString())
+			Log.i("RESPONSE ERROR - LOGIN JWT", t.message.toString())
 		}
 	})
 	return tokenJWT

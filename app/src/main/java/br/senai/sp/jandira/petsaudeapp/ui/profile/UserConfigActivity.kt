@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import br.senai.sp.jandira.petsaudeapp.R
 import br.senai.sp.jandira.petsaudeapp.components.ConfigHeader
+import br.senai.sp.jandira.petsaudeapp.service.integrations.getUserInfosById
 import br.senai.sp.jandira.petsaudeapp.ui.authentication.RegisterActivity
 import br.senai.sp.jandira.petsaudeapp.ui.theme.PetSaudeAppTheme
 
@@ -34,8 +35,7 @@ class UserConfigActivity : ComponentActivity() {
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 
-		//CRIAR UM IF() PARA QUE O BUTTON MUDE A FUNCAO DE ABERTURA DE TELA
-		//E O TEXTO, QUANDO O PERFIL FOR DE PROFISSIONAIS OU DE TUTORES !!
+		val isVet = getUserInfosById(userId)
 
 		setContent {
 			PetSaudeAppTheme {
@@ -66,7 +66,7 @@ fun GlobalUserConfig(context: Context) {
 			icon = Icons.Filled.Settings
 		)
 		UserProfile()
-		UserPreferences()
+		UserPreferences(isVet)
 	}
 }
 
@@ -85,7 +85,7 @@ fun UserProfile() {
 			shape = RoundedCornerShape(35.dp),
 			elevation = 2.dp
 		) {
-			
+
 			//---------- COLOCAR IMAGEM DE PERFIL DO USUARIO ----------//
 
 		}
@@ -107,7 +107,7 @@ fun UserProfile() {
 				//---------- COLOCAR EMAIL DE CADASTRO DO USUARIO ----------//
 
 				text = "hayley.williams@useremail.com",
-				color = Color(169,169,169),
+				color = Color(169, 169, 169),
 				fontSize = 12.sp,
 				fontWeight = FontWeight.W400
 			)
@@ -116,7 +116,7 @@ fun UserProfile() {
 }
 
 @Composable
-fun UserPreferences() {
+fun UserPreferences(isVet: Boolean) {
 	val context = LocalContext.current
 	Column(
 		modifier = Modifier.fillMaxSize()
@@ -139,7 +139,7 @@ fun UserPreferences() {
 				.padding(bottom = 4.dp),
 			elevation = ButtonDefaults.elevation(0.dp),
 			shape = RoundedCornerShape(size = 12.dp),
-			border = BorderStroke(0.5.dp, Color(202,196,208)),
+			border = BorderStroke(0.5.dp, Color(202, 196, 208)),
 			colors = ButtonDefaults.buttonColors(
 				backgroundColor = Color.Transparent,
 				contentColor = Color.Black
@@ -150,24 +150,24 @@ fun UserPreferences() {
 				horizontalArrangement = Arrangement.SpaceBetween,
 				verticalAlignment = Alignment.CenterVertically
 			) {
-					Row(
-						modifier = Modifier.padding(start = 4.dp),
-						horizontalArrangement = Arrangement.Start,
-						verticalAlignment = Alignment.CenterVertically
-					) {
-						Icon(
-							imageVector = Icons.Filled.Person,
-							contentDescription = "Person",
-							modifier = Modifier.size(30.dp)
-						)
-						Text(
-							text = stringResource(id = R.string.user_config_personal_information),
-							modifier = Modifier.padding(start = 16.dp),
-							color = Color(28,27,31),
-							fontSize = 16.sp,
-							fontWeight = FontWeight.Normal
-						)
-					}
+				Row(
+					modifier = Modifier.padding(start = 4.dp),
+					horizontalArrangement = Arrangement.Start,
+					verticalAlignment = Alignment.CenterVertically
+				) {
+					Icon(
+						imageVector = Icons.Filled.Person,
+						contentDescription = "Person",
+						modifier = Modifier.size(30.dp)
+					)
+					Text(
+						text = stringResource(id = R.string.user_config_personal_information),
+						modifier = Modifier.padding(start = 16.dp),
+						color = Color(28, 27, 31),
+						fontSize = 16.sp,
+						fontWeight = FontWeight.Normal
+					)
+				}
 				Icon(
 					imageVector = Icons.Default.ArrowForwardIos,
 					contentDescription = "ArrowForwardIos",
@@ -186,7 +186,7 @@ fun UserPreferences() {
 				.padding(bottom = 4.dp),
 			elevation = ButtonDefaults.elevation(0.dp),
 			shape = RoundedCornerShape(size = 12.dp),
-			border = BorderStroke(0.5.dp, Color(202,196,208)),
+			border = BorderStroke(0.5.dp, Color(202, 196, 208)),
 			colors = ButtonDefaults.buttonColors(
 				backgroundColor = Color.Transparent,
 				contentColor = Color.Black
@@ -210,7 +210,7 @@ fun UserPreferences() {
 					Text(
 						text = stringResource(id = R.string.user_config_security),
 						modifier = Modifier.padding(start = 16.dp),
-						color = Color(28,27,31),
+						color = Color(28, 27, 31),
 						fontSize = 16.sp,
 						fontWeight = FontWeight.Normal
 					)
@@ -233,7 +233,7 @@ fun UserPreferences() {
 				.padding(bottom = 4.dp),
 			elevation = ButtonDefaults.elevation(0.dp),
 			shape = RoundedCornerShape(size = 12.dp),
-			border = BorderStroke(0.5.dp, Color(202,196,208)),
+			border = BorderStroke(0.5.dp, Color(202, 196, 208)),
 			colors = ButtonDefaults.buttonColors(
 				backgroundColor = Color.Transparent,
 				contentColor = Color.Black
@@ -257,7 +257,7 @@ fun UserPreferences() {
 					Text(
 						text = stringResource(id = R.string.user_config_location),
 						modifier = Modifier.padding(start = 16.dp),
-						color = Color(28,27,31),
+						color = Color(28, 27, 31),
 						fontSize = 16.sp,
 						fontWeight = FontWeight.Normal
 					)
@@ -287,7 +287,7 @@ fun UserPreferences() {
 				.padding(bottom = 4.dp),
 			elevation = ButtonDefaults.elevation(0.dp),
 			shape = RoundedCornerShape(size = 12.dp),
-			border = BorderStroke(0.5.dp, Color(202,196,208)),
+			border = BorderStroke(0.5.dp, Color(202, 196, 208)),
 			colors = ButtonDefaults.buttonColors(
 				backgroundColor = Color.Transparent,
 				contentColor = Color.Black
@@ -311,7 +311,7 @@ fun UserPreferences() {
 					Text(
 						text = stringResource(id = R.string.user_config_queries),
 						modifier = Modifier.padding(start = 16.dp),
-						color = Color(28,27,31),
+						color = Color(28, 27, 31),
 						fontSize = 16.sp,
 						fontWeight = FontWeight.Normal
 					)
@@ -323,17 +323,16 @@ fun UserPreferences() {
 				)
 			}
 		}
-
-
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-												//CRIAR UM IF() PARA QUE O BUTTON MUDE A FUNCAO DE ABERTURA DE TELA
-												//E O TEXTO, QUANDO O PERFIL FOR DE PROFISSIONAIS OU DE TUTORES !!
-
 		Button(
 			onClick = {
-
-				val openProfessionalActivity = Intent(context, UserProfessionalActivity::class.java)
-				ContextCompat.startActivity(context, openProfessionalActivity, null)
+				if (isVet) {
+					val openProfessionalActivity = Intent(context, UserProfessionalActivity::class.java)
+					ContextCompat.startActivity(context, openProfessionalActivity, null)
+				} else {
+					val openPetsActivity = Intent(context, UserPetsActivity::class.java)
+					ContextCompat.startActivity(context, openPetsActivity, null)
+				}
 			},
 			modifier = Modifier
 				.fillMaxWidth()
@@ -341,7 +340,7 @@ fun UserPreferences() {
 				.padding(bottom = 4.dp),
 			elevation = ButtonDefaults.elevation(0.dp),
 			shape = RoundedCornerShape(size = 12.dp),
-			border = BorderStroke(0.5.dp, Color(202,196,208)),
+			border = BorderStroke(0.5.dp, Color(202, 196, 208)),
 			colors = ButtonDefaults.buttonColors(
 				backgroundColor = Color.Transparent,
 				contentColor = Color.Black
@@ -363,9 +362,15 @@ fun UserPreferences() {
 						modifier = Modifier.size(30.dp)
 					)
 					Text(
-						text = stringResource(id = R.string.user_config_professional_information),
+						text = {
+							if (isVet) {
+								stringResource(id = R.string.user_config_professional_information)
+							} else {
+								stringResource(id = R.string.user_config_pets)
+							}
+						},
 						modifier = Modifier.padding(start = 16.dp),
-						color = Color(28,27,31),
+						color = Color(28, 27, 31),
 						fontSize = 16.sp,
 						fontWeight = FontWeight.Normal
 					)
@@ -377,59 +382,56 @@ fun UserPreferences() {
 				)
 			}
 		}
-
-		////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-		//-------------------------------------------------- SAIR ---------------------------------------------------//
-		Spacer(modifier = Modifier.height(32.dp))
-		Button(
-			onClick = {
-				/*TODO*/
-			},
-			modifier = Modifier
-				.fillMaxWidth()
-				.height(70.dp)
-				.padding(bottom = 4.dp),
-			elevation = ButtonDefaults.elevation(0.dp),
-			shape = RoundedCornerShape(size = 12.dp),
-			border = BorderStroke(0.5.dp, Color(179,38,30)),
-			colors = ButtonDefaults.buttonColors(
-				backgroundColor = Color.Transparent,
-				contentColor = Color(179,38,30)
-			)
+	}
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//-------------------------------------------------- SAIR ---------------------------------------------------//
+	Spacer(modifier = Modifier.height(32.dp))
+	Button(
+		onClick = {
+			/*TODO*/
+		},
+		modifier = Modifier
+			.fillMaxWidth()
+			.height(70.dp)
+			.padding(bottom = 4.dp),
+		elevation = ButtonDefaults.elevation(0.dp),
+		shape = RoundedCornerShape(size = 12.dp),
+		border = BorderStroke(0.5.dp, Color(179, 38, 30)),
+		colors = ButtonDefaults.buttonColors(
+			backgroundColor = Color.Transparent,
+			contentColor = Color(179, 38, 30)
+		)
+	) {
+		Row(
+			modifier = Modifier.fillMaxWidth(),
+			horizontalArrangement = Arrangement.SpaceBetween,
+			verticalAlignment = Alignment.CenterVertically
 		) {
 			Row(
-				modifier = Modifier.fillMaxWidth(),
-				horizontalArrangement = Arrangement.SpaceBetween,
+				modifier = Modifier.padding(start = 4.dp),
+				horizontalArrangement = Arrangement.Start,
 				verticalAlignment = Alignment.CenterVertically
 			) {
-				Row(
-					modifier = Modifier.padding(start = 4.dp),
-					horizontalArrangement = Arrangement.Start,
-					verticalAlignment = Alignment.CenterVertically
-				) {
-					Icon(
-						imageVector = Icons.Filled.Logout,
-						contentDescription = "Logout",
-						modifier = Modifier.size(30.dp),
-						tint = Color(179,38,30)
-					)
-					Text(
-						text = stringResource(id = R.string.user_config_logout),
-						modifier = Modifier.padding(start = 16.dp),
-						color = Color(179,38,30),
-						fontSize = 16.sp,
-						fontWeight = FontWeight.Normal
-					)
-				}
 				Icon(
-					imageVector = Icons.Default.ArrowForwardIos,
-					contentDescription = "ArrowForwardIos",
-					modifier = Modifier.size(25.dp),
-					tint = Color(179,39,30)
+					imageVector = Icons.Filled.Logout,
+					contentDescription = "Logout",
+					modifier = Modifier.size(30.dp),
+					tint = Color(179, 38, 30)
+				)
+				Text(
+					text = stringResource(id = R.string.user_config_logout),
+					modifier = Modifier.padding(start = 16.dp),
+					color = Color(179, 38, 30),
+					fontSize = 16.sp,
+					fontWeight = FontWeight.Normal
 				)
 			}
+			Icon(
+				imageVector = Icons.Default.ArrowForwardIos,
+				contentDescription = "ArrowForwardIos",
+				modifier = Modifier.size(25.dp),
+				tint = Color(179, 39, 30)
+			)
 		}
 	}
 }

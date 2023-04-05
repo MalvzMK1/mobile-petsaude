@@ -1,4 +1,4 @@
-package br.senai.sp.jandira.petsaudeapp.service
+package br.senai.sp.jandira.petsaudeapp.service.integrations
 
 //import br.senai.sp.jandira.petsaudeapp.model.Token
 //import retrofit2.Call
