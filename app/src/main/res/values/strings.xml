@@ -84,6 +84,18 @@
     <string name="start_atuating_date_professional">Atuation beginning</string>
     <string name="user_config_rg_id_card">ID Card</string>
     <string name="reviews_professional">Reviews</string>
+    <string name="review_professional">Review</string>
+    <string name="score_professional">Score</string>
+    <string name="total_queries_profile">Total queries</string>
+    <string name="finished_appointments_profile">Finished appointments</string>
+    <string name="to_schedule_an_appointment_profile">To schedule an appointment</string>
+    <string name="select_the_animal_agendamento">Select the animal</string>
+    <string name="date_and_time_agendamento">Date and Time</string>
+    <string name="date_agendamento">Date</string>
+    <string name="time_agendamento">Time</string>
+    <string name="to_mark_agendamento">To mark</string>
+    <string name="cancel_agendamento">Cancel</string>
+    <string name="about_me_profile">About me</string>
 
     // SPECIALITIES
 

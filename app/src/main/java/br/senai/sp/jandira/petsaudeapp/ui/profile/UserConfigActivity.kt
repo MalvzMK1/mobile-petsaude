@@ -35,7 +35,7 @@ class UserConfigActivity : ComponentActivity() {
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 
-		val isVet = getUserInfosById(userId)
+//		val isVet = getUserInfosById(userId)
 
 		setContent {
 			PetSaudeAppTheme {
@@ -66,7 +66,8 @@ fun GlobalUserConfig(context: Context) {
 			icon = Icons.Filled.Settings
 		)
 		UserProfile()
-		UserPreferences(isVet)
+//		UserPreferences(isVet)
+		UserPreferences()
 	}
 }
 
@@ -85,9 +86,7 @@ fun UserProfile() {
 			shape = RoundedCornerShape(35.dp),
 			elevation = 2.dp
 		) {
-
 			//---------- COLOCAR IMAGEM DE PERFIL DO USUARIO ----------//
-
 		}
 		Spacer(modifier = Modifier.width(16.dp))
 		Column(
@@ -95,9 +94,7 @@ fun UserProfile() {
 				.fillMaxWidth()
 		) {
 			Text(
-
 				//---------- COLOCAR NOME DE PERFIL DO USUARIO ----------//
-
 				text = "Hayley Williams",
 				fontSize = 22.sp,
 				fontWeight = FontWeight.W400
@@ -116,7 +113,7 @@ fun UserProfile() {
 }
 
 @Composable
-fun UserPreferences(isVet: Boolean) {
+fun UserPreferences() {
 	val context = LocalContext.current
 	Column(
 		modifier = Modifier.fillMaxSize()
@@ -326,13 +323,13 @@ fun UserPreferences(isVet: Boolean) {
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		Button(
 			onClick = {
-				if (isVet) {
-					val openProfessionalActivity = Intent(context, UserProfessionalActivity::class.java)
-					ContextCompat.startActivity(context, openProfessionalActivity, null)
-				} else {
-					val openPetsActivity = Intent(context, UserPetsActivity::class.java)
-					ContextCompat.startActivity(context, openPetsActivity, null)
-				}
+//				if (isVet) {
+//					val openProfessionalActivity = Intent(context, UserProfessionalActivity::class.java)
+//					ContextCompat.startActivity(context, openProfessionalActivity, null)
+//				} else {
+//					val openPetsActivity = Intent(context, UserPetsActivity::class.java)
+//					ContextCompat.startActivity(context, openPetsActivity, null)
+//				}
 			},
 			modifier = Modifier
 				.fillMaxWidth()
@@ -361,14 +358,21 @@ fun UserPreferences(isVet: Boolean) {
 						contentDescription = "Work",
 						modifier = Modifier.size(30.dp)
 					)
+//					Text(
+//						text = {
+//							if (isVet) {
+//								stringResource(id = R.string.user_config_professional_information)
+//							} else {
+//								stringResource(id = R.string.user_config_pets)
+//							}
+//						},
+//						modifier = Modifier.padding(start = 16.dp),
+//						color = Color(28, 27, 31),
+//						fontSize = 16.sp,
+//						fontWeight = FontWeight.Normal
+//					)
 					Text(
-						text = {
-							if (isVet) {
-								stringResource(id = R.string.user_config_professional_information)
-							} else {
-								stringResource(id = R.string.user_config_pets)
-							}
-						},
+						text = stringResource(id = R.string.user_config_professional_information),
 						modifier = Modifier.padding(start = 16.dp),
 						color = Color(28, 27, 31),
 						fontSize = 16.sp,
