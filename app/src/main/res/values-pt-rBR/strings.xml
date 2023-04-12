@@ -91,6 +91,12 @@
     <string name="finished_appointments_profile">Consultas realizadas</string>
     <string name="to_schedule_an_appointment_profile">Agendar uma Consulta</string>
     <string name="about_me_profile">Sobre mim</string>
+    <string name="select_the_animal_agendamento">Selecione o animal</string>
+    <string name="date_and_time_agendamento">Data e Hora</string>
+    <string name="date_agendamento">Data</string>
+    <string name="time_agendamento">Hora</string>
+    <string name="to_mark_agendamento">Marcar</string>
+    <string name="cancel_agendamento">Cancelar</string>
 
     //NAME ACTIVITY
 

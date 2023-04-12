@@ -1,10 +1,8 @@
 package br.senai.sp.jandira.petsaudeapp.service
 
-import br.senai.sp.jandira.petsaudeapp.model.Token
-import br.senai.sp.jandira.petsaudeapp.model.UserLogin
-import br.senai.sp.jandira.petsaudeapp.model.UserRegister
-import br.senai.sp.jandira.petsaudeapp.model.VetInfos
+import br.senai.sp.jandira.petsaudeapp.model.*
 import br.senai.sp.jandira.petsaudeapp.service.response.PostUserResponse
+import br.senai.sp.jandira.petsaudeapp.service.response.PostUserVetResponse
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -23,13 +21,16 @@ interface PetSaudeRetrofitService {
 
 //--------------------------------------RegisterActivity and RegisterAddressActivity------------------------------------------//
 	@POST("user")
-	fun saveUserRegister(@Body register: UserRegister): Call<PostUserResponse>
+	fun saveUserRegister(@Body register: UserInfos): Call<PostUserResponse>
 
 //-------------------------------------------RegisterProfessionalActivity-----------------------------------------------------//
-	@POST("veterinarian/user")
-	fun createVetInfosInAnExistingUser(@Query("userId") userId: Number, @Body vetInfos: VetInfos): Call<VetInfos>
+	@POST("veterinary")
+	fun saveUserRegisterVet(@Body registerVet: UserRegister): Call<PostUserVetResponse>
 
 //----------------------------------------------UserConfigActivity------------------------------------------------------------//
-	@GET("user")
-	fun getUserById(@Query("userId") userId: Number): Call<PostUserResponse>
+	@GET("user") // User Default
+	fun getUserById(@Query("userId") userId: Number): Call<UserInfos>
+
+//	@GET("user") // User Veterinary
+//	fun getUseVetById(@Query("userId") userId: Number): Call<UserRegister>
 }

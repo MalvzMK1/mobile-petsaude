@@ -33,6 +33,7 @@ import br.senai.sp.jandira.petsaudeapp.components.MaskedZipCodeInput
 import br.senai.sp.jandira.petsaudeapp.components.TextFieldAddressInput
 import br.senai.sp.jandira.petsaudeapp.components.TextFieldInput
 import br.senai.sp.jandira.petsaudeapp.model.Address
+import br.senai.sp.jandira.petsaudeapp.model.UserDefault
 import br.senai.sp.jandira.petsaudeapp.model.UserInfos
 import br.senai.sp.jandira.petsaudeapp.model.UserRegister
 import br.senai.sp.jandira.petsaudeapp.service.integrations.saveUserRegister
@@ -52,7 +53,7 @@ import retrofit2.http.Path
 class RegisterAddressActivity : ComponentActivity() {
 	override fun onCreate(savedInstanceState: Bundle?) {
 
-		val userInfos: UserInfos = intent.getSerializableExtra("userInfosRegister") as UserInfos
+		val userInfos: UserDefault = intent.getSerializableExtra("userInfosRegister") as UserDefault
 //		val userInfos = UserInfos(
 //			"",
 //			"",
@@ -80,7 +81,7 @@ class RegisterAddressActivity : ComponentActivity() {
 }
 
 @Composable
-fun GlobalLocalization(userInfos: UserInfos) {
+fun GlobalLocalization(userInfos: UserDefault) {
 	val context = LocalContext.current
 
 	Column(
@@ -141,7 +142,7 @@ fun LocalizationHeader() {
 }
 
 @Composable
-fun LocalizationForm(userInfos: UserInfos) {
+fun LocalizationForm(userInfos: UserDefault) {
 	val context = LocalContext.current
 
 	var zipCodeState = ""
@@ -248,7 +249,7 @@ fun LocalizationForm(userInfos: UserInfos) {
 		modifier = Modifier.padding(bottom = 32.dp),
 		horizontalArrangement = Arrangement.SpaceBetween
 	) {
-		val userInfosNow = userInfos
+//		val userInfosNow = userInfos
 		Button(
 			onClick = {
 				isErrorZipCodeState = validateEmptyInput(zipCodeState)
@@ -277,19 +278,20 @@ fun LocalizationForm(userInfos: UserInfos) {
 						number = numberState,
 						complement = complementState
 					)
-					val userRegister = UserRegister(
-						name = userInfosNow.name,
-						itp = userInfosNow.itp,
-						email = userInfosNow.email,
-						password = userInfosNow.password,
-						cellphoneNumber = userInfosNow.cellphoneNumber,
-						phoneNumber = userInfosNow.phoneNumber,
+					val userRegister = UserInfos(
+						name = userInfos.name,
+						itp = userInfos.itp,
+						email = userInfos.email,
+						password = userInfos.password,
+						cellphoneNumber = userInfos.cellphoneNumber,
+						phoneNumber = userInfos.phoneNumber,
 						address = userAddress
 					)
 					// TODO: CADASTRO DE USUÁRIO PADRÃO - ****CONCLUIDO****
 					val responseSaveUser = saveUserRegister(userRegister) {
 						Log.i("SAVE USER", it.toString())
 					}
+					Log.i("responseSaveUser", responseSaveUser.toString())
 					val openMainActivity = Intent(context, MainActivity::class.java)
 					startActivity(context, openMainActivity, null)
 				}
@@ -312,14 +314,14 @@ fun LocalizationForm(userInfos: UserInfos) {
 			onClick = {
 				val userAddress = Address(
 					zipCode = zipCodeState,
-					city = "osasco",
-					state = "sao paulo",
+					city = cityStateValue,
+					state = stateStateValue,
 					street = streetStateValue,
 					neighborhood = neighborhoodStateValue,
 					number = numberState,
 					complement = complementState
 				)
-				val userRegister = UserRegister(
+				val userRegister = UserInfos(
 					name = userInfos.name,
 					itp = userInfos.itp,
 					email = userInfos.email,

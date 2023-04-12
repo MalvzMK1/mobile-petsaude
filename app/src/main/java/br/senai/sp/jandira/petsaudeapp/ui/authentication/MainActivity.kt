@@ -205,7 +205,7 @@ fun LoginForm() {
 				} else {
 					if (loginEmailState.indexOf("@") != -1) {
 						loginState = loginUser(loginEmailState, loginPasswordState) {
-							Log.i("DS", it)
+//							Log.i("DS", it)
 							loginState = it
 							if (loginState.isNotEmpty()) {
 								val openHomePetActivity = Intent(context, HomePetActivity::class.java)
@@ -214,7 +214,7 @@ fun LoginForm() {
 							} else {
 								isErrorEmailState = true
 								isErrorPasswordState = true
-								Toast.makeText(context, "Email ou Senha Incorretos!!!", Toast.LENGTH_SHORT).show()
+								Toast.makeText(context, "Email ou Senha Incorreto!!!", Toast.LENGTH_SHORT).show()
 							}
 						}
 					} else {

@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat.startActivity
 import br.senai.sp.jandira.petsaudeapp.R
 import br.senai.sp.jandira.petsaudeapp.components.*
+import br.senai.sp.jandira.petsaudeapp.model.UserDefault
 import br.senai.sp.jandira.petsaudeapp.model.UserInfos
 //import br.senai.sp.jandira.petsaudeapp.service.saveUserRegister
 import br.senai.sp.jandira.petsaudeapp.ui.theme.PetSaudeAppTheme
@@ -276,15 +277,15 @@ fun RegisterForm() {
 					isErrorCellphoneNumberState
 				) {
 					Toast.makeText(context, "Campos obrigatórios não preenchidos", Toast.LENGTH_SHORT).show()
-				} else if (passwordState.length >= 6) { //VALIDAR TAMANHO DA SENHA - 6 DIGITOS//
+				} else if (passwordState.length >= 6) {
 						if (checkPassState == passwordState) {
-							val userRegisterInfos = UserInfos(
+							val userRegisterInfos = UserDefault(
 								name = "$nameState $lastNameState",
-								itpState,
-								emailState,
-								passwordState,
-								cellphoneNumberState,
-								phoneNumberState
+								itp = itpState,
+								email = emailState,
+								password = passwordState,
+								cellphoneNumber =  cellphoneNumberState,
+								phoneNumber = phoneNumberState
 							)
 							val openRegisterAddressActivity = Intent(context, RegisterAddressActivity::class.java)
 							openRegisterAddressActivity.putExtra("userInfosRegister", userRegisterInfos)

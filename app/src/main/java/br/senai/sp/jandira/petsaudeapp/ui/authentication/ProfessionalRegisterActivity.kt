@@ -38,17 +38,18 @@ import br.senai.sp.jandira.petsaudeapp.R
 import br.senai.sp.jandira.petsaudeapp.components.AuthHeaderTitle
 import br.senai.sp.jandira.petsaudeapp.components.TextFieldInput
 import br.senai.sp.jandira.petsaudeapp.model.Address
+import br.senai.sp.jandira.petsaudeapp.model.UserInfos
 import br.senai.sp.jandira.petsaudeapp.model.UserRegister
 import br.senai.sp.jandira.petsaudeapp.model.VetInfos
-import br.senai.sp.jandira.petsaudeapp.service.integrations.createUserVetInfos
-import br.senai.sp.jandira.petsaudeapp.service.integrations.saveUserRegister
+import br.senai.sp.jandira.petsaudeapp.service.integrations.createUserVet
 import br.senai.sp.jandira.petsaudeapp.ui.theme.PetSaudeAppTheme
 import br.senai.sp.jandira.petsaudeapp.utils.validateEmptyInput
+import com.google.gson.annotations.SerializedName
 import java.util.*
 
 class ProfessionalRegisterActivity : ComponentActivity() {
 	override fun onCreate(savedInstanceState: Bundle?) {
-		val userInfosRegister: UserRegister = intent.getSerializableExtra("userInfos") as UserRegister
+		val userInfosRegister: UserInfos = intent.getSerializableExtra("userInfos") as UserInfos
 		super.onCreate(savedInstanceState)
 		setContent {
 			PetSaudeAppTheme {
@@ -66,7 +67,7 @@ class ProfessionalRegisterActivity : ComponentActivity() {
 }
 
 @Composable
-fun ProfessionalRegisterGlobal(userInfosRegister: UserRegister) {
+fun ProfessionalRegisterGlobal(userInfosRegister: UserInfos) {
 	val context = LocalContext.current
 
 	Column(
@@ -120,7 +121,7 @@ fun ProfessionalRegisterHeader() {
 }
 
 @Composable
-fun ProfessionalRegisterForm(userInfosRegister: UserRegister) {
+fun ProfessionalRegisterForm(userInfosRegister: UserInfos) {
 	val context = LocalContext.current
 
 	var surgeonCheckState by rememberSaveable {
@@ -477,17 +478,30 @@ fun ProfessionalRegisterForm(userInfosRegister: UserRegister) {
 					occupationArea = occupationAreaState,
 					startActingDate = startAtuatingDateState
 				)
+				val userVetRegister = UserRegister(
+					name = userInfosRegister.name,
+					itp = userInfosRegister.itp,
+					email = userInfosRegister.email,
+					password = userInfosRegister.password,
+					cellphoneNumber = userInfosRegister.cellphoneNumber,
+					phoneNumber = userInfosRegister.phoneNumber,
+					address = userInfosRegister.address,
+					crmv = vetInfos.crmv,
+					occupationArea = vetInfos.occupationArea,
+					formation = vetInfos.formation,
+					institution = vetInfos.institution,
+					startActingDate = vetInfos.startActingDate,
+					formationDate = vetInfos.formationDate
+				)
+				//Log.i("USER MODEL", userVetRegister.toString())
 				// TODO: CADASTRO DE USUÁRIO VETERINARIO - ****CONCLUIDO****
-				val userRegisterVet = saveUserRegister(userInfosRegister) {
+				val userRegisterVet = createUserVet(userVetRegister) {
 					Log.i("CREATE USER RESPONSE", it.toString())
 					val id = it.id
-//					Toast.makeText(context, "${it.id}", Toast.LENGTH_SHORT).show()
-					val createVetInfos = createUserVetInfos(id, vetInfos) {
-						Toast.makeText(context, "Usuário criado com sucesso", Toast.LENGTH_SHORT).show()
-						val openMainActivity = Intent(context, MainActivity::class.java)
-						openMainActivity.putExtra("userID", id)
-						startActivity(context, openMainActivity, null)
-					}
+					Toast.makeText(context, "Usuário criado com sucesso", Toast.LENGTH_SHORT).show()
+					val openMainActivity = Intent(context, MainActivity::class.java)
+					openMainActivity.putExtra("userID", id)
+					startActivity(context, openMainActivity, null)
 				}
 			}
 		},
