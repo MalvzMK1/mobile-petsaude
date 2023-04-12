@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import br.senai.sp.jandira.petsaudeapp.R
 import br.senai.sp.jandira.petsaudeapp.components.ConfigHeader
-import br.senai.sp.jandira.petsaudeapp.service.integrations.getUserInfosById
+//import br.senai.sp.jandira.petsaudeapp.service.integrations.getUserInfosById
 import br.senai.sp.jandira.petsaudeapp.ui.authentication.RegisterActivity
 import br.senai.sp.jandira.petsaudeapp.ui.theme.PetSaudeAppTheme
 

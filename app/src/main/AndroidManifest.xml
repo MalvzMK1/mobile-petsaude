@@ -32,6 +32,11 @@
             android:exported="true"
             android:label="@string/title_activity_profile_visity"
             android:theme="@style/Theme.PetSaudeApp">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".ui.profile.UserInfoPersonalActivity"
@@ -58,11 +63,6 @@
             android:exported="true"
             android:label="@string/title_activity_user_config"
             android:theme="@style/Theme.PetSaudeApp">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".ui.HomePetActivity"

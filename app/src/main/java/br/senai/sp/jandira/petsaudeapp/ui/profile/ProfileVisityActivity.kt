@@ -46,6 +46,8 @@ import com.google.android.material.transition.MaterialContainerTransform.FitMode
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.MapProperties
 import com.google.maps.android.compose.MapType
+import java.sql.Time
+import java.text.SimpleDateFormat
 import java.util.*
 
 class ProfileVisityActivity : ComponentActivity() {
@@ -215,11 +217,12 @@ fun PersonProfessional() {
 
 	var timeState by rememberSaveable { mutableStateOf("") }
 	var isErrorTimeState by rememberSaveable { mutableStateOf(false) }
+	val timeFormat = "HH:mm"
+	val timeFormatDisplay = SimpleDateFormat(timeFormat, Locale.getDefault())
 
 	val year: Int
 	val month: Int
 	val day: Int
-
 	val hour: Int
 	val minute: Int
 
@@ -227,8 +230,9 @@ fun PersonProfessional() {
 	year = calendar.get(Calendar.YEAR)
 	month = calendar.get(Calendar.MONTH)
 	day = calendar.get(Calendar.DAY_OF_MONTH)
+	hour = calendar.get(Calendar.HOUR_OF_DAY)
+	minute = calendar.get(Calendar.MINUTE)
 	calendar.time = Date()
-
 
 	val datePickerDialog = DatePickerDialog(
 		context,
@@ -236,43 +240,170 @@ fun PersonProfessional() {
 			dateState = "$month/$dayOfMonth/$year"
 		}, year, month, day
 	)
-
-//	val timePickerDialog = TimePickerDialog(
-//		context,
-//		{ _: TimePicker, hour: Int, minute: Int ->
-//			timeState = "$hour:$minute"
-//		}, hour, minute
-//	)
-
+	val timePickerDialog = TimePickerDialog(
+		context,
+		{ _, hour: Int, minute: Int ->
+			timeState = "$hour:$minute"
+		}, hour, minute, true
+	)
 	AnimatedVisibility(
 		visible = expandState,
-		enter = slideInVertically(tween(durationMillis = 500)) + expandVertically( expandFrom = Alignment.Top),
+		enter = slideInVertically(tween(durationMillis = 500)) + expandVertically(expandFrom = Alignment.Top),
 		exit = slideOutVertically(tween(durationMillis = 500)) + shrinkVertically()
 	) {
 		Card(
 			modifier = Modifier
 				.fillMaxWidth()
-				.wrapContentHeight()
-				.padding(12.dp),
+				.wrapContentHeight(),
 			shape = RoundedCornerShape(12.dp),
+			border = BorderStroke(0.5.dp, Color(202, 196, 208))
 		) {
 			Column(
-				modifier = Modifier.fillMaxWidth()
+				modifier = Modifier
+					.fillMaxWidth()
+					.padding(12.dp)
 			) {
 				Text(
 					text = stringResource(id = R.string.select_the_animal_agendamento),
+					modifier = Modifier.fillMaxWidth(),
 					color = Color.Black,
-					fontSize = 24.sp,
-					fontWeight = FontWeight.W400
+					fontSize = 28.sp,
+					fontWeight = FontWeight.W400,
+					textAlign = TextAlign.Center
 				)
-//				LazyColumn() {
-//
-//				}
+				Spacer(modifier = Modifier.height(14.dp))
+				Box(
+					modifier = Modifier
+						.border(
+							width = 0.5.dp,
+							color = Color(202, 196, 208),
+							shape = RoundedCornerShape(5.dp)
+						)
+				) {
+					Column(
+						modifier = Modifier
+							.fillMaxWidth()
+							.height(82.dp)
+							.verticalScroll(rememberScrollState())
+					) {
+						Card(
+							border = BorderStroke(0.5.dp, Color(202, 196, 208))
+						) {
+							Row(
+								modifier = Modifier
+									.fillMaxWidth()
+									.height(82.dp)
+									.padding(12.dp),
+								verticalAlignment = Alignment.CenterVertically
+							) {
+								Image(
+									//COLOCAR A IMAGEM DO PET A SER ATENDIDO//
+									painter = painterResource(id = R.drawable.media),
+									contentDescription = "Imagem do Pet",
+									modifier = Modifier
+										.size(58.dp),
+									contentScale = ContentScale.Crop
+								)
+								Spacer(modifier = Modifier.width(12.dp))
+								Text(
+									//COLOCAR A NOME DO PET A SER ATENDIDO//
+									text = "it.namePet",
+									fontSize = 20.sp,
+									fontWeight = FontWeight.W400,
+								)
+							}
+						}
+						Card(
+							border = BorderStroke(0.5.dp, Color(202, 196, 208))
+						) {
+							Row(
+								modifier = Modifier
+									.fillMaxWidth()
+									.height(70.dp)
+									.padding(12.dp),
+								verticalAlignment = Alignment.CenterVertically
+							) {
+								Image(
+									//COLOCAR A IMAGEM DO PET A SER ATENDIDO//
+									painter = painterResource(id = R.drawable.media),
+									contentDescription = "Imagem do Pet",
+									modifier = Modifier
+										.size(58.dp),
+									contentScale = ContentScale.Crop
+								)
+								Spacer(modifier = Modifier.width(12.dp))
+								Text(
+									//COLOCAR A NOME DO PET A SER ATENDIDO//
+									text = "it.namePet",
+									fontSize = 20.sp,
+									fontWeight = FontWeight.W400,
+								)
+							}
+						}
+						Card(
+							border = BorderStroke(0.5.dp, Color(202, 196, 208))
+						) {
+							Row(
+								modifier = Modifier
+									.fillMaxWidth()
+									.height(70.dp)
+									.padding(12.dp),
+								verticalAlignment = Alignment.CenterVertically
+							) {
+								Image(
+									//COLOCAR A IMAGEM DO PET A SER ATENDIDO//
+									painter = painterResource(id = R.drawable.media),
+									contentDescription = "Imagem do Pet",
+									modifier = Modifier
+										.size(58.dp),
+									contentScale = ContentScale.Crop
+								)
+								Spacer(modifier = Modifier.width(12.dp))
+								Text(
+									//COLOCAR A NOME DO PET A SER ATENDIDO//
+									text = "it.namePet",
+									fontSize = 20.sp,
+									fontWeight = FontWeight.W400,
+								)
+							}
+						}
+						Card(
+							border = BorderStroke(0.5.dp, Color(202, 196, 208))
+						) {
+							Row(
+								modifier = Modifier
+									.fillMaxWidth()
+									.height(70.dp)
+									.padding(12.dp),
+								verticalAlignment = Alignment.CenterVertically
+							) {
+								Image(
+									//COLOCAR A IMAGEM DO PET A SER ATENDIDO//
+									painter = painterResource(id = R.drawable.media),
+									contentDescription = "Imagem do Pet",
+									modifier = Modifier
+										.size(58.dp),
+									contentScale = ContentScale.Crop
+								)
+								Spacer(modifier = Modifier.width(12.dp))
+								Text(
+									//COLOCAR A NOME DO PET A SER ATENDIDO//
+									text = "it.namePet",
+									fontSize = 20.sp,
+									fontWeight = FontWeight.W400,
+								)
+							}
+						}
+					}
+				}
+				Spacer(modifier = Modifier.height(14.dp))
 				Text(
 					text = stringResource(id = R.string.date_and_time_agendamento),
+					modifier = Modifier.fillMaxWidth(),
 					color = Color.Black,
-					fontSize = 24.sp,
-					fontWeight = FontWeight.W400
+					fontSize = 28.sp,
+					fontWeight = FontWeight.W400,
+					textAlign = TextAlign.Center
 				)
 				OutlinedTextField(
 					value = dateState,
@@ -299,32 +430,35 @@ fun PersonProfessional() {
 					},
 					singleLine = true,
 				)
-//				Spacer(modifier = Modifier.height(18.dp))
-//				OutlinedTextField(
-//					value = timeState,
-//					onValueChange = { if (it.length <= 8) timeState = it },
-//					modifier = Modifier.fillMaxWidth(),
-//					enabled = false,
-//					label = { Text(text = stringResource(id = R.string.time_agendamento)) },
-//					keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-//					isError = isErrorTimeState,
-//					trailingIcon = {
-//						val image = Icons.Default.HistoryToggleOff
-//						val description = "Calendar"
-//
-//						IconButton(onClick = { timePickerDialog.show() }) {
-//							val iconColor = if (isErrorTimeState)
-//								MaterialTheme.colors.error
-//							else MaterialTheme.colors.onBackground
-//							Icon(
-//								imageVector = image,
-//								contentDescription = description,
-//								tint = iconColor
-//							)
-//						}
-//					},
-//					singleLine = true,
-//				)
+				Spacer(modifier = Modifier.height(14.dp))
+				OutlinedTextField(
+//					value = timeFormatDisplay.format(calendar.time),
+					value = timeState,
+					onValueChange = { },
+					modifier = Modifier.fillMaxWidth(),
+					enabled = false,
+					label = { Text(text = stringResource(id = R.string.time_agendamento)) },
+					keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+					isError = isErrorTimeState,
+					trailingIcon = {
+//						val image = Icons.Default.AccessTime
+						val image = Icons.Default.HistoryToggleOff
+						val description = "Timer"
+						IconButton(
+							onClick = { timePickerDialog.show() }
+						) {
+							val iconColor = if (isErrorTimeState)
+								MaterialTheme.colors.error
+							else MaterialTheme.colors.onBackground
+							Icon(
+								imageVector = image,
+								contentDescription = description,
+								tint = iconColor
+							)
+						}
+					},
+					singleLine = true
+				)
 				Spacer(modifier = Modifier.height(12.dp))
 				Row(
 					modifier = Modifier.fillMaxWidth(),
@@ -332,20 +466,22 @@ fun PersonProfessional() {
 				) {
 					Button(
 						onClick = { expandState = false },
+						shape = RoundedCornerShape(32.dp),
 						colors = ButtonDefaults.buttonColors(Color(249, 222, 220))
 					) {
 						Text(
 							text = stringResource(id = R.string.cancel_agendamento),
-							color = Color(65,14,11)
+							color = Color(65, 14, 11)
 						)
 					}
 					Button(
 						onClick = { expandState = false },
+						shape = RoundedCornerShape(32.dp),
 						colors = ButtonDefaults.buttonColors(Color(158, 209, 183))
 					) {
 						Text(
 							text = stringResource(id = R.string.to_mark_agendamento),
-							color = Color(65,86,75)
+							color = Color(65, 86, 75)
 						)
 					}
 				}
@@ -373,12 +509,26 @@ fun AvaliationProfessional() {
 			textAlign = TextAlign.Start
 		)
 		Spacer(modifier = Modifier.height(2.dp))
-		LazyColumn(
+		Column(
 			modifier = Modifier
 				.fillMaxWidth()
 				.height(780.dp)
-				.background(Color.DarkGray)
+				.verticalScroll(rememberScrollState())
 		) {
+			Card(
+				modifier = Modifier
+					.fillMaxWidth()
+					.wrapContentHeight(),
+				shape = RoundedCornerShape(16.dp),
+				backgroundColor = Color.White,
+				border = BorderStroke(0.8.dp, Color(202, 196, 208))
+			) {
+				LazyColumn(
+					modifier = Modifier
+						.fillMaxWidth()
+						.height(780.dp)
+						.background(Color.DarkGray)
+				) {
 //			items(reviews){
 //				Card(
 //					modifier = Modifier
@@ -464,6 +614,8 @@ fun AvaliationProfessional() {
 //					}
 //				}
 //			}
+				}
+			}
 		}
 	}
 }
@@ -483,14 +635,12 @@ fun InformationAcademyProfessional() {
 		)
 		Spacer(modifier = Modifier.height(2.dp))
 		Row(
-			modifier = Modifier.fillMaxWidth(),
-			horizontalArrangement = Arrangement.Center
+			modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center
 		) {
 			Card(
 				modifier = Modifier
 					.width(185.dp)
-					.height(60.dp),
-				elevation = 2.dp
+					.height(60.dp), elevation = 2.dp
 			) {
 				Box(
 					contentAlignment = Alignment.Center
@@ -498,8 +648,7 @@ fun InformationAcademyProfessional() {
 					Column() {
 						Text(
 							text = stringResource(id = R.string.formation_professional),
-							modifier = Modifier
-								.fillMaxWidth(),
+							modifier = Modifier.fillMaxWidth(),
 							fontSize = 11.sp,
 							fontWeight = FontWeight.W600,
 							textAlign = TextAlign.Center
@@ -508,8 +657,7 @@ fun InformationAcademyProfessional() {
 						//Inserir dados da API//
 						Text(
 							text = "it.formation",
-							modifier = Modifier
-								.fillMaxWidth(),
+							modifier = Modifier.fillMaxWidth(),
 							fontSize = 14.sp,
 							fontWeight = FontWeight.W600,
 							textAlign = TextAlign.Center
@@ -521,8 +669,7 @@ fun InformationAcademyProfessional() {
 			Card(
 				modifier = Modifier
 					.width(185.dp)
-					.height(60.dp),
-				elevation = 2.dp
+					.height(60.dp), elevation = 2.dp
 			) {
 				Box(
 					contentAlignment = Alignment.Center
@@ -530,8 +677,7 @@ fun InformationAcademyProfessional() {
 					Column() {
 						Text(
 							text = stringResource(id = R.string.formation_date_professional),
-							modifier = Modifier
-								.fillMaxWidth(),
+							modifier = Modifier.fillMaxWidth(),
 							fontSize = 11.sp,
 							fontWeight = FontWeight.W600,
 							textAlign = TextAlign.Center
@@ -540,8 +686,7 @@ fun InformationAcademyProfessional() {
 						//Inserir dados da API//
 						Text(
 							text = "it.formationDate",
-							modifier = Modifier
-								.fillMaxWidth(),
+							modifier = Modifier.fillMaxWidth(),
 							fontSize = 14.sp,
 							fontWeight = FontWeight.W600,
 							textAlign = TextAlign.Center
@@ -552,14 +697,12 @@ fun InformationAcademyProfessional() {
 		}
 		Spacer(modifier = Modifier.height(8.dp))
 		Row(
-			modifier = Modifier.fillMaxWidth(),
-			horizontalArrangement = Arrangement.Center
+			modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center
 		) {
 			Card(
 				modifier = Modifier
 					.width(185.dp)
-					.height(60.dp),
-				elevation = 2.dp
+					.height(60.dp), elevation = 2.dp
 			) {
 				Box(
 					contentAlignment = Alignment.Center
@@ -567,8 +710,7 @@ fun InformationAcademyProfessional() {
 					Column() {
 						Text(
 							text = stringResource(id = R.string.institution_professional),
-							modifier = Modifier
-								.fillMaxWidth(),
+							modifier = Modifier.fillMaxWidth(),
 							fontSize = 11.sp,
 							fontWeight = FontWeight.W600,
 							textAlign = TextAlign.Center
@@ -577,8 +719,7 @@ fun InformationAcademyProfessional() {
 						//Inserir dados da API//
 						Text(
 							text = "it.instituation",
-							modifier = Modifier
-								.fillMaxWidth(),
+							modifier = Modifier.fillMaxWidth(),
 							fontSize = 14.sp,
 							fontWeight = FontWeight.W600,
 							textAlign = TextAlign.Center
@@ -590,8 +731,7 @@ fun InformationAcademyProfessional() {
 			Card(
 				modifier = Modifier
 					.width(185.dp)
-					.height(60.dp),
-				elevation = 2.dp
+					.height(60.dp), elevation = 2.dp
 			) {
 				Box(
 					contentAlignment = Alignment.Center
@@ -599,8 +739,7 @@ fun InformationAcademyProfessional() {
 					Column() {
 						Text(
 							text = stringResource(id = R.string.start_atuating_date_professional),
-							modifier = Modifier
-								.fillMaxWidth(),
+							modifier = Modifier.fillMaxWidth(),
 							fontSize = 11.sp,
 							fontWeight = FontWeight.W600,
 							textAlign = TextAlign.Center
@@ -609,8 +748,7 @@ fun InformationAcademyProfessional() {
 						//Inserir dados da API//
 						Text(
 							text = "it.startAtuatingDate",
-							modifier = Modifier
-								.fillMaxWidth(),
+							modifier = Modifier.fillMaxWidth(),
 							fontSize = 14.sp,
 							fontWeight = FontWeight.W600,
 							textAlign = TextAlign.Center
