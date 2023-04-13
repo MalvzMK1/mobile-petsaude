@@ -271,8 +271,8 @@ fun LocalizationForm(userInfos: UserDefault) {
 				} else {
 					val userAddress = Address(
 						zipCode = zipCodeState,
-						city = "osasco",
-						state = "sao paulo",
+						city = cityStateValue,
+						state = stateStateValue,
 						street = streetStateValue,
 						neighborhood = neighborhoodStateValue,
 						number = numberState,

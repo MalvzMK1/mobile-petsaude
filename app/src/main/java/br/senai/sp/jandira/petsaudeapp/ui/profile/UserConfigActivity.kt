@@ -35,7 +35,6 @@ class UserConfigActivity : ComponentActivity() {
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 
-//		val isVet = getUserInfosById(userId)
 
 		setContent {
 			PetSaudeAppTheme {
@@ -66,7 +65,6 @@ fun GlobalUserConfig(context: Context) {
 			icon = Icons.Filled.Settings
 		)
 		UserProfile()
-//		UserPreferences(isVet)
 		UserPreferences()
 	}
 }

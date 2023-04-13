@@ -10,7 +10,7 @@ data class PostUserResponse(
 	val profileBannerPhoto: String?,
 	val email: String,
 	val password: String,
-	val isVet: Boolean,
-	val addressId: Number,
-	val vetInfosId: Number?
+	val phoneNumber: String,
+	val cellphoneNumber: String,
+	val addressId: Number
 )

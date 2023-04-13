@@ -27,6 +27,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -34,6 +35,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
@@ -62,7 +64,7 @@ class ProfileVisityActivity : ComponentActivity() {
 						.verticalScroll(rememberScrollState()),
 					color = MaterialTheme.colors.background
 				) {
-					GlocalProfileVisity(this)
+					GlobalProfileVisity(this)
 				}
 			}
 		}
@@ -70,19 +72,18 @@ class ProfileVisityActivity : ComponentActivity() {
 }
 
 @Composable
-fun GlocalProfileVisity(context: Context) {
+fun GlobalProfileVisity(context: Context) {
 	Column(
 		modifier = Modifier
 			.fillMaxSize()
 			.padding(12.dp)
 	) {
 		ConfigHeader(
-			headline = stringResource(id = R.string.name_app_petsaude),
+			headline = stringResource(id = R.string.empty_string),
 			context,
 			icon = Icons.Filled.Settings
 		)
 		PersonProfessional()
-//		UserProfile()
 		AvaliationProfessional()
 //		PetsFromUser()
 		InformationAcademyProfessional()
@@ -97,18 +98,19 @@ fun PersonProfessional() {
 	var expandState by remember {
 		mutableStateOf(false)
 	}
+	var expandAboutMe by remember {
+		mutableStateOf(false)
+	}
 	Column(
 		modifier = Modifier.fillMaxWidth()
 	) {
 		Row(
-			modifier = Modifier.fillMaxWidth(),
-			horizontalArrangement = Arrangement.Center
+			modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center
 		) {
 			Card(
 				modifier = Modifier
 					.width(185.dp)
-					.height(60.dp),
-				elevation = 2.dp
+					.height(60.dp), elevation = 2.dp
 			) {
 				Box(
 					contentAlignment = Alignment.Center
@@ -116,8 +118,7 @@ fun PersonProfessional() {
 					Column() {
 						Text(
 							text = stringResource(id = R.string.total_queries_profile),
-							modifier = Modifier
-								.fillMaxWidth(),
+							modifier = Modifier.fillMaxWidth(),
 							fontSize = 11.sp,
 							fontWeight = FontWeight.W600,
 							textAlign = TextAlign.Center
@@ -126,8 +127,7 @@ fun PersonProfessional() {
 						Text(
 							//Inserir dados da API//
 							text = "it.NumberQueries",
-							modifier = Modifier
-								.fillMaxWidth(),
+							modifier = Modifier.fillMaxWidth(),
 							fontSize = 14.sp,
 							fontWeight = FontWeight.W600,
 							textAlign = TextAlign.Center
@@ -150,8 +150,7 @@ fun PersonProfessional() {
 						Text(
 							text = stringResource(id = R.string.score_professional),
 							color = Color(9, 115, 138),
-							modifier = Modifier
-								.fillMaxWidth(),
+							modifier = Modifier.fillMaxWidth(),
 							fontSize = 11.sp,
 							fontWeight = FontWeight.W600,
 							textAlign = TextAlign.Center
@@ -161,8 +160,7 @@ fun PersonProfessional() {
 							//Inserir dados da API//
 							text = "it.Score",
 							color = Color(9, 115, 138),
-							modifier = Modifier
-								.fillMaxWidth(),
+							modifier = Modifier.fillMaxWidth(),
 							fontSize = 14.sp,
 							fontWeight = FontWeight.W600,
 							textAlign = TextAlign.Center
@@ -203,15 +201,27 @@ fun PersonProfessional() {
 			)
 			Text(
 				//Inserir dados da API//
-				text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed aliquet quam sapien, in porta mi tristique nec. Se... Ler mais",
+				text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed aliquet quam sapien, in porta mi tristique necLorem ipsum dolor sit amet, consectetur adipiscing elit. Sed aliquet quam sapien, in porta mi tristique nec. Se Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed aliquet quam sapien, in porta mi tristique nec. See ",
+				overflow = TextOverflow.Ellipsis,
+				maxLines = if (expandAboutMe) 50 else 3,
 				modifier = Modifier.fillMaxWidth(),
 				color = Color(169, 169, 169),
 				fontSize = 14.sp,
 				fontWeight = FontWeight.W400
 			)
+			Row(
+				modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End
+			) {
+				Text(
+					text = if (expandAboutMe) stringResource(id = R.string.about_me_read_less) else stringResource(id = R.string.about_me_read_more),
+					modifier = Modifier.clickable { expandAboutMe = !expandAboutMe },
+					color = Color(9, 115, 138),
+					fontSize = 12.sp,
+					fontWeight = FontWeight.W500
+				)
+			}
 		}
 	}
-
 	var dateState by rememberSaveable { mutableStateOf("") }
 	var isErrorDateState by rememberSaveable { mutableStateOf(false) }
 
@@ -235,21 +245,19 @@ fun PersonProfessional() {
 	calendar.time = Date()
 
 	val datePickerDialog = DatePickerDialog(
-		context,
-		{ _: DatePicker, year: Int, month: Int, dayOfMonth: Int ->
+		context, { _: DatePicker, year: Int, month: Int, dayOfMonth: Int ->
 			dateState = "$month/$dayOfMonth/$year"
 		}, year, month, day
 	)
 	val timePickerDialog = TimePickerDialog(
-		context,
-		{ _, hour: Int, minute: Int ->
+		context, { _, hour: Int, minute: Int ->
 			timeState = "$hour:$minute"
 		}, hour, minute, true
 	)
 	AnimatedVisibility(
 		visible = expandState,
-		enter = slideInVertically(tween(durationMillis = 500)) + expandVertically(expandFrom = Alignment.Top),
-		exit = slideOutVertically(tween(durationMillis = 500)) + shrinkVertically()
+		enter = slideInVertically(tween(durationMillis = 500)) + expandVertically(expandFrom = Alignment.Top) + fadeIn(initialAlpha = 0.3f),
+		exit = slideOutVertically(tween(durationMillis = 500)) + shrinkVertically() + fadeOut(targetAlpha = 0.3f)
 	) {
 		Card(
 			modifier = Modifier
@@ -273,12 +281,9 @@ fun PersonProfessional() {
 				)
 				Spacer(modifier = Modifier.height(14.dp))
 				Box(
-					modifier = Modifier
-						.border(
-							width = 0.5.dp,
-							color = Color(202, 196, 208),
-							shape = RoundedCornerShape(5.dp)
-						)
+					modifier = Modifier.border(
+						width = 0.5.dp, color = Color(202, 196, 208), shape = RoundedCornerShape(5.dp)
+					)
 				) {
 					Column(
 						modifier = Modifier
@@ -300,8 +305,7 @@ fun PersonProfessional() {
 									//COLOCAR A IMAGEM DO PET A SER ATENDIDO//
 									painter = painterResource(id = R.drawable.media),
 									contentDescription = "Imagem do Pet",
-									modifier = Modifier
-										.size(58.dp),
+									modifier = Modifier.size(58.dp),
 									contentScale = ContentScale.Crop
 								)
 								Spacer(modifier = Modifier.width(12.dp))
@@ -327,8 +331,7 @@ fun PersonProfessional() {
 									//COLOCAR A IMAGEM DO PET A SER ATENDIDO//
 									painter = painterResource(id = R.drawable.media),
 									contentDescription = "Imagem do Pet",
-									modifier = Modifier
-										.size(58.dp),
+									modifier = Modifier.size(58.dp),
 									contentScale = ContentScale.Crop
 								)
 								Spacer(modifier = Modifier.width(12.dp))
@@ -354,8 +357,7 @@ fun PersonProfessional() {
 									//COLOCAR A IMAGEM DO PET A SER ATENDIDO//
 									painter = painterResource(id = R.drawable.media),
 									contentDescription = "Imagem do Pet",
-									modifier = Modifier
-										.size(58.dp),
+									modifier = Modifier.size(58.dp),
 									contentScale = ContentScale.Crop
 								)
 								Spacer(modifier = Modifier.width(12.dp))
@@ -381,8 +383,7 @@ fun PersonProfessional() {
 									//COLOCAR A IMAGEM DO PET A SER ATENDIDO//
 									painter = painterResource(id = R.drawable.media),
 									contentDescription = "Imagem do Pet",
-									modifier = Modifier
-										.size(58.dp),
+									modifier = Modifier.size(58.dp),
 									contentScale = ContentScale.Crop
 								)
 								Spacer(modifier = Modifier.width(12.dp))
@@ -418,13 +419,10 @@ fun PersonProfessional() {
 						val description = "Calendar"
 
 						IconButton(onClick = { datePickerDialog.show() }) {
-							val iconColor = if (isErrorDateState)
-								MaterialTheme.colors.error
+							val iconColor = if (isErrorDateState) MaterialTheme.colors.error
 							else MaterialTheme.colors.onBackground
 							Icon(
-								imageVector = image,
-								contentDescription = description,
-								tint = iconColor
+								imageVector = image, contentDescription = description, tint = iconColor
 							)
 						}
 					},
@@ -444,16 +442,11 @@ fun PersonProfessional() {
 //						val image = Icons.Default.AccessTime
 						val image = Icons.Default.HistoryToggleOff
 						val description = "Timer"
-						IconButton(
-							onClick = { timePickerDialog.show() }
-						) {
-							val iconColor = if (isErrorTimeState)
-								MaterialTheme.colors.error
+						IconButton(onClick = { timePickerDialog.show() }) {
+							val iconColor = if (isErrorTimeState) MaterialTheme.colors.error
 							else MaterialTheme.colors.onBackground
 							Icon(
-								imageVector = image,
-								contentDescription = description,
-								tint = iconColor
+								imageVector = image, contentDescription = description, tint = iconColor
 							)
 						}
 					},
@@ -461,8 +454,7 @@ fun PersonProfessional() {
 				)
 				Spacer(modifier = Modifier.height(12.dp))
 				Row(
-					modifier = Modifier.fillMaxWidth(),
-					horizontalArrangement = Arrangement.SpaceBetween
+					modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween
 				) {
 					Button(
 						onClick = { expandState = false },
@@ -470,8 +462,7 @@ fun PersonProfessional() {
 						colors = ButtonDefaults.buttonColors(Color(249, 222, 220))
 					) {
 						Text(
-							text = stringResource(id = R.string.cancel_agendamento),
-							color = Color(65, 14, 11)
+							text = stringResource(id = R.string.cancel_agendamento), color = Color(65, 14, 11)
 						)
 					}
 					Button(
@@ -480,8 +471,7 @@ fun PersonProfessional() {
 						colors = ButtonDefaults.buttonColors(Color(158, 209, 183))
 					) {
 						Text(
-							text = stringResource(id = R.string.to_mark_agendamento),
-							color = Color(65, 86, 75)
+							text = stringResource(id = R.string.to_mark_agendamento), color = Color(65, 86, 75)
 						)
 					}
 				}
@@ -515,20 +505,12 @@ fun AvaliationProfessional() {
 				.height(780.dp)
 				.verticalScroll(rememberScrollState())
 		) {
-			Card(
+			LazyColumn(
 				modifier = Modifier
 					.fillMaxWidth()
-					.wrapContentHeight(),
-				shape = RoundedCornerShape(16.dp),
-				backgroundColor = Color.White,
-				border = BorderStroke(0.8.dp, Color(202, 196, 208))
+					.height(780.dp)
+					.background(Color(236,236,236))
 			) {
-				LazyColumn(
-					modifier = Modifier
-						.fillMaxWidth()
-						.height(780.dp)
-						.background(Color.DarkGray)
-				) {
 //			items(reviews){
 //				Card(
 //					modifier = Modifier
@@ -614,7 +596,6 @@ fun AvaliationProfessional() {
 //					}
 //				}
 //			}
-				}
 			}
 		}
 	}
@@ -654,8 +635,8 @@ fun InformationAcademyProfessional() {
 							textAlign = TextAlign.Center
 						)
 						Spacer(modifier = Modifier.height(4.dp))
-						//Inserir dados da API//
 						Text(
+							//Inserir dados da API//
 							text = "it.formation",
 							modifier = Modifier.fillMaxWidth(),
 							fontSize = 14.sp,
@@ -683,8 +664,8 @@ fun InformationAcademyProfessional() {
 							textAlign = TextAlign.Center
 						)
 						Spacer(modifier = Modifier.height(4.dp))
-						//Inserir dados da API//
 						Text(
+							//Inserir dados da API//
 							text = "it.formationDate",
 							modifier = Modifier.fillMaxWidth(),
 							fontSize = 14.sp,
@@ -716,8 +697,8 @@ fun InformationAcademyProfessional() {
 							textAlign = TextAlign.Center
 						)
 						Spacer(modifier = Modifier.height(4.dp))
-						//Inserir dados da API//
 						Text(
+							//Inserir dados da API//
 							text = "it.instituation",
 							modifier = Modifier.fillMaxWidth(),
 							fontSize = 14.sp,
@@ -745,8 +726,8 @@ fun InformationAcademyProfessional() {
 							textAlign = TextAlign.Center
 						)
 						Spacer(modifier = Modifier.height(4.dp))
-						//Inserir dados da API//
 						Text(
+							//Inserir dados da API//
 							text = "it.startAtuatingDate",
 							modifier = Modifier.fillMaxWidth(),
 							fontSize = 14.sp,
@@ -763,8 +744,7 @@ fun InformationAcademyProfessional() {
 @Composable
 fun LocalizationProfile() {
 	Column(
-		modifier = Modifier
-			.fillMaxWidth()
+		modifier = Modifier.fillMaxWidth()
 	) {
 		Spacer(modifier = Modifier.height(12.dp))
 		Text(
@@ -783,18 +763,10 @@ fun LocalizationProfile() {
 			elevation = 2.dp
 		) {
 			GoogleMap(
-				modifier = Modifier.fillMaxSize(),
-				properties = MapProperties(mapType = MapType.NORMAL)
+				modifier = Modifier.fillMaxSize(), properties = MapProperties(mapType = MapType.NORMAL)
 			)
 		}
 		Spacer(modifier = Modifier.height(32.dp))
 	}
 }
 
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview11() {
-	PetSaudeAppTheme {
-		GlocalProfileVisity(LocalContext.current)
-	}
-}

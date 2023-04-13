@@ -97,6 +97,9 @@
     <string name="time_agendamento">Hora</string>
     <string name="to_mark_agendamento">Marcar</string>
     <string name="cancel_agendamento">Cancelar</string>
+    <string name="about_me_read_more">Ler mais</string>
+    <string name="about_me_read_less">Ler menos</string>
+    <string name="empty_string"> </string>
 
     //NAME ACTIVITY
 

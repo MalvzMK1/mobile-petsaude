@@ -96,6 +96,9 @@
     <string name="to_mark_agendamento">To mark</string>
     <string name="cancel_agendamento">Cancel</string>
     <string name="about_me_profile">About me</string>
+    <string name="about_me_read_more">Read more</string>
+    <string name="about_me_read_less">Read less</string>
+    <string name="empty_string"> </string>
 
     // SPECIALITIES
 
@@ -125,5 +128,6 @@
     <string name="title_activity_user_info_personal">UserInfoPersonalActivity</string>
     <string name="title_activity_profile_visity">ProfileVisityActivity</string>
     <string name="title_activity_user_pets">UserPetsActivity</string>
+    <string name="title_activity_create_pet">CreatePetActivity</string>
 
 </resources>

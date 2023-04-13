@@ -2,6 +2,7 @@ package br.senai.sp.jandira.petsaudeapp.ui.profile
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -27,6 +28,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.senai.sp.jandira.petsaudeapp.R
 import br.senai.sp.jandira.petsaudeapp.components.*
+import br.senai.sp.jandira.petsaudeapp.model.Address
+import br.senai.sp.jandira.petsaudeapp.service.integrations.saveUserRegister
 import br.senai.sp.jandira.petsaudeapp.service.viacep.getAddressByZipCode
 import br.senai.sp.jandira.petsaudeapp.ui.theme.PetSaudeAppTheme
 import br.senai.sp.jandira.petsaudeapp.utils.validateEmptyInput
@@ -184,9 +187,19 @@ fun UserLocation() {
 				) {
 					Toast.makeText(context, "Campos vazios!", Toast.LENGTH_SHORT).show()
 				} else {
-
-					//---------- IMPLEMENTAR O UPDATE DA LOCALIZACAO DO USUARIO ----------//
-
+					val userAddress = Address(
+						zipCode = zipCodeState,
+						city = cityStateValue,
+						state = stateStateValue,
+						street = streetStateValue,
+						neighborhood = neighborhoodStateValue,
+						number = numberState,
+						complement = complementState
+					)
+//					val responsePutUserLocation = PutUserLocation(addressId, userAddress) {
+//						Log.i("PUT USER LOCATION", it.toString())
+//					}
+//					Toast.makeText(context, "Dados de endereço atualizado com com sucesso", Toast.LENGTH_SHORT).show()
 				}
 			},
 			modifier = Modifier
