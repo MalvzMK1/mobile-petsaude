@@ -17,15 +17,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import br.senai.sp.jandira.petsaudeapp.R
 import br.senai.sp.jandira.petsaudeapp.components.ConfigHeader
+import br.senai.sp.jandira.petsaudeapp.ui.profile.ProfileVisityActivity
+import br.senai.sp.jandira.petsaudeapp.ui.profile.UserConfigActivity
 import br.senai.sp.jandira.petsaudeapp.ui.theme.PetSaudeAppTheme
 
 class HomePetActivity : ComponentActivity() {
@@ -49,11 +53,53 @@ fun GlobalHomePet(context: Context) {
 			.fillMaxSize()
 			.padding(16.dp)
 	) {
-		ConfigHeader(
-			headline = stringResource(id = R.string.name_app_petsaude),
-			context,
-			icon = Icons.Filled.AccountCircle
-		)
+//		ConfigHeader(
+//			headline = stringResource(id = R.string.name_app_petsaude),
+//			context,
+//			icon = Icons.Filled.AccountCircle
+//		)
+		Column(
+			modifier = Modifier.fillMaxWidth()
+		) {
+			Row(
+				modifier = Modifier
+					.fillMaxWidth(),
+				horizontalArrangement = Arrangement.SpaceBetween,
+				verticalAlignment = Alignment.CenterVertically
+			) {
+				IconButton(
+					onClick = {
+//					val openUserConfigActivity = Intent(context, UserConfigActivity::class.java)
+//					ContextCompat.startActivity(context, openUserConfigActivity, null)
+					}
+				) {
+					Icon(
+						imageVector = Icons.Filled.Menu,
+						contentDescription = "leftSideButtonHeader",
+						modifier = Modifier.size(32.dp)
+					)
+				}
+				Text(
+					text = " ",
+					modifier = Modifier.width(200.dp),
+					fontSize = 24.sp,
+					fontWeight = FontWeight.W500,
+					textAlign = TextAlign.Center
+				)
+				IconButton(
+					onClick = {
+						val openUserProfileVisityActivity = Intent(context, ProfileVisityActivity::class.java)
+						ContextCompat.startActivity(context, openUserProfileVisityActivity, null)
+					}
+				) {
+					Icon(
+						imageVector = Icons.Default.Person,
+						contentDescription = "rightSideButtonHeader",
+						modifier = Modifier.size(30.dp)
+					)
+				}
+			}
+		}
 	}
 }
 

@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import br.senai.sp.jandira.petsaudeapp.R
 import br.senai.sp.jandira.petsaudeapp.components.ConfigHeader
+import br.senai.sp.jandira.petsaudeapp.ui.authentication.MainActivity
 //import br.senai.sp.jandira.petsaudeapp.service.integrations.getUserInfosById
 import br.senai.sp.jandira.petsaudeapp.ui.authentication.RegisterActivity
 import br.senai.sp.jandira.petsaudeapp.ui.theme.PetSaudeAppTheme
@@ -102,9 +103,9 @@ fun UserProfile() {
 				//---------- COLOCAR EMAIL DE CADASTRO DO USUARIO ----------//
 
 				text = "hayley.williams@useremail.com",
-				color = Color(169, 169, 169),
-				fontSize = 12.sp,
-				fontWeight = FontWeight.W400
+					color = Color(169, 169, 169),
+					fontSize = 12.sp,
+					fontWeight = FontWeight.W400
 			)
 		}
 	}
@@ -274,7 +275,8 @@ fun UserPreferences() {
 		Spacer(modifier = Modifier.height(4.dp))
 		Button(
 			onClick = {
-				/*TODO*/
+				val openPetsActivity = Intent(context, CreatePetActivity::class.java)
+				ContextCompat.startActivity(context, openPetsActivity, null)
 			},
 			modifier = Modifier
 				.fillMaxWidth()
@@ -304,7 +306,8 @@ fun UserPreferences() {
 						modifier = Modifier.size(30.dp)
 					)
 					Text(
-						text = stringResource(id = R.string.user_config_queries),
+//						text = stringResource(id = R.string.user_config_queries),
+						text = "Pets",
 						modifier = Modifier.padding(start = 16.dp),
 						color = Color(28, 27, 31),
 						fontSize = 16.sp,
@@ -390,7 +393,8 @@ fun UserPreferences() {
 	Spacer(modifier = Modifier.height(32.dp))
 	Button(
 		onClick = {
-			/*TODO*/
+			val openLoginActivity = Intent(context, MainActivity::class.java)
+			ContextCompat.startActivity(context, openLoginActivity, null)
 		},
 		modifier = Modifier
 			.fillMaxWidth()

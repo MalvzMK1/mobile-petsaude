@@ -99,8 +99,25 @@
     <string name="about_me_read_more">Read more</string>
     <string name="about_me_read_less">Read less</string>
     <string name="empty_string"> </string>
+    <string name="my_pets_activity">Your animals</string>
 
     // SPECIALITIES
+
+    <string name="specie_animal_type">Species</string>
+    <string name="sex_animal_type">Sex</string>
+    <string name="information_animal_type">Information</string>
+    <string name="size_animal_type">Size</string>
+
+
+    <string name="male_animal_type">Male</string>
+    <string name="female_animal_type">Female</string>
+    <string name="gynandromorph_animal_type">Gynandromorph</string>
+
+
+    <string name="small_animal_type">Small</string>
+    <string name="medium_animal_type">Medium</string>
+    <string name="big_animal_type">Big</string>
+
 
     <string name="surgeon_speciality">Surgeon</string>
     <string name="clinic_speciality">Clinic</string>
@@ -129,5 +146,7 @@
     <string name="title_activity_profile_visity">ProfileVisityActivity</string>
     <string name="title_activity_user_pets">UserPetsActivity</string>
     <string name="title_activity_create_pet">CreatePetActivity</string>
+    <string name="title_activity_edit_pet">EditPetActivity</string>
+    <string name="title_activity_my_pets">MyPetsActivity</string>
 
 </resources>

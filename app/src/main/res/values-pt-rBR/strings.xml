@@ -100,6 +100,7 @@
     <string name="about_me_read_more">Ler mais</string>
     <string name="about_me_read_less">Ler menos</string>
     <string name="empty_string"> </string>
+    <string name="my_pets_activity">Seus animais</string>
 
     //NAME ACTIVITY
 
@@ -122,6 +123,19 @@
 
     // ANIMAL TYPES
 
+    <string name="specie_animal_type">Espécie</string>
+
+    <string name="male_animal_type">Macho</string>
+    <string name="female_animal_type">Fêmea</string>
+    <string name="gynandromorph_animal_type">Ginandromorfo</string>
+
+    <string name="small_animal_type">Pequeno</string>
+    <string name="medium_animal_type">Médio</string>
+    <string name="big_animal_type">Grande</string>
+
+    <string name="sex_animal_type">Sexo</string>
+    <string name="information_animal_type">Informações</string>
+    <string name="size_animal_type">Tamanho</string>
     <string name="dog_animal_type">Cachorros</string>
     <string name="cat_animal_type">Gatos</string>
     <string name="birds_animal_type">Aves</string>
