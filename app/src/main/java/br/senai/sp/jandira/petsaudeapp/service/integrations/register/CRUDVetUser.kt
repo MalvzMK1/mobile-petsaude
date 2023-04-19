@@ -1,4 +1,4 @@
-package br.senai.sp.jandira.petsaudeapp.service.integrations
+package br.senai.sp.jandira.petsaudeapp.service.integrations.register
 
 import android.util.Log
 import br.senai.sp.jandira.petsaudeapp.model.UserRegister
@@ -8,6 +8,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+//////// INSERT - UserVet ////////
 fun createUserVet(registerVet: UserRegister, onComplete: (PostUserVetResponse) -> Unit) {
 	val call = RetrofitFactory().retrofitService().saveUserRegisterVet(registerVet)
 	Log.i("NOT EMPTY SUCCESS - VET", registerVet.toString())

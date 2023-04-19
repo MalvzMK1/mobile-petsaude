@@ -29,7 +29,6 @@ import androidx.compose.ui.unit.sp
 import br.senai.sp.jandira.petsaudeapp.R
 import br.senai.sp.jandira.petsaudeapp.components.*
 import br.senai.sp.jandira.petsaudeapp.model.Address
-import br.senai.sp.jandira.petsaudeapp.service.integrations.saveUserRegister
 import br.senai.sp.jandira.petsaudeapp.service.viacep.getAddressByZipCode
 import br.senai.sp.jandira.petsaudeapp.ui.theme.PetSaudeAppTheme
 import br.senai.sp.jandira.petsaudeapp.utils.validateEmptyInput

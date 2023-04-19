@@ -36,7 +36,7 @@ import br.senai.sp.jandira.petsaudeapp.R
 import br.senai.sp.jandira.petsaudeapp.components.ConfigHeader
 import br.senai.sp.jandira.petsaudeapp.model.PetsCard
 import br.senai.sp.jandira.petsaudeapp.model.Reviews
-import br.senai.sp.jandira.petsaudeapp.ui.profile.ui.theme.PetSaudeAppTheme
+import br.senai.sp.jandira.petsaudeapp.ui.theme.PetSaudeAppTheme
 
 class MyPetsActivity : ComponentActivity() {
 	override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,41 +58,46 @@ class MyPetsActivity : ComponentActivity() {
 
 @Composable
 fun GlobalMyPets(context: Context) {
-	Column(
-		modifier = Modifier
-			.fillMaxSize()
-			.padding(12.dp)
-	) {
-		ConfigHeader(
-			headline = stringResource(id = R.string.user_config_pets),
-			context,
-			icon = Icons.Filled.Settings
-		)
-		Spacer(modifier = Modifier.height(8.dp))
-		Text(
-			text = stringResource(id = R.string.my_pets_activity),
-			fontSize = 22.sp,
-			fontWeight = FontWeight.W600
-		)
-		CardsPet()
-//		FloatingActionButton(
-//			onClick = { /*TODO*/ },
-//			modifier = Modifier
-//				.height(68.dp)
-//				.width(68.dp)
-//				.offset(x = 312.dp, y = 48.dp)
-//				.absoluteOffset(x = 16.dp, y = 16.dp),
-//			shape = RoundedCornerShape(16.dp),
-//			backgroundColor = Color(158, 209, 183)
-//		) {
-//			Icon(
-//				imageVector = Icons.Default.Add,
-//				contentDescription = "rightButton",
-//				modifier = Modifier.size(48.dp),
-//				tint = Color(65, 86, 75)
-//			)
-//		}
-	}
+	Scaffold(
+		modifier = Modifier.padding(12.dp),
+		floatingActionButton = {
+			FloatingActionButton(
+				onClick = { /*TODO: INSERIR NOVO PET*/ },
+				modifier = Modifier
+					.height(68.dp)
+					.width(68.dp),
+				shape = RoundedCornerShape(16.dp),
+				backgroundColor = Color(158, 209, 183)
+			) {
+				Icon(
+					imageVector = Icons.Default.Add,
+					contentDescription = "rightButton",
+					modifier = Modifier.size(48.dp),
+					tint = Color(65, 86, 75)
+				)
+			}
+		},
+		content = {
+			Column(
+				modifier = Modifier
+					.fillMaxWidth()
+					.padding(it)
+			) {
+				ConfigHeader(
+					headline = stringResource(id = R.string.user_config_pets),
+					context,
+					icon = Icons.Filled.Settings
+				)
+				Spacer(modifier = Modifier.height(8.dp))
+				Text(
+					text = stringResource(id = R.string.my_pets_activity),
+					fontSize = 22.sp,
+					fontWeight = FontWeight.W600
+				)
+				CardsPet()
+			}
+		}
+	)
 }
 
 @Composable
@@ -105,8 +110,8 @@ fun CardsPet() {
 		modifier = Modifier
 			.verticalScroll(rememberScrollState())
 			.fillMaxWidth()
-			.height(1060.dp)
-			.background(Color(236, 236, 236))
+			.fillMaxHeight()
+			.background(Color(245, 244, 244, 255))
 	) {
 //		LazyColumn(
 //			modifier = Modifier

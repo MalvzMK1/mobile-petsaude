@@ -523,22 +523,6 @@ fun ProfessionalRegisterForm(userInfosRegister: UserInfos) {
 //@Composable
 //fun DefaultPreview4() {
 //	PetSaudeAppTheme {
-//		ProfessionalRegisterGlobal(userInfos = UserRegister(
-//			"",
-//			"",
-//			"",
-//			"",
-//			"",
-//			"",
-//			Address(
-//				"",
-//				"",
-//				"",
-//				"",
-//				"",
-//				"",
-//				""
-//			),
-//		))
-//	}
+//
+//  }
 //}

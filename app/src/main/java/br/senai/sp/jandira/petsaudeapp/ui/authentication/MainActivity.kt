@@ -32,7 +32,7 @@ import br.senai.sp.jandira.petsaudeapp.R
 import br.senai.sp.jandira.petsaudeapp.components.AuthHeaderTitle
 import br.senai.sp.jandira.petsaudeapp.components.PasswordInputHideShowIcon
 import br.senai.sp.jandira.petsaudeapp.components.TextFieldInput
-import br.senai.sp.jandira.petsaudeapp.service.integrations.loginUser
+import br.senai.sp.jandira.petsaudeapp.service.integrations.login.loginUser
 import br.senai.sp.jandira.petsaudeapp.ui.HomePetActivity
 import br.senai.sp.jandira.petsaudeapp.ui.theme.PetSaudeAppTheme
 import br.senai.sp.jandira.petsaudeapp.utils.validateEmptyInput
@@ -205,7 +205,6 @@ fun LoginForm() {
 				} else {
 					if (loginEmailState.indexOf("@") != -1) {
 						loginState = loginUser(loginEmailState, loginPasswordState) {
-//							Log.i("DS", it)
 							loginState = it
 							if (loginState.isNotEmpty()) {
 								val openHomePetActivity = Intent(context, HomePetActivity::class.java)

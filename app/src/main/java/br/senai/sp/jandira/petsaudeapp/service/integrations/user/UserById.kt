@@ -1,4 +1,4 @@
-//package br.senai.sp.jandira.petsaudeapp.service.integrations
+//package br.senai.sp.jandira.petsaudeapp.service.integrations.user
 //
 //import android.util.Log
 //import br.senai.sp.jandira.petsaudeapp.service.RetrofitFactory

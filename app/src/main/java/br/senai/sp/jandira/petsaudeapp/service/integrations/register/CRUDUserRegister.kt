@@ -1,17 +1,18 @@
-package br.senai.sp.jandira.petsaudeapp.service.integrations
+package br.senai.sp.jandira.petsaudeapp.service.integrations.register
 
 import android.util.Log
 import br.senai.sp.jandira.petsaudeapp.model.Address
+import br.senai.sp.jandira.petsaudeapp.model.Token
 import br.senai.sp.jandira.petsaudeapp.model.UserInfos
 import br.senai.sp.jandira.petsaudeapp.service.RetrofitFactory
 import br.senai.sp.jandira.petsaudeapp.service.response.PostUserResponse
+import br.senai.sp.jandira.petsaudeapp.service.response.PostUserVetResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+//////// INSERT - UserRegister ////////
 fun saveUserRegister(userRegister: UserInfos, onComplete: (PostUserResponse) -> Unit) {
-//	var responseSaveUserRegister: PostUserResponse
-// 	var responseSaveUserRegister = ""
 	val call = RetrofitFactory().retrofitService().saveUserRegister(userRegister)
 
 	call.enqueue(object: Callback<PostUserResponse> {
@@ -26,5 +27,22 @@ fun saveUserRegister(userRegister: UserInfos, onComplete: (PostUserResponse) -> 
 			Log.i("RESPONSE ERROR - SAVE USER", t.message.toString())
 		}
 	})
-//	return responseSaveUserRegister
+}
+
+//////// UPDATE - Address ////////
+fun putUserLocation(token: Token, addressId: Number, userAddress: Address, onComplete: (PostUserVetResponse) -> Unit){
+	val call = RetrofitFactory().retrofitService().putUserLocation(addressId, userAddress)
+	Log.i("NOT EMPTY SUCCESS - ADDRESSid", addressId.toString())
+	Log.i("NOT EMPTY SUCCESS - USERADDRESS", userAddress.toString())
+
+	call.enqueue(object : Callback<String>{
+		override fun onResponse(call: Call<String>, response: Response<String>) {
+			TODO("Not yet implemented")
+		}
+
+		override fun onFailure(call: Call<String>, t: Throwable) {
+			TODO("Not yet implemented")
+		}
+
+	})
 }

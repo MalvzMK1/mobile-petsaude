@@ -35,8 +35,7 @@ import br.senai.sp.jandira.petsaudeapp.components.TextFieldInput
 import br.senai.sp.jandira.petsaudeapp.model.Address
 import br.senai.sp.jandira.petsaudeapp.model.UserDefault
 import br.senai.sp.jandira.petsaudeapp.model.UserInfos
-import br.senai.sp.jandira.petsaudeapp.model.UserRegister
-import br.senai.sp.jandira.petsaudeapp.service.integrations.saveUserRegister
+import br.senai.sp.jandira.petsaudeapp.service.integrations.register.saveUserRegister
 import br.senai.sp.jandira.petsaudeapp.service.viacep.getAddressByZipCode
 import br.senai.sp.jandira.petsaudeapp.ui.theme.PetSaudeAppTheme
 import br.senai.sp.jandira.petsaudeapp.utils.validateEmptyInput
@@ -54,14 +53,6 @@ class RegisterAddressActivity : ComponentActivity() {
 	override fun onCreate(savedInstanceState: Bundle?) {
 
 		val userInfos: UserDefault = intent.getSerializableExtra("userInfosRegister") as UserDefault
-//		val userInfos = UserInfos(
-//			"",
-//			"",
-//			"",
-//			"",
-//			"",
-//			""
-//		)
 
 		super.onCreate(savedInstanceState)
 		setContent {
@@ -249,7 +240,6 @@ fun LocalizationForm(userInfos: UserDefault) {
 		modifier = Modifier.padding(bottom = 32.dp),
 		horizontalArrangement = Arrangement.SpaceBetween
 	) {
-//		val userInfosNow = userInfos
 		Button(
 			onClick = {
 				isErrorZipCodeState = validateEmptyInput(zipCodeState)
@@ -355,15 +345,6 @@ fun LocalizationForm(userInfos: UserDefault) {
 @Composable
 fun DefaultPreview3() {
 	PetSaudeAppTheme {
-//		GlobalLocalization(
-//			userInfos = UserInfos(
-//				"",
-//				"",
-//				"",
-//				"",
-//				"",
-//				""
-//			)
-//		)
+//		GlobalLocalization()
 	}
 }
