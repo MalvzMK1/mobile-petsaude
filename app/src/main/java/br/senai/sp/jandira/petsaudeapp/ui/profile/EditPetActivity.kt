@@ -22,7 +22,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import br.senai.sp.jandira.petsaudeapp.R
 import br.senai.sp.jandira.petsaudeapp.components.ConfigHeader
-import br.senai.sp.jandira.petsaudeapp.ui.profile.ui.theme.PetSaudeAppTheme
+import br.senai.sp.jandira.petsaudeapp.ui.theme.PetSaudeAppTheme
 
 class EditPetActivity : ComponentActivity() {
 	override fun onCreate(savedInstanceState: Bundle?) {

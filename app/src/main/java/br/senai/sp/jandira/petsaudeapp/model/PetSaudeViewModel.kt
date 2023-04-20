@@ -8,14 +8,14 @@ import androidx.lifecycle.viewModelScope
 import br.senai.sp.jandira.petsaudeapp.service.integrations.login.loginUser
 import kotlinx.coroutines.launch
 
-class PetSaudeViewModel : ViewModel() {
-	private var myData by mutableStateOf("")
-
-	fun fetchData(email: String, password: String) {
-		viewModelScope.launch {
-			val token = loginUser(email, password) {
-				myData.value = it
-			}
-		}
-	}
-}
+//class PetSaudeViewModel : ViewModel() {
+//	private var myData by mutableStateOf("")
+//
+//	fun fetchData(email: String, password: String) {
+//		viewModelScope.launch {
+//			val token = loginUser(email, password) {
+//				myData.value = it
+//			}
+//		}
+//	}
+//}

@@ -51,9 +51,7 @@ import retrofit2.http.Path
 
 class RegisterAddressActivity : ComponentActivity() {
 	override fun onCreate(savedInstanceState: Bundle?) {
-
 		val userInfos: UserDefault = intent.getSerializableExtra("userInfosRegister") as UserDefault
-
 		super.onCreate(savedInstanceState)
 		setContent {
 			PetSaudeAppTheme {
@@ -280,10 +278,12 @@ fun LocalizationForm(userInfos: UserDefault) {
 					// TODO: CADASTRO DE USUÁRIO PADRÃO - ****CONCLUIDO****
 					val responseSaveUser = saveUserRegister(userRegister) {
 						Log.i("SAVE USER", it.toString())
+						val id = it.id
+						val openMainActivity = Intent(context, MainActivity::class.java)
+//						openMainActivity.putExtra("userIdDef", id)
+						startActivity(context, openMainActivity, null)
 					}
-					Log.i("responseSaveUser", responseSaveUser.toString())
-					val openMainActivity = Intent(context, MainActivity::class.java)
-					startActivity(context, openMainActivity, null)
+
 				}
 			},
 			modifier = Modifier

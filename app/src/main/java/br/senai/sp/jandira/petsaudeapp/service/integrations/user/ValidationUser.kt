@@ -1,26 +1,25 @@
 package br.senai.sp.jandira.petsaudeapp.service.integrations.user
 
-//import br.senai.sp.jandira.petsaudeapp.model.Token
-//import retrofit2.Call
-//import retrofit2.Callback
-//import retrofit2.Response
-//
-//fun validationUserJWT(auth: String, onComplete: (String) -> Unit) {
-//	var result = ""
-//	var token = Token(auth)
-//
-//	val call = RetrofitFactroy().retrofitService().validationUser(token)
-//
-//	call.enqueue(object : Callback<Token> {
-//		override fun onResponse(call: Call<Token>, response: Response<Token>) {
-//			result = response.body()!!.token
-//			onComplete.invoke(result)
-//		}
-//
-//		override fun onFailure(call: Call<Token>, t: Throwable) {
-//			TODO("Not yet implemented")
-//		}
-//
-//
-//	})
-//}
+import android.util.Log
+import br.senai.sp.jandira.petsaudeapp.model.Token
+import br.senai.sp.jandira.petsaudeapp.model.UserInfos
+import br.senai.sp.jandira.petsaudeapp.service.RetrofitFactory
+import br.senai.sp.jandira.petsaudeapp.service.response.ResponseValidUser
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+
+fun validationUserJWT(token: String) {
+	val call = RetrofitFactory().retrofitService().validationUser(token)
+
+	call.enqueue(object : Callback<ResponseValidUser> {
+		override fun onResponse(call: Call<ResponseValidUser>, response: Response<ResponseValidUser>) {
+			Log.i("RESPONSE ERROR - VALID JWT", response.body().toString())
+		}
+
+		override fun onFailure(call: Call<ResponseValidUser>, t: Throwable) {
+			Log.i("RESPONSE ERROR - VALID JWT", t.message.toString())
+		}
+
+	})
+}

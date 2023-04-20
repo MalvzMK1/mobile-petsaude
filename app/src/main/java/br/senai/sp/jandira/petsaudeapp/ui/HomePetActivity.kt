@@ -3,6 +3,7 @@ package br.senai.sp.jandira.petsaudeapp.ui
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.clickable
@@ -28,17 +29,26 @@ import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import br.senai.sp.jandira.petsaudeapp.R
 import br.senai.sp.jandira.petsaudeapp.components.ConfigHeader
+import br.senai.sp.jandira.petsaudeapp.model.Token
+import br.senai.sp.jandira.petsaudeapp.model.UserDefault
+import br.senai.sp.jandira.petsaudeapp.service.integrations.user.validationUserJWT
 import br.senai.sp.jandira.petsaudeapp.ui.profile.ProfileVisityActivity
 import br.senai.sp.jandira.petsaudeapp.ui.profile.UserConfigActivity
 import br.senai.sp.jandira.petsaudeapp.ui.theme.PetSaudeAppTheme
 
 class HomePetActivity : ComponentActivity() {
 	override fun onCreate(savedInstanceState: Bundle?) {
+		val tokenId: Token = intent.getSerializableExtra("tokenID") as Token
+		val user = validationUserJWT("Bearer ${tokenId.token}")
+		Log.i("RESPONSE SUCCESS - VALID JWT", user.toString())
 		super.onCreate(savedInstanceState)
 		setContent {
 			PetSaudeAppTheme {
 				// A surface container using the 'background' color from the theme
-				Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
+				Surface(
+					modifier = Modifier.fillMaxSize(),
+					color = MaterialTheme.colors.background
+				) {
 					GlobalHomePet(this)
 				}
 			}
@@ -68,10 +78,7 @@ fun GlobalHomePet(context: Context) {
 				verticalAlignment = Alignment.CenterVertically
 			) {
 				IconButton(
-					onClick = {
-//					val openUserConfigActivity = Intent(context, UserConfigActivity::class.java)
-//					ContextCompat.startActivity(context, openUserConfigActivity, null)
-					}
+					onClick = { }
 				) {
 					Icon(
 						imageVector = Icons.Filled.Menu,
@@ -88,7 +95,9 @@ fun GlobalHomePet(context: Context) {
 				)
 				IconButton(
 					onClick = {
+//						val idUser = userId
 						val openUserProfileVisityActivity = Intent(context, ProfileVisityActivity::class.java)
+//						openUserProfileVisityActivity.putExtra("userID", idUser)
 						ContextCompat.startActivity(context, openUserProfileVisityActivity, null)
 					}
 				) {

@@ -36,10 +36,13 @@ import br.senai.sp.jandira.petsaudeapp.R
 import br.senai.sp.jandira.petsaudeapp.components.ConfigHeader
 import br.senai.sp.jandira.petsaudeapp.model.PetsCard
 import br.senai.sp.jandira.petsaudeapp.model.Reviews
+import br.senai.sp.jandira.petsaudeapp.model.UserInfos
+import br.senai.sp.jandira.petsaudeapp.service.integrations.pet.getAllPetsUser
 import br.senai.sp.jandira.petsaudeapp.ui.theme.PetSaudeAppTheme
 
 class MyPetsActivity : ComponentActivity() {
 	override fun onCreate(savedInstanceState: Bundle?) {
+		val userId: Number = intent.getSerializableExtra("userId") as Number
 		super.onCreate(savedInstanceState)
 		setContent {
 			PetSaudeAppTheme {
@@ -49,6 +52,7 @@ class MyPetsActivity : ComponentActivity() {
 						.fillMaxSize(),
 					color = MaterialTheme.colors.background
 				) {
+//					getAllPetsUser(userId)
 					GlobalMyPets(this)
 				}
 			}

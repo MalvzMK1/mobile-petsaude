@@ -41,7 +41,7 @@ import br.senai.sp.jandira.petsaudeapp.model.Address
 import br.senai.sp.jandira.petsaudeapp.model.UserInfos
 import br.senai.sp.jandira.petsaudeapp.model.UserRegister
 import br.senai.sp.jandira.petsaudeapp.model.VetInfos
-import br.senai.sp.jandira.petsaudeapp.service.integrations.createUserVet
+import br.senai.sp.jandira.petsaudeapp.service.integrations.register.createUserVet
 import br.senai.sp.jandira.petsaudeapp.ui.theme.PetSaudeAppTheme
 import br.senai.sp.jandira.petsaudeapp.utils.validateEmptyInput
 import com.google.gson.annotations.SerializedName
@@ -493,14 +493,13 @@ fun ProfessionalRegisterForm(userInfosRegister: UserInfos) {
 					startActingDate = vetInfos.startActingDate,
 					formationDate = vetInfos.formationDate
 				)
-				//Log.i("USER MODEL", userVetRegister.toString())
 				// TODO: CADASTRO DE USUÁRIO VETERINARIO - ****CONCLUIDO****
 				val userRegisterVet = createUserVet(userVetRegister) {
 					Log.i("CREATE USER RESPONSE", it.toString())
 					val id = it.id
 					Toast.makeText(context, "Usuário criado com sucesso", Toast.LENGTH_SHORT).show()
 					val openMainActivity = Intent(context, MainActivity::class.java)
-					openMainActivity.putExtra("userID", id)
+//					openMainActivity.putExtra("userIDVet", id)
 					startActivity(context, openMainActivity, null)
 				}
 			}

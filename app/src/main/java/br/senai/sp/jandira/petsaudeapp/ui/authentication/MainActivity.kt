@@ -39,6 +39,8 @@ import br.senai.sp.jandira.petsaudeapp.utils.validateEmptyInput
 
 class MainActivity : ComponentActivity() {
 	override fun onCreate(savedInstanceState: Bundle?) {
+//		val userIdDef: Number = intent.getSerializableExtra("userIdDef") as Number
+//		val userIdVet: Number = intent.getSerializableExtra("userIdVet") as Number
 		super.onCreate(savedInstanceState)
 		setContent {
 			PetSaudeAppTheme {
@@ -164,7 +166,7 @@ fun LoginForm() {
 	val context = LocalContext.current
 	var loginEmailState = ""
 	var loginPasswordState = ""
-	var loginState by rememberSaveable() { mutableStateOf("") }
+	var loginStateToken by rememberSaveable() { mutableStateOf("") }
 	var isErrorEmailState by rememberSaveable { mutableStateOf(false) }
 	var isErrorPasswordState by rememberSaveable { mutableStateOf(false) }
 	Column(
@@ -204,10 +206,11 @@ fun LoginForm() {
 					Toast.makeText(context, "Campos obrigatórios não informados", Toast.LENGTH_SHORT).show()
 				} else {
 					if (loginEmailState.indexOf("@") != -1) {
-						loginState = loginUser(loginEmailState, loginPasswordState) {
-							loginState = it
-							if (loginState.isNotEmpty()) {
+						loginStateToken = loginUser(loginEmailState, loginPasswordState) {
+							loginStateToken = it
+							if (loginStateToken.isNotEmpty()) {
 								val openHomePetActivity = Intent(context, HomePetActivity::class.java)
+								openHomePetActivity.putExtra("tokenID", loginStateToken)
 								startActivity(context, openHomePetActivity, null)
 								Toast.makeText(context, "Seja Bem-Vindo!", Toast.LENGTH_SHORT).show()
 							} else {

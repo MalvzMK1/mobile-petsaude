@@ -3,6 +3,7 @@ package br.senai.sp.jandira.petsaudeapp.service
 import br.senai.sp.jandira.petsaudeapp.model.*
 import br.senai.sp.jandira.petsaudeapp.service.response.PostUserResponse
 import br.senai.sp.jandira.petsaudeapp.service.response.PostUserVetResponse
+import br.senai.sp.jandira.petsaudeapp.service.response.ResponseValidUser
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -25,14 +26,17 @@ interface PetSaudeRetrofitService {
 
 //-------------------------------------------------------GET-------------------------------------------------------------------//
 																							//##UserConfigActivity##//
-	//	@GET("auth")
-	//	fun validationUser(@Headers("Authorization") Token): Call<Token>
+	@GET("auth")
+  fun validationUser(@Header("Authorization") token: String): Call<ResponseValidUser>
 
 	@GET("user") // User Default
 	fun getUserById(@Query("userId") userId: Number): Call<UserInfos>
 
 	@GET("user") // User Veterinary
 	fun getUserVetById(@Query("userId") userId: Number): Call<UserRegister>
+
+	@GET("pet/all") // Pets User
+	fun getAllPetsUser(@Query("userId") userId: Number): Call<PetsCard>
 
 //-------------------------------------------------------PUT-------------------------------------------------------------------//
 																							//##UserLocationActivity##//
