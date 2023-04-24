@@ -5,6 +5,7 @@ import android.app.TimePickerDialog
 import android.content.Context
 import android.graphics.Paint.Align
 import android.os.Bundle
+import android.util.Log
 import android.widget.DatePicker
 import android.widget.ImageButton
 import android.widget.TimePicker
@@ -42,6 +43,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.senai.sp.jandira.petsaudeapp.R
 import br.senai.sp.jandira.petsaudeapp.components.ConfigHeader
+import br.senai.sp.jandira.petsaudeapp.model.PetsCard
 import br.senai.sp.jandira.petsaudeapp.model.Reviews
 import br.senai.sp.jandira.petsaudeapp.ui.theme.PetSaudeAppTheme
 import com.google.android.material.transition.MaterialContainerTransform.FitMode
@@ -54,6 +56,10 @@ import java.util.*
 
 class ProfileVisityActivity : ComponentActivity() {
 	override fun onCreate(savedInstanceState: Bundle?) {
+		val idUser: Int = intent.getSerializableExtra("userID") as Int
+		Log.i("RESPONSE SUCCESS - ID PERFIL", idUser.toString())
+		val isVetUser: Boolean = intent.getSerializableExtra("isVetUser") as Boolean
+		Log.i("RESPONSE SUCCESS - ISVET PERFIL", isVetUser.toString())
 		super.onCreate(savedInstanceState)
 		setContent {
 			PetSaudeAppTheme {
@@ -64,7 +70,7 @@ class ProfileVisityActivity : ComponentActivity() {
 						.verticalScroll(rememberScrollState()),
 					color = MaterialTheme.colors.background
 				) {
-					GlobalProfileVisity(this)
+					GlobalProfileVisity(this, idUser, isVetUser)
 				}
 			}
 		}
@@ -72,7 +78,7 @@ class ProfileVisityActivity : ComponentActivity() {
 }
 
 @Composable
-fun GlobalProfileVisity(context: Context) {
+fun GlobalProfileVisity(context: Context, idUser: Number, isVetUser: Boolean) {
 	Column(
 		modifier = Modifier
 			.fillMaxSize()
@@ -83,11 +89,16 @@ fun GlobalProfileVisity(context: Context) {
 			context,
 			icon = Icons.Filled.Settings
 		)
-		PersonProfessional()
-		AvaliationProfessional()
-//		PetsFromUser()
-		InformationAcademyProfessional()
-		LocalizationProfile()
+		if (isVetUser) {
+			PersonProfessional()
+			AvaliationProfessional()
+			InformationAcademyProfessional()
+			LocalizationProfile()
+		} else {
+			ProfileUser()
+			PetsFromUser()
+			LocalizationProfile()
+		}
 	}
 }
 
@@ -213,7 +224,9 @@ fun PersonProfessional() {
 				modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End
 			) {
 				Text(
-					text = if (expandAboutMe) stringResource(id = R.string.about_me_read_less) else stringResource(id = R.string.about_me_read_more),
+					text = if (expandAboutMe) stringResource(id = R.string.about_me_read_less) else stringResource(
+						id = R.string.about_me_read_more
+					),
 					modifier = Modifier.clickable { expandAboutMe = !expandAboutMe },
 					color = Color(9, 115, 138),
 					fontSize = 12.sp,
@@ -256,8 +269,12 @@ fun PersonProfessional() {
 	)
 	AnimatedVisibility(
 		visible = expandState,
-		enter = slideInVertically(tween(durationMillis = 500)) + expandVertically(expandFrom = Alignment.Top) + fadeIn(initialAlpha = 0.3f),
-		exit = slideOutVertically(tween(durationMillis = 500)) + shrinkVertically() + fadeOut(targetAlpha = 0.3f)
+		enter = slideInVertically(tween(durationMillis = 500)) + expandVertically(expandFrom = Alignment.Top) + fadeIn(
+			initialAlpha = 0.3f
+		),
+		exit = slideOutVertically(tween(durationMillis = 500)) + shrinkVertically() + fadeOut(
+			targetAlpha = 0.3f
+		)
 	) {
 		Card(
 			modifier = Modifier
@@ -481,6 +498,202 @@ fun PersonProfessional() {
 }
 
 @Composable
+fun ProfileUser() {
+	var expandAboutMe by remember {
+		mutableStateOf(false)
+	}
+	Column(
+		modifier = Modifier.fillMaxWidth()
+	) {
+		Row(
+			modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center
+		) {
+			Card(
+				modifier = Modifier
+					.width(185.dp)
+					.height(60.dp), elevation = 2.dp
+			) {
+				Box(
+					contentAlignment = Alignment.Center
+				) {
+					Column() {
+						Text(
+							text = stringResource(id = R.string.finished_appointments_profile),
+							modifier = Modifier.fillMaxWidth(),
+							fontSize = 11.sp,
+							fontWeight = FontWeight.W600,
+							textAlign = TextAlign.Center
+						)
+						Spacer(modifier = Modifier.height(4.dp))
+						Text(
+							//Inserir dados da API//
+							text = "it.finishedAppointments",
+							modifier = Modifier.fillMaxWidth(),
+							fontSize = 14.sp,
+							fontWeight = FontWeight.W600,
+							textAlign = TextAlign.Center
+						)
+					}
+				}
+			}
+			Spacer(modifier = Modifier.width(12.dp))
+			Card(
+				modifier = Modifier
+					.width(185.dp)
+					.height(60.dp),
+				backgroundColor = Color(227, 239, 240),
+				elevation = 2.dp
+			) {
+				Box(
+					contentAlignment = Alignment.Center
+				) {
+					Column() {
+						Text(
+							text = stringResource(id = R.string.score_professional),
+							color = Color(9, 115, 138),
+							modifier = Modifier.fillMaxWidth(),
+							fontSize = 11.sp,
+							fontWeight = FontWeight.W600,
+							textAlign = TextAlign.Center
+						)
+						Spacer(modifier = Modifier.height(4.dp))
+						Text(
+							//Inserir dados da API//
+							text = "it.Score",
+							color = Color(9, 115, 138),
+							modifier = Modifier.fillMaxWidth(),
+							fontSize = 14.sp,
+							fontWeight = FontWeight.W600,
+							textAlign = TextAlign.Center
+						)
+					}
+				}
+			}
+		}
+		Spacer(modifier = Modifier.height(16.dp))
+		Column(
+			modifier = Modifier.fillMaxWidth()
+		) {
+			Text(
+				text = stringResource(id = R.string.about_me_profile),
+				modifier = Modifier.fillMaxWidth(),
+				fontSize = 18.sp,
+				fontWeight = FontWeight.W600,
+				textAlign = TextAlign.Start
+			)
+			Text(
+				//Inserir dados da API//
+				text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed aliquet quam sapien, in porta mi tristique necLorem ipsum dolor sit amet, consectetur adipiscing elit. Sed aliquet quam sapien, in porta mi tristique nec. Se Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed aliquet quam sapien, in porta mi tristique nec. See ",
+				overflow = TextOverflow.Ellipsis,
+				maxLines = if (expandAboutMe) 50 else 3,
+				modifier = Modifier.fillMaxWidth(),
+				color = Color(169, 169, 169),
+				fontSize = 14.sp,
+				fontWeight = FontWeight.W400
+			)
+			Row(
+				modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End
+			) {
+				Text(
+					text = if (expandAboutMe) stringResource(id = R.string.about_me_read_less) else stringResource(
+						id = R.string.about_me_read_more
+					),
+					modifier = Modifier.clickable { expandAboutMe = !expandAboutMe },
+					color = Color(9, 115, 138),
+					fontSize = 12.sp,
+					fontWeight = FontWeight.W500
+				)
+			}
+		}
+	}
+}
+
+@Composable
+fun PetsFromUser() {
+	var pets by rememberSaveable() {
+		mutableStateOf(listOf<PetsCard>())
+	}
+	Column(
+		modifier = Modifier
+			.fillMaxWidth()
+			.height(760.dp)
+	) {
+		Spacer(modifier = Modifier.height(12.dp))
+		Text(
+			text = stringResource(id = R.string.user_config_pets),
+			modifier = Modifier.fillMaxWidth(),
+			fontSize = 18.sp,
+			fontWeight = FontWeight.W600,
+			textAlign = TextAlign.Start
+		)
+		Spacer(modifier = Modifier.height(2.dp))
+		Column(
+			modifier = Modifier
+				.fillMaxWidth()
+				.height(780.dp)
+				.verticalScroll(rememberScrollState())
+		) {
+			LazyColumn(
+				modifier = Modifier
+					.fillMaxWidth()
+					.height(780.dp)
+					.background(Color(236, 236, 236))
+			) {
+//				items(pets) {
+//					Card(
+//						modifier = Modifier
+//							.fillMaxWidth()
+//							.wrapContentHeight(),
+//						shape = RoundedCornerShape(16.dp),
+//						backgroundColor = Color.White,
+//						border = BorderStroke(0.8.dp, Color(202, 196, 208))
+//					) {
+//						Column(
+//							modifier = Modifier.fillMaxSize()
+//						) {
+//							Row(
+//								modifier = Modifier
+//									.fillMaxWidth()
+//									.wrapContentHeight()
+//									.padding(16.dp),
+//								horizontalArrangement = Arrangement.SpaceBetween,
+//								verticalAlignment = Alignment.CenterVertically
+//							) {
+//								Card(
+//									modifier = Modifier
+//										.width(55.dp)
+//										.height(55.dp),
+//									shape = RoundedCornerShape(50),
+//									border = BorderStroke(0.7.dp, Color(202, 196, 208)),
+//									elevation = 2.dp
+//								) {
+//									//---------- COLOCAR IMAGEM DE PERFIL DO USUARIO ----------//
+//								}
+//								Text(
+//									//---------- COLOCAR NOME DE USUARIO ----------//
+//									text = "it.petName",
+//									fontSize = 16.sp,
+//									fontWeight = FontWeight.W500,
+//									textAlign = TextAlign.Start
+//								)
+//							}
+//							Image(
+//								//---------- COLOCAR IMAGEM DA AVALIACAO DO USUARIO ----------//
+//								painter = painterResource(id = R.drawable.media),
+//								contentDescription = "Image Card",
+//								modifier = Modifier
+//									.fillMaxWidth(),
+//								contentScale = ContentScale.FillWidth
+//							)
+//						}
+//					}
+//				}
+			}
+		}
+	}
+}
+
+@Composable
 fun AvaliationProfessional() {
 	var reviews by rememberSaveable() {
 		mutableStateOf(listOf<Reviews>())
@@ -509,7 +722,7 @@ fun AvaliationProfessional() {
 				modifier = Modifier
 					.fillMaxWidth()
 					.height(780.dp)
-					.background(Color(236,236,236))
+					.background(Color(236, 236, 236))
 			) {
 //			items(reviews){
 //				Card(

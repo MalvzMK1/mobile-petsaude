@@ -3,6 +3,7 @@ package br.senai.sp.jandira.petsaudeapp.ui
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.text.BoringLayout
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -37,11 +38,31 @@ import br.senai.sp.jandira.petsaudeapp.ui.profile.UserConfigActivity
 import br.senai.sp.jandira.petsaudeapp.ui.theme.PetSaudeAppTheme
 
 class HomePetActivity : ComponentActivity() {
+	var isVet: Boolean = false
+	var idUser: Int = 0
+//	val tokenId: String = intent.getSerializableExtra("tokenID") as String
+//	Log.i("RESPONSE SUCCESS - JWT HOME", tokenId)
+//	val user = validationUserJWT("Bearer ${tokenId}") {
+//		Log.i("RESPONSE SUCCESS - JWT HOME USER", it.toString())
+//		idUser = it.user.id
+//		isVet = it.user.isVet
+//	}
 	override fun onCreate(savedInstanceState: Bundle?) {
-		val tokenId: Token = intent.getSerializableExtra("tokenID") as Token
-		val user = validationUserJWT("Bearer ${tokenId.token}")
-		Log.i("RESPONSE SUCCESS - VALID JWT", user.toString())
+//		var isVet: Boolean = false
+//		var idUser: Int = 0
+		val tokenId: String = intent.getSerializableExtra("tokenID") as String
+		Log.i("RESPONSE SUCCESS - JWT HOME", tokenId)
+		val user = validationUserJWT("Bearer ${tokenId}") {
+			Log.i("RESPONSE SUCCESS - JWT HOME USER", it.toString())
+			idUser = it.user.id
+			isVet = it.user.isVet
+			onUpdateValues(idUser, isVet)
+		}
 		super.onCreate(savedInstanceState)
+//		onUpdateValues(idUser, isVet)
+		setContentWithValues(idUser, isVet)
+	}
+	private fun setContentWithValues(idUser: Number, isVet: Boolean) {
 		setContent {
 			PetSaudeAppTheme {
 				// A surface container using the 'background' color from the theme
@@ -49,15 +70,22 @@ class HomePetActivity : ComponentActivity() {
 					modifier = Modifier.fillMaxSize(),
 					color = MaterialTheme.colors.background
 				) {
-					GlobalHomePet(this)
+					GlobalHomePet(this, idUser.toInt(), isVet)
+					Log.i("RESPONSE SUCCESS - JWT HOME idUser", idUser.toString())
+					Log.i("RESPONSE SUCCESS - JWT HOME isVet", isVet.toString())
 				}
 			}
 		}
 	}
+	fun onUpdateValues(idUser: Number, isVet: Boolean) {
+		this.idUser = idUser.toInt()
+		this.isVet = isVet
+		setContentWithValues(idUser, isVet)
+	}
 }
 
 @Composable
-fun GlobalHomePet(context: Context) {
+fun GlobalHomePet(context: Context, idUser: Int, isVet: Boolean) {
 	Column(
 		modifier = Modifier
 			.fillMaxSize()
@@ -95,9 +123,9 @@ fun GlobalHomePet(context: Context) {
 				)
 				IconButton(
 					onClick = {
-//						val idUser = userId
 						val openUserProfileVisityActivity = Intent(context, ProfileVisityActivity::class.java)
-//						openUserProfileVisityActivity.putExtra("userID", idUser)
+						openUserProfileVisityActivity.putExtra("userID", idUser)
+						openUserProfileVisityActivity.putExtra("isVetUser", isVet)
 						ContextCompat.startActivity(context, openUserProfileVisityActivity, null)
 					}
 				) {
@@ -112,10 +140,10 @@ fun GlobalHomePet(context: Context) {
 	}
 }
 
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview5() {
-	PetSaudeAppTheme {
-		GlobalHomePet(LocalContext.current)
-	}
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun DefaultPreview5() {
+//	PetSaudeAppTheme {
+//		GlobalHomePet(LocalContext.current, isVet = false)
+//	}
+//}

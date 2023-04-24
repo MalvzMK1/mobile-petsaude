@@ -1,7 +1,7 @@
 package br.senai.sp.jandira.petsaudeapp.service.response
 
 data class PostUserResponse(
-	val id: Number,
+	val id: Int,
 	val personName: String,
 	val userName: String,
 	val cpf: String,

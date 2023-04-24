@@ -25,7 +25,6 @@ interface PetSaudeRetrofitService {
 	fun saveUserRegisterVet(@Body registerVet: UserRegister): Call<PostUserVetResponse>
 
 //-------------------------------------------------------GET-------------------------------------------------------------------//
-																							//##UserConfigActivity##//
 	@GET("auth")
   fun validationUser(@Header("Authorization") token: String): Call<ResponseValidUser>
 
@@ -39,7 +38,6 @@ interface PetSaudeRetrofitService {
 	fun getAllPetsUser(@Query("userId") userId: Number): Call<PetsCard>
 
 //-------------------------------------------------------PUT-------------------------------------------------------------------//
-																							//##UserLocationActivity##//
 	@PUT("address")
 	fun putUserLocation(@Query("addressId") addressId: Number, @Body userAddress: Address): Call<String>
 

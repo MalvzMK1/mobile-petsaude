@@ -9,12 +9,13 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-fun validationUserJWT(token: String) {
+fun validationUserJWT(token: String, onComplete: (ResponseValidUser) -> Unit) {
 	val call = RetrofitFactory().retrofitService().validationUser(token)
 
 	call.enqueue(object : Callback<ResponseValidUser> {
 		override fun onResponse(call: Call<ResponseValidUser>, response: Response<ResponseValidUser>) {
-			Log.i("RESPONSE ERROR - VALID JWT", response.body().toString())
+			onComplete.invoke(response.body()!!)
+			Log.i("RESPONSE SUCCESS - VALID JWT", response.body().toString())
 		}
 
 		override fun onFailure(call: Call<ResponseValidUser>, t: Throwable) {
