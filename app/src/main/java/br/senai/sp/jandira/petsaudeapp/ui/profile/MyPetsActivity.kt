@@ -7,6 +7,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -35,14 +36,13 @@ import androidx.compose.ui.unit.sp
 import br.senai.sp.jandira.petsaudeapp.R
 import br.senai.sp.jandira.petsaudeapp.components.ConfigHeader
 import br.senai.sp.jandira.petsaudeapp.model.PetsCard
-import br.senai.sp.jandira.petsaudeapp.model.Reviews
-import br.senai.sp.jandira.petsaudeapp.model.UserInfos
 import br.senai.sp.jandira.petsaudeapp.service.integrations.pet.getAllPetsUser
 import br.senai.sp.jandira.petsaudeapp.ui.theme.PetSaudeAppTheme
+import coil.compose.AsyncImage
 
 class MyPetsActivity : ComponentActivity() {
 	override fun onCreate(savedInstanceState: Bundle?) {
-		val userId: Number = intent.getSerializableExtra("userId") as Number
+		val userId: Int = intent.getSerializableExtra("userId") as Int
 		super.onCreate(savedInstanceState)
 		setContent {
 			PetSaudeAppTheme {
@@ -52,8 +52,7 @@ class MyPetsActivity : ComponentActivity() {
 						.fillMaxSize(),
 					color = MaterialTheme.colors.background
 				) {
-//					getAllPetsUser(userId)
-					GlobalMyPets(this)
+					GlobalMyPets(this, userId)
 				}
 			}
 		}
@@ -61,7 +60,7 @@ class MyPetsActivity : ComponentActivity() {
 }
 
 @Composable
-fun GlobalMyPets(context: Context) {
+fun GlobalMyPets(context: Context, userId: Int) {
 	Scaffold(
 		modifier = Modifier.padding(12.dp),
 		floatingActionButton = {
@@ -98,87 +97,89 @@ fun GlobalMyPets(context: Context) {
 					fontSize = 22.sp,
 					fontWeight = FontWeight.W600
 				)
-				CardsPet()
+				CardsPet(userId)
 			}
 		}
 	)
 }
 
 @Composable
-fun CardsPet() {
-	var pets by rememberSaveable() {
+fun CardsPet(userId: Int) {
+	var pets by rememberSaveable {
 		mutableStateOf(listOf<PetsCard>())
 	}
-
-	Column(
-		modifier = Modifier
-			.verticalScroll(rememberScrollState())
-			.fillMaxWidth()
-			.fillMaxHeight()
-			.background(Color(245, 244, 244, 255))
-	) {
-//		LazyColumn(
-//			modifier = Modifier
-//				.fillMaxWidth()
-//				.height(780.dp)
-//				.background(Color(236, 236, 236))
-//		) {
-//			items(pets) {
-//				Card(
-//					modifier = Modifier
-//						.fillMaxWidth(),
-//					shape = RoundedCornerShape(16.dp),
-//					backgroundColor = Color.White,
-//					border = BorderStroke(0.8.dp, Color(202, 196, 208))
-//				) {
-//					Column(
-//						modifier = Modifier.fillMaxSize()
-//					) {
-//						Row(
-//							modifier = Modifier
-//								.fillMaxWidth()
-//								.wrapContentHeight()
-//								.padding(16.dp),
-//							horizontalArrangement = Arrangement.SpaceBetween,
-//							verticalAlignment = Alignment.CenterVertically
-//						) {
-//							Card(
-//								modifier = Modifier
-//									.width(55.dp)
-//									.height(55.dp),
-//								shape = RoundedCornerShape(50),
-//								border = BorderStroke(0.7.dp, Color(202, 196, 208)),
-//								elevation = 2.dp
-//							) {
-//								//---------- COLOCAR IMAGEM DE PERFIL DO USUARIO ----------//
-//							}
-//							Text(
-//								//---------- COLOCAR NOME DO PET ----------//
-//								text = "it.petName",
-//								fontSize = 16.sp,
-//								fontWeight = FontWeight.W500,
-//								textAlign = TextAlign.Start
-//							)
-//						}
-//						Image(
-//							//---------- COLOCAR IMAGEM DO PET ----------//
-//							painter = painterResource(id = R.drawable.media),
-//							contentDescription = "Image Card",
-//							modifier = Modifier
-//								.fillMaxWidth(),
-//							contentScale = ContentScale.FillWidth
-//						)
-//					}
-//				}
-//			}
-//		}
+	getAllPetsUser(userId) {
+		pets = it
 	}
+
+//	Column(
+//		modifier = Modifier
+//			.verticalScroll(rememberScrollState())
+//			.fillMaxWidth()
+//			.fillMaxHeight()
+//			.background(Color(245, 244, 244, 255))
+//	) {
+		LazyColumn(
+			modifier = Modifier
+				.fillMaxWidth()
+				.height(780.dp)
+		) {
+			items(pets) {
+				Card(
+					modifier = Modifier
+						.fillMaxWidth(),
+					shape = RoundedCornerShape(16.dp),
+					backgroundColor = Color.White,
+					border = BorderStroke(0.8.dp, Color(202, 196, 208))
+				) {
+					Column(
+						modifier = Modifier.fillMaxSize()
+					) {
+						Row(
+							modifier = Modifier
+								.fillMaxWidth()
+								.wrapContentHeight()
+								.padding(16.dp),
+							horizontalArrangement = Arrangement.SpaceBetween,
+							verticalAlignment = Alignment.CenterVertically
+						) {
+							Card(
+								modifier = Modifier
+									.width(55.dp)
+									.height(55.dp),
+								shape = RoundedCornerShape(50),
+								border = BorderStroke(0.7.dp, Color(202, 196, 208)),
+								elevation = 2.dp
+							) {
+								//---------- COLOCAR IMAGEM DE PERFIL DO USUARIO ----------//
+							}
+							Text(
+								//---------- COLOCAR NOME DO PET ----------//
+								text = it.namePet,
+								fontSize = 16.sp,
+								fontWeight = FontWeight.W500,
+								textAlign = TextAlign.Start
+							)
+						}
+						AsyncImage(
+							//---------- COLOCAR IMAGEM DO PET ----------//
+							model = it.photoPet,
+							contentDescription = "Image Card",
+							modifier = Modifier
+								.fillMaxWidth(),
+							contentScale = ContentScale.FillWidth
+						)
+					}
+				}
+			}
+		}
+//	}
 }
 
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview12() {
-	PetSaudeAppTheme {
-		GlobalMyPets(LocalContext.current)
-	}
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun DefaultPreview12() {
+//	PetSaudeAppTheme {
+//		GlobalMyPets(LocalContext.current)
+//	}
+//}

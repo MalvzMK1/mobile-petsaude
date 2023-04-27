@@ -3,6 +3,7 @@ package br.senai.sp.jandira.petsaudeapp.ui.profile
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context
+import android.content.Intent
 import android.graphics.Paint.Align
 import android.os.Bundle
 import android.util.Log
@@ -41,6 +42,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat
 import br.senai.sp.jandira.petsaudeapp.R
 import br.senai.sp.jandira.petsaudeapp.components.ConfigHeader
 import br.senai.sp.jandira.petsaudeapp.model.PetsCard
@@ -78,32 +80,77 @@ class ProfileVisityActivity : ComponentActivity() {
 }
 
 @Composable
-fun GlobalProfileVisity(context: Context, idUser: Number, isVetUser: Boolean) {
+fun GlobalProfileVisity(context: Context, idUser: Int, isVetUser: Boolean) {
 	Column(
 		modifier = Modifier
 			.fillMaxSize()
 			.padding(12.dp)
 	) {
-		ConfigHeader(
-			headline = stringResource(id = R.string.empty_string),
-			context,
-			icon = Icons.Filled.Settings
-		)
+//		ConfigHeader(
+//			headline = stringResource(id = R.string.empty_string),
+//			context,
+//			icon = Icons.Filled.Settings
+//		)
+		Column(
+			modifier = Modifier.fillMaxWidth()
+		) {
+			Row(
+				modifier = Modifier
+					.fillMaxWidth(),
+				horizontalArrangement = Arrangement.SpaceBetween,
+				verticalAlignment = Alignment.CenterVertically
+			) {
+				IconButton(
+					onClick = { }
+				) {
+					Icon(
+						imageVector = Icons.Filled.Menu,
+						contentDescription = "leftSideButtonHeader",
+						modifier = Modifier.size(32.dp)
+					)
+				}
+				Text(
+					text = " ",
+					modifier = Modifier.width(200.dp),
+					fontSize = 24.sp,
+					fontWeight = FontWeight.W500,
+					textAlign = TextAlign.Center
+				)
+				IconButton(
+					onClick = {
+						val openUserConfigActivity = Intent(context, UserConfigActivity::class.java)
+						Log.i("RESPONSE SUCCESS - ****userid**** PERFIL", idUser.toString())
+						openUserConfigActivity.putExtra("userID", idUser)
+						Log.i("RESPONSE SUCCESS - ****userid**** PERFIL", idUser.toString())
+						Log.i("RESPONSE SUCCESS - ****isvet**** HOME", isVetUser.toString())
+						openUserConfigActivity.putExtra("isVetUser", isVetUser)
+						Log.i("RESPONSE SUCCESS - ****isvet**** HOME", isVetUser.toString())
+						ContextCompat.startActivity(context, openUserConfigActivity, null)
+					}
+				) {
+					Icon(
+						imageVector = Icons.Default.Person,
+						contentDescription = "rightSideButtonHeader",
+						modifier = Modifier.size(30.dp)
+					)
+				}
+			}
+		}
 		if (isVetUser) {
-			PersonProfessional()
-			AvaliationProfessional()
-			InformationAcademyProfessional()
+			PersonProfessional(idUser, isVetUser)
+			AvaliationProfessional(idUser, isVetUser)
+			InformationAcademyProfessional(idUser, isVetUser)
 			LocalizationProfile()
 		} else {
-			ProfileUser()
-			PetsFromUser()
+			ProfileUser(idUser, isVetUser)
+			PetsFromUser(idUser, isVetUser)
 			LocalizationProfile()
 		}
 	}
 }
 
 @Composable
-fun PersonProfessional() {
+fun PersonProfessional(idUser: Int, isVetUser: Boolean) {
 	val context = LocalContext.current
 
 	var expandState by remember {
@@ -498,7 +545,7 @@ fun PersonProfessional() {
 }
 
 @Composable
-fun ProfileUser() {
+fun ProfileUser(idUser: Int, isVetUser: Boolean) {
 	var expandAboutMe by remember {
 		mutableStateOf(false)
 	}
@@ -609,7 +656,7 @@ fun ProfileUser() {
 }
 
 @Composable
-fun PetsFromUser() {
+fun PetsFromUser(idUser: Int, isVetUser: Boolean) {
 	var pets by rememberSaveable() {
 		mutableStateOf(listOf<PetsCard>())
 	}
@@ -694,7 +741,7 @@ fun PetsFromUser() {
 }
 
 @Composable
-fun AvaliationProfessional() {
+fun AvaliationProfessional(idUser: Int, isVetUser: Boolean) {
 	var reviews by rememberSaveable() {
 		mutableStateOf(listOf<Reviews>())
 	}
@@ -815,7 +862,7 @@ fun AvaliationProfessional() {
 }
 
 @Composable
-fun InformationAcademyProfessional() {
+fun InformationAcademyProfessional(idUser: Int, isVetUser: Boolean) {
 	Column(
 		modifier = Modifier.fillMaxWidth()
 	) {

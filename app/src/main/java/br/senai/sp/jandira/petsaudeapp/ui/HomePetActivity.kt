@@ -40,13 +40,6 @@ import br.senai.sp.jandira.petsaudeapp.ui.theme.PetSaudeAppTheme
 class HomePetActivity : ComponentActivity() {
 	var isVet: Boolean = false
 	var idUser: Int = 0
-//	val tokenId: String = intent.getSerializableExtra("tokenID") as String
-//	Log.i("RESPONSE SUCCESS - JWT HOME", tokenId)
-//	val user = validationUserJWT("Bearer ${tokenId}") {
-//		Log.i("RESPONSE SUCCESS - JWT HOME USER", it.toString())
-//		idUser = it.user.id
-//		isVet = it.user.isVet
-//	}
 	override fun onCreate(savedInstanceState: Bundle?) {
 //		var isVet: Boolean = false
 //		var idUser: Int = 0
@@ -59,7 +52,6 @@ class HomePetActivity : ComponentActivity() {
 			onUpdateValues(idUser, isVet)
 		}
 		super.onCreate(savedInstanceState)
-//		onUpdateValues(idUser, isVet)
 		setContentWithValues(idUser, isVet)
 	}
 	private fun setContentWithValues(idUser: Number, isVet: Boolean) {
@@ -124,8 +116,12 @@ fun GlobalHomePet(context: Context, idUser: Int, isVet: Boolean) {
 				IconButton(
 					onClick = {
 						val openUserProfileVisityActivity = Intent(context, ProfileVisityActivity::class.java)
+						Log.i("RESPONSE SUCCESS - ****userid**** HOME", idUser.toString())
 						openUserProfileVisityActivity.putExtra("userID", idUser)
+						Log.i("RESPONSE SUCCESS - ****userid**** HOME", idUser.toString())
+						Log.i("RESPONSE SUCCESS - ****isvet**** HOME", isVet.toString())
 						openUserProfileVisityActivity.putExtra("isVetUser", isVet)
+						Log.i("RESPONSE SUCCESS - ****isvet**** HOME", isVet.toString())
 						ContextCompat.startActivity(context, openUserProfileVisityActivity, null)
 					}
 				) {

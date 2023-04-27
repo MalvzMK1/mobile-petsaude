@@ -3,6 +3,7 @@ package br.senai.sp.jandira.petsaudeapp.ui.profile
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.*
@@ -34,9 +35,11 @@ import br.senai.sp.jandira.petsaudeapp.ui.theme.PetSaudeAppTheme
 
 class UserConfigActivity : ComponentActivity() {
 	override fun onCreate(savedInstanceState: Bundle?) {
+		val idUser: Int = intent.getSerializableExtra("userID") as Int
+		Log.i("RESPONSE SUCCESS - ID CONFIG", idUser.toString())
+		val isVetUser: Boolean = intent.getSerializableExtra("isVetUser") as Boolean
+		Log.i("RESPONSE SUCCESS - ISVETUSER CONFIG", isVetUser.toString())
 		super.onCreate(savedInstanceState)
-
-
 		setContent {
 			PetSaudeAppTheme {
 				// A surface container using the 'background' color from the theme
@@ -46,7 +49,7 @@ class UserConfigActivity : ComponentActivity() {
 						.verticalScroll(rememberScrollState()),
 					color = MaterialTheme.colors.background
 				) {
-					GlobalUserConfig(this)
+					GlobalUserConfig(this, idUser, isVetUser)
 				}
 			}
 		}
@@ -54,7 +57,7 @@ class UserConfigActivity : ComponentActivity() {
 }
 
 @Composable
-fun GlobalUserConfig(context: Context) {
+fun GlobalUserConfig(context: Context, idUser: Int, isVetUser: Boolean) {
 	Column(
 		modifier = Modifier
 			.fillMaxSize()
@@ -66,7 +69,7 @@ fun GlobalUserConfig(context: Context) {
 			icon = Icons.Filled.Settings
 		)
 		UserProfile()
-		UserPreferences()
+		UserPreferences(idUser, isVetUser)
 	}
 }
 
@@ -112,7 +115,7 @@ fun UserProfile() {
 }
 
 @Composable
-fun UserPreferences() {
+fun UserPreferences(idUser: Int, isVetUser: Boolean) {
 	val context = LocalContext.current
 	Column(
 		modifier = Modifier.fillMaxSize()
@@ -275,8 +278,8 @@ fun UserPreferences() {
 		Spacer(modifier = Modifier.height(4.dp))
 		Button(
 			onClick = {
-				val openPetsActivity = Intent(context, CreatePetActivity::class.java)
-				ContextCompat.startActivity(context, openPetsActivity, null)
+//				val openPetsActivity = Intent(context, CreatePetActivity::class.java)
+//				ContextCompat.startActivity(context, openPetsActivity, null)
 			},
 			modifier = Modifier
 				.fillMaxWidth()
@@ -306,8 +309,7 @@ fun UserPreferences() {
 						modifier = Modifier.size(30.dp)
 					)
 					Text(
-//						text = stringResource(id = R.string.user_config_queries),
-						text = "Pets",
+						text = stringResource(id = R.string.user_config_queries),
 						modifier = Modifier.padding(start = 16.dp),
 						color = Color(28, 27, 31),
 						fontSize = 16.sp,
@@ -324,13 +326,16 @@ fun UserPreferences() {
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		Button(
 			onClick = {
-//				if (isVet) {
-//					val openProfessionalActivity = Intent(context, UserProfessionalActivity::class.java)
-//					ContextCompat.startActivity(context, openProfessionalActivity, null)
-//				} else {
-//					val openPetsActivity = Intent(context, UserPetsActivity::class.java)
-//					ContextCompat.startActivity(context, openPetsActivity, null)
-//				}
+				if (isVetUser) {
+					val openProfessionalActivity = Intent(context, UserProfessionalActivity::class.java)
+					ContextCompat.startActivity(context, openProfessionalActivity, null)
+				} else {
+					val openMyPetsActivity = Intent(context, MyPetsActivity::class.java)
+					Log.i("RESPONSE SUCCESS - ****userid**** CONFIG", idUser.toString())
+					openMyPetsActivity.putExtra("userId", idUser)
+					Log.i("RESPONSE SUCCESS - ****userid**** CONFIG", idUser.toString())
+					ContextCompat.startActivity(context, openMyPetsActivity, null)
+				}
 			},
 			modifier = Modifier
 				.fillMaxWidth()
@@ -354,26 +359,23 @@ fun UserPreferences() {
 					horizontalArrangement = Arrangement.Start,
 					verticalAlignment = Alignment.CenterVertically
 				) {
-					Icon(
-						imageVector = Icons.Filled.Work,
-						contentDescription = "Work",
-						modifier = Modifier.size(30.dp)
-					)
-//					Text(
-//						text = {
-//							if (isVet) {
-//								stringResource(id = R.string.user_config_professional_information)
-//							} else {
-//								stringResource(id = R.string.user_config_pets)
-//							}
-//						},
-//						modifier = Modifier.padding(start = 16.dp),
-//						color = Color(28, 27, 31),
-//						fontSize = 16.sp,
-//						fontWeight = FontWeight.Normal
-//					)
+					if (isVetUser) {
+						Icon(
+							imageVector = Icons.Filled.Work,
+							contentDescription = "Work",
+							modifier = Modifier.size(30.dp)
+						)
+					} else {
+						Icon(
+							imageVector = Icons.Filled.Pets,
+							contentDescription = "Work",
+							modifier = Modifier.size(30.dp)
+						)
+					}
 					Text(
-						text = stringResource(id = R.string.user_config_professional_information),
+						text =
+						if (isVetUser) stringResource(id = R.string.user_config_professional_information)
+						else stringResource(id = R.string.user_config_pets),
 						modifier = Modifier.padding(start = 16.dp),
 						color = Color(28, 27, 31),
 						fontSize = 16.sp,
@@ -442,10 +444,10 @@ fun UserPreferences() {
 	}
 }
 
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview6() {
-	PetSaudeAppTheme {
-		GlobalUserConfig(LocalContext.current)
-	}
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun DefaultPreview6() {
+//	PetSaudeAppTheme {
+//		GlobalUserConfig(LocalContext.current)
+//	}
+//}
