@@ -17,6 +17,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
@@ -29,6 +30,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -45,9 +47,13 @@ import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import br.senai.sp.jandira.petsaudeapp.R
 import br.senai.sp.jandira.petsaudeapp.components.ConfigHeader
-import br.senai.sp.jandira.petsaudeapp.model.PetsCard
+import br.senai.sp.jandira.petsaudeapp.model.Pet
 import br.senai.sp.jandira.petsaudeapp.model.Reviews
+import br.senai.sp.jandira.petsaudeapp.model.Token
+import br.senai.sp.jandira.petsaudeapp.service.integrations.pet.getAllPetsUser
+import br.senai.sp.jandira.petsaudeapp.service.integrations.user.getUserInfosById
 import br.senai.sp.jandira.petsaudeapp.ui.theme.PetSaudeAppTheme
+import coil.compose.AsyncImage
 import com.google.android.material.transition.MaterialContainerTransform.FitMode
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.MapProperties
@@ -58,10 +64,10 @@ import java.util.*
 
 class ProfileVisityActivity : ComponentActivity() {
 	override fun onCreate(savedInstanceState: Bundle?) {
-		val idUser: Int = intent.getSerializableExtra("userID") as Int
-		Log.i("RESPONSE SUCCESS - ID PERFIL", idUser.toString())
-		val isVetUser: Boolean = intent.getSerializableExtra("isVetUser") as Boolean
-		Log.i("RESPONSE SUCCESS - ISVET PERFIL", isVetUser.toString())
+		val idUser: Int = intent.getIntExtra("userID", 0) as Int
+		val isVetUser: Boolean = intent.getBooleanExtra("isVetUser", false)
+		val tokenId: String = intent.getStringExtra("tokenIDUser") as String
+
 		super.onCreate(savedInstanceState)
 		setContent {
 			PetSaudeAppTheme {
@@ -72,7 +78,7 @@ class ProfileVisityActivity : ComponentActivity() {
 						.verticalScroll(rememberScrollState()),
 					color = MaterialTheme.colors.background
 				) {
-					GlobalProfileVisity(this, idUser, isVetUser)
+					GlobalProfileVisity(this, idUser, isVetUser, tokenId)
 				}
 			}
 		}
@@ -80,7 +86,8 @@ class ProfileVisityActivity : ComponentActivity() {
 }
 
 @Composable
-fun GlobalProfileVisity(context: Context, idUser: Int, isVetUser: Boolean) {
+fun GlobalProfileVisity(context: Context, idUser: Int, isVetUser: Boolean, tokenId: String) {
+	var teste = LocalContext.current
 	Column(
 		modifier = Modifier
 			.fillMaxSize()
@@ -119,17 +126,14 @@ fun GlobalProfileVisity(context: Context, idUser: Int, isVetUser: Boolean) {
 				IconButton(
 					onClick = {
 						val openUserConfigActivity = Intent(context, UserConfigActivity::class.java)
-						Log.i("RESPONSE SUCCESS - ****userid**** PERFIL", idUser.toString())
 						openUserConfigActivity.putExtra("userID", idUser)
-						Log.i("RESPONSE SUCCESS - ****userid**** PERFIL", idUser.toString())
-						Log.i("RESPONSE SUCCESS - ****isvet**** HOME", isVetUser.toString())
 						openUserConfigActivity.putExtra("isVetUser", isVetUser)
-						Log.i("RESPONSE SUCCESS - ****isvet**** HOME", isVetUser.toString())
-						ContextCompat.startActivity(context, openUserConfigActivity, null)
+						openUserConfigActivity.putExtra("tokenUserID", tokenId)
+						teste.startActivity(openUserConfigActivity)
 					}
 				) {
 					Icon(
-						imageVector = Icons.Default.Person,
+						imageVector = Icons.Default.Settings,
 						contentDescription = "rightSideButtonHeader",
 						modifier = Modifier.size(30.dp)
 					)
@@ -142,7 +146,7 @@ fun GlobalProfileVisity(context: Context, idUser: Int, isVetUser: Boolean) {
 			InformationAcademyProfessional(idUser, isVetUser)
 			LocalizationProfile()
 		} else {
-			ProfileUser(idUser, isVetUser)
+			ProfileUser(idUser)
 			PetsFromUser(idUser, isVetUser)
 			LocalizationProfile()
 		}
@@ -162,6 +166,51 @@ fun PersonProfessional(idUser: Int, isVetUser: Boolean) {
 	Column(
 		modifier = Modifier.fillMaxWidth()
 	) {
+		Box(
+			modifier = Modifier
+				.fillMaxWidth()
+				//Colocar a Foto de Banner do Usuario
+		) {
+			Column(
+				modifier = Modifier
+					.fillMaxWidth()
+					.wrapContentHeight(),
+				horizontalAlignment = Alignment.CenterHorizontally
+			) {
+				Card(
+					modifier = Modifier
+						.width(90.dp)
+						.height(90.dp),
+					shape = RoundedCornerShape(50),
+					elevation = 2.dp
+				) {
+					Image(
+						painter = painterResource(id = R.drawable.media),
+						contentDescription = "Image Card"
+					)
+				}
+				Text(
+					text = "John Doe",
+					fontSize = 22.sp,
+					fontWeight = FontWeight.W400
+				)
+				Row {
+					Text(
+						text = "2",
+						fontSize = 14.sp,
+						fontWeight = FontWeight.W500
+					)
+					Spacer(modifier = Modifier.width(4.dp))
+					Text(
+						text = stringResource(id = R.string.user_config_clients),
+						fontSize = 14.sp,
+						fontWeight = FontWeight.W500,
+						color = Color(169, 169, 169)
+					)
+				}
+			}
+		}
+		Spacer(modifier = Modifier.height(12.dp))
 		Row(
 			modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center
 		) {
@@ -545,20 +594,75 @@ fun PersonProfessional(idUser: Int, isVetUser: Boolean) {
 }
 
 @Composable
-fun ProfileUser(idUser: Int, isVetUser: Boolean) {
+fun ProfileUser(idUser: Int) {
 	var expandAboutMe by remember {
 		mutableStateOf(false)
 	}
+	var profilePhotoStateValue by rememberSaveable() {
+		mutableStateOf("")
+	}
+	var nameStateValue by rememberSaveable() {
+		mutableStateOf("")
+	}
+	var bioStateValue by rememberSaveable() {
+		mutableStateOf("")
+	}
+	getUserInfosById(idUser) {
+		profilePhotoStateValue = it.response.user.profileBannerPhoto.toString()
+		nameStateValue = it.response.user.personName
+		bioStateValue = it.response.user.biography.toString()
+	}
+
 	Column(
 		modifier = Modifier.fillMaxWidth()
 	) {
+		Column(
+			modifier = Modifier
+				.fillMaxWidth()
+				.wrapContentHeight(),
+			horizontalAlignment = Alignment.CenterHorizontally
+		) {
+			Card(
+				modifier = Modifier
+					.width(90.dp)
+					.height(90.dp),
+				shape = RoundedCornerShape(50),
+				elevation = 2.dp
+			) {
+				AsyncImage(
+					model = profilePhotoStateValue,
+					contentDescription = "Image Card"
+				)
+			}
+			Text(
+				text = nameStateValue,
+				fontSize = 22.sp,
+				fontWeight = FontWeight.W400
+			)
+			Row {
+				Text(
+					text = "2",
+					fontSize = 14.sp,
+					fontWeight = FontWeight.W500
+				)
+				Spacer(modifier = Modifier.width(4.dp))
+				Text(
+					text = stringResource(id = R.string.user_config_pets),
+					fontSize = 14.sp,
+					fontWeight = FontWeight.W500,
+					color = Color(169, 169, 169)
+				)
+			}
+		}
+		Spacer(modifier = Modifier.height(12.dp))
 		Row(
 			modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center
 		) {
 			Card(
 				modifier = Modifier
 					.width(185.dp)
-					.height(60.dp), elevation = 2.dp
+					.height(60.dp),
+				elevation = 2.dp
 			) {
 				Box(
 					contentAlignment = Alignment.Center
@@ -630,7 +734,7 @@ fun ProfileUser(idUser: Int, isVetUser: Boolean) {
 			)
 			Text(
 				//Inserir dados da API//
-				text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed aliquet quam sapien, in porta mi tristique necLorem ipsum dolor sit amet, consectetur adipiscing elit. Sed aliquet quam sapien, in porta mi tristique nec. Se Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed aliquet quam sapien, in porta mi tristique nec. See ",
+				text = bioStateValue,
 				overflow = TextOverflow.Ellipsis,
 				maxLines = if (expandAboutMe) 50 else 3,
 				modifier = Modifier.fillMaxWidth(),
@@ -658,8 +762,12 @@ fun ProfileUser(idUser: Int, isVetUser: Boolean) {
 @Composable
 fun PetsFromUser(idUser: Int, isVetUser: Boolean) {
 	var pets by rememberSaveable() {
-		mutableStateOf(listOf<PetsCard>())
+		mutableStateOf(listOf<Pet>())
 	}
+	getAllPetsUser(idUser) {
+		pets = it.response
+	}
+
 	Column(
 		modifier = Modifier
 			.fillMaxWidth()
@@ -674,67 +782,68 @@ fun PetsFromUser(idUser: Int, isVetUser: Boolean) {
 			textAlign = TextAlign.Start
 		)
 		Spacer(modifier = Modifier.height(2.dp))
-		Column(
+		LazyColumn(
 			modifier = Modifier
 				.fillMaxWidth()
-				.height(780.dp)
-				.verticalScroll(rememberScrollState())
+				.height(780.dp),
+			verticalArrangement = Arrangement.spacedBy(10.dp)
 		) {
-			LazyColumn(
-				modifier = Modifier
-					.fillMaxWidth()
-					.height(780.dp)
-					.background(Color(236, 236, 236))
-			) {
-//				items(pets) {
-//					Card(
-//						modifier = Modifier
-//							.fillMaxWidth()
-//							.wrapContentHeight(),
-//						shape = RoundedCornerShape(16.dp),
-//						backgroundColor = Color.White,
-//						border = BorderStroke(0.8.dp, Color(202, 196, 208))
-//					) {
-//						Column(
-//							modifier = Modifier.fillMaxSize()
-//						) {
-//							Row(
-//								modifier = Modifier
-//									.fillMaxWidth()
-//									.wrapContentHeight()
-//									.padding(16.dp),
-//								horizontalArrangement = Arrangement.SpaceBetween,
-//								verticalAlignment = Alignment.CenterVertically
-//							) {
-//								Card(
-//									modifier = Modifier
-//										.width(55.dp)
-//										.height(55.dp),
-//									shape = RoundedCornerShape(50),
-//									border = BorderStroke(0.7.dp, Color(202, 196, 208)),
-//									elevation = 2.dp
-//								) {
-//									//---------- COLOCAR IMAGEM DE PERFIL DO USUARIO ----------//
-//								}
-//								Text(
-//									//---------- COLOCAR NOME DE USUARIO ----------//
-//									text = "it.petName",
-//									fontSize = 16.sp,
-//									fontWeight = FontWeight.W500,
-//									textAlign = TextAlign.Start
-//								)
-//							}
-//							Image(
-//								//---------- COLOCAR IMAGEM DA AVALIACAO DO USUARIO ----------//
-//								painter = painterResource(id = R.drawable.media),
-//								contentDescription = "Image Card",
-//								modifier = Modifier
-//									.fillMaxWidth(),
-//								contentScale = ContentScale.FillWidth
-//							)
-//						}
-//					}
-//				}
+			items(pets) {
+				Card(
+					modifier = Modifier
+						.fillMaxWidth()
+						.wrapContentHeight(),
+					shape = RoundedCornerShape(16.dp),
+					backgroundColor = Color.White,
+					border = BorderStroke(0.8.dp, Color(202, 196, 208))
+				) {
+					Column(
+						modifier = Modifier.fillMaxSize()
+					) {
+						Row(
+							modifier = Modifier
+								.fillMaxWidth()
+								.wrapContentHeight()
+								.padding(16.dp),
+							horizontalArrangement = Arrangement.SpaceBetween,
+							verticalAlignment = Alignment.CenterVertically
+						) {
+							Card(
+								modifier = Modifier
+									.width(55.dp)
+									.height(55.dp),
+								shape = RoundedCornerShape(50),
+								border = BorderStroke(0.7.dp, Color(202, 196, 208)),
+								elevation = 2.dp
+							) {
+								//---------- COLOCAR IMAGEM DE PERFIL DO USUARIO ----------//
+								AsyncImage(
+									//---------- COLOCAR FOTO DO PET ----------//
+									model = it.photo,
+									contentDescription = "Image Card",
+									modifier = Modifier
+										.fillMaxWidth(),
+									contentScale = ContentScale.FillWidth
+								)
+							}
+							Text(
+								//---------- COLOCAR NOME DE USUARIO ----------//
+								text = it.name,
+								fontSize = 16.sp,
+								fontWeight = FontWeight.W500,
+								textAlign = TextAlign.Start
+							)
+						}
+						AsyncImage(
+							//---------- COLOCAR FOTO DO PET ----------//
+							model = it.photo,
+							contentDescription = "Image Card",
+							modifier = Modifier
+								.fillMaxWidth(),
+							contentScale = ContentScale.FillWidth
+						)
+					}
+				}
 			}
 		}
 	}
@@ -759,19 +868,13 @@ fun AvaliationProfessional(idUser: Int, isVetUser: Boolean) {
 			textAlign = TextAlign.Start
 		)
 		Spacer(modifier = Modifier.height(2.dp))
-		Column(
+		LazyColumn(
 			modifier = Modifier
 				.fillMaxWidth()
 				.height(780.dp)
-				.verticalScroll(rememberScrollState())
+				.background(Color(236, 236, 236))
 		) {
-			LazyColumn(
-				modifier = Modifier
-					.fillMaxWidth()
-					.height(780.dp)
-					.background(Color(236, 236, 236))
-			) {
-//			items(reviews){
+//			items(reviews) {
 //				Card(
 //					modifier = Modifier
 //						.fillMaxWidth()
@@ -856,7 +959,6 @@ fun AvaliationProfessional(idUser: Int, isVetUser: Boolean) {
 //					}
 //				}
 //			}
-			}
 		}
 	}
 }

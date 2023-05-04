@@ -1,7 +1,7 @@
 package br.senai.sp.jandira.petsaudeapp.model
 
 data class Address(
-	val zipCode: String,
+	val cep: String,
 	val city: String,
 	val state: String,
 	val street: String,

@@ -1,7 +1,6 @@
 package br.senai.sp.jandira.petsaudeapp.ui.authentication
 
 import android.content.Intent
-import android.content.Intent.getIntent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -17,7 +16,6 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -39,15 +37,6 @@ import br.senai.sp.jandira.petsaudeapp.service.integrations.register.saveUserReg
 import br.senai.sp.jandira.petsaudeapp.service.viacep.getAddressByZipCode
 import br.senai.sp.jandira.petsaudeapp.ui.theme.PetSaudeAppTheme
 import br.senai.sp.jandira.petsaudeapp.utils.validateEmptyInput
-import com.google.android.gms.common.internal.safeparcel.SafeParcelable.Param
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.delay
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.GET
-import retrofit2.http.Path
 
 class RegisterAddressActivity : ComponentActivity() {
 	override fun onCreate(savedInstanceState: Bundle?) {
@@ -139,7 +128,7 @@ fun LocalizationForm(userInfos: UserDefault) {
 		mutableStateOf(false)
 	}
 
-	var cityState = "ice city"
+	var cityState = ""
 	var cityStateValue by rememberSaveable {
 		mutableStateOf("")
 	}
@@ -147,7 +136,7 @@ fun LocalizationForm(userInfos: UserDefault) {
 		mutableStateOf(false)
 	}
 
-	var stateState = "god state"
+	var stateState = ""
 	var stateStateValue by rememberSaveable {
 		mutableStateOf("")
 	}
@@ -258,7 +247,7 @@ fun LocalizationForm(userInfos: UserDefault) {
 					Toast.makeText(context, "Campos obrigatórios não preenchidos!", Toast.LENGTH_SHORT).show()
 				} else {
 					val userAddress = Address(
-						zipCode = zipCodeState,
+						cep = zipCodeState,
 						city = cityStateValue,
 						state = stateStateValue,
 						street = streetStateValue,
@@ -303,7 +292,7 @@ fun LocalizationForm(userInfos: UserDefault) {
 		Button(
 			onClick = {
 				val userAddress = Address(
-					zipCode = zipCodeState,
+					cep = zipCodeState,
 					city = cityStateValue,
 					state = stateStateValue,
 					street = streetStateValue,

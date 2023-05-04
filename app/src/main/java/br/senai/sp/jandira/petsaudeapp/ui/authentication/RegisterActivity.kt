@@ -247,14 +247,24 @@ fun RegisterForm() {
 			errorState = isErrorCheckPasswordState
 		)
 		Spacer(Modifier.height(16.dp))
-		cellphoneNumberState = MaskedCellphoneNumberInput(
+//		cellphoneNumberState = MaskedCellphoneNumberInput(
+//			label = stringResource(id = R.string.cellphone_number_string_resource),
+//			errorState = isErrorCellphoneNumberState
+//		)
+		cellphoneNumberState = TextFieldInput(
 			label = stringResource(id = R.string.cellphone_number_string_resource),
+			type = KeyboardType.Number,
 			errorState = isErrorCellphoneNumberState
 		)
 		Spacer(Modifier.height(16.dp))
-		phoneNumberState = MaskedPhoneNumberInput(
+//		phoneNumberState = MaskedPhoneNumberInput(
+//			label = stringResource(id = R.string.phone_number_string_resource),
+//			errorState = isErrorPhoneNumberState
+//		)
+		phoneNumberState = TextFieldInput(
 			label = stringResource(id = R.string.phone_number_string_resource),
-			errorState = isErrorPhoneNumberState
+			type = KeyboardType.Number,
+			errorState = isErrorCellphoneNumberState
 		)
 		Spacer(Modifier.height(32.dp))
 		Button(

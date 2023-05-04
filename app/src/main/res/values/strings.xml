@@ -51,6 +51,7 @@
     <string name="user_config_academic_information">Academic information</string>
     <string name="user_config_logout">Logout</string>
     <string name="user_config_pets">Pets</string>
+    <string name="user_config_clients">Clients</string>
     <string name="user_config_profile">Profile</string>
     <string name="user_config_change_email">Change E-mail</string>
     <string name="user_config_change_password">Change password</string>

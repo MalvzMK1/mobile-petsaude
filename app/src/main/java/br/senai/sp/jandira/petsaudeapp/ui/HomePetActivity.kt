@@ -41,20 +41,17 @@ class HomePetActivity : ComponentActivity() {
 	var isVet: Boolean = false
 	var idUser: Int = 0
 	override fun onCreate(savedInstanceState: Bundle?) {
-//		var isVet: Boolean = false
-//		var idUser: Int = 0
-		val tokenId: String = intent.getSerializableExtra("tokenID") as String
-		Log.i("RESPONSE SUCCESS - JWT HOME", tokenId)
+		val tokenId: String = intent.getStringExtra("tokenID") as String
 		val user = validationUserJWT("Bearer ${tokenId}") {
 			Log.i("RESPONSE SUCCESS - JWT HOME USER", it.toString())
 			idUser = it.user.id
 			isVet = it.user.isVet
-			onUpdateValues(idUser, isVet)
+			onUpdateValues(idUser, isVet, tokenId)
 		}
 		super.onCreate(savedInstanceState)
-		setContentWithValues(idUser, isVet)
+		setContentWithValues(idUser, isVet, tokenId)
 	}
-	private fun setContentWithValues(idUser: Number, isVet: Boolean) {
+	private fun setContentWithValues(idUser: Number, isVet: Boolean, tokenId: String) {
 		setContent {
 			PetSaudeAppTheme {
 				// A surface container using the 'background' color from the theme
@@ -62,22 +59,22 @@ class HomePetActivity : ComponentActivity() {
 					modifier = Modifier.fillMaxSize(),
 					color = MaterialTheme.colors.background
 				) {
-					GlobalHomePet(this, idUser.toInt(), isVet)
+					GlobalHomePet(this, idUser.toInt(), isVet, tokenId)
 					Log.i("RESPONSE SUCCESS - JWT HOME idUser", idUser.toString())
 					Log.i("RESPONSE SUCCESS - JWT HOME isVet", isVet.toString())
 				}
 			}
 		}
 	}
-	fun onUpdateValues(idUser: Number, isVet: Boolean) {
+	fun onUpdateValues(idUser: Number, isVet: Boolean, tokenId: String) {
 		this.idUser = idUser.toInt()
 		this.isVet = isVet
-		setContentWithValues(idUser, isVet)
+		setContentWithValues(idUser, isVet, tokenId)
 	}
 }
 
 @Composable
-fun GlobalHomePet(context: Context, idUser: Int, isVet: Boolean) {
+fun GlobalHomePet(context: Context, idUser: Int, isVet: Boolean, tokenId: String) {
 	Column(
 		modifier = Modifier
 			.fillMaxSize()
@@ -116,12 +113,9 @@ fun GlobalHomePet(context: Context, idUser: Int, isVet: Boolean) {
 				IconButton(
 					onClick = {
 						val openUserProfileVisityActivity = Intent(context, ProfileVisityActivity::class.java)
-						Log.i("RESPONSE SUCCESS - ****userid**** HOME", idUser.toString())
 						openUserProfileVisityActivity.putExtra("userID", idUser)
-						Log.i("RESPONSE SUCCESS - ****userid**** HOME", idUser.toString())
-						Log.i("RESPONSE SUCCESS - ****isvet**** HOME", isVet.toString())
 						openUserProfileVisityActivity.putExtra("isVetUser", isVet)
-						Log.i("RESPONSE SUCCESS - ****isvet**** HOME", isVet.toString())
+						openUserProfileVisityActivity.putExtra("tokenIDUser", tokenId)
 						ContextCompat.startActivity(context, openUserProfileVisityActivity, null)
 					}
 				) {
@@ -135,11 +129,3 @@ fun GlobalHomePet(context: Context, idUser: Int, isVet: Boolean) {
 		}
 	}
 }
-
-//@Preview(showBackground = true)
-//@Composable
-//fun DefaultPreview5() {
-//	PetSaudeAppTheme {
-//		GlobalHomePet(LocalContext.current, isVet = false)
-//	}
-//}

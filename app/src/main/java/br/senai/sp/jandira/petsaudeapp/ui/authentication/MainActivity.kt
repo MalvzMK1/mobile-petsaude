@@ -164,8 +164,8 @@ fun LoginHeader() {
 @Composable
 fun LoginForm() {
 	val context = LocalContext.current
-	var loginEmailState = ""
-	var loginPasswordState = ""
+	var loginEmailState = "hermanli@gmail.com"
+	var loginPasswordState = "senhaherman"
 	var loginStateToken by rememberSaveable() { mutableStateOf("") }
 	var isErrorEmailState by rememberSaveable { mutableStateOf(false) }
 	var isErrorPasswordState by rememberSaveable { mutableStateOf(false) }

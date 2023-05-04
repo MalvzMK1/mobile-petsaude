@@ -2,7 +2,6 @@ package br.senai.sp.jandira.petsaudeapp.ui.profile
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -187,7 +186,7 @@ fun UserLocation() {
 					Toast.makeText(context, "Campos vazios!", Toast.LENGTH_SHORT).show()
 				} else {
 					val userAddress = Address(
-						zipCode = zipCodeState,
+						cep = zipCodeState,
 						city = cityStateValue,
 						state = stateStateValue,
 						street = streetStateValue,

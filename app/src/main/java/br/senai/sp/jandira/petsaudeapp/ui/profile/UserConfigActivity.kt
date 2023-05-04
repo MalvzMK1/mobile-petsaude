@@ -13,12 +13,17 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.AlignmentLine
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -28,17 +33,16 @@ import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import br.senai.sp.jandira.petsaudeapp.R
 import br.senai.sp.jandira.petsaudeapp.components.ConfigHeader
+import br.senai.sp.jandira.petsaudeapp.service.integrations.user.getUserInfosById
 import br.senai.sp.jandira.petsaudeapp.ui.authentication.MainActivity
-//import br.senai.sp.jandira.petsaudeapp.service.integrations.getUserInfosById
-import br.senai.sp.jandira.petsaudeapp.ui.authentication.RegisterActivity
 import br.senai.sp.jandira.petsaudeapp.ui.theme.PetSaudeAppTheme
+import coil.compose.AsyncImage
 
 class UserConfigActivity : ComponentActivity() {
 	override fun onCreate(savedInstanceState: Bundle?) {
-		val idUser: Int = intent.getSerializableExtra("userID") as Int
-		Log.i("RESPONSE SUCCESS - ID CONFIG", idUser.toString())
-		val isVetUser: Boolean = intent.getSerializableExtra("isVetUser") as Boolean
-		Log.i("RESPONSE SUCCESS - ISVETUSER CONFIG", isVetUser.toString())
+		val idUser: Int = intent.getIntExtra("userID", 0)
+		val isVetUser: Boolean = intent.getBooleanExtra("isVetUser", false)
+		val tokenId: String = intent.getStringExtra("tokenUserID") as String
 		super.onCreate(savedInstanceState)
 		setContent {
 			PetSaudeAppTheme {
@@ -49,7 +53,7 @@ class UserConfigActivity : ComponentActivity() {
 						.verticalScroll(rememberScrollState()),
 					color = MaterialTheme.colors.background
 				) {
-					GlobalUserConfig(this, idUser, isVetUser)
+					GlobalUserConfig(this, idUser, isVetUser, tokenId)
 				}
 			}
 		}
@@ -57,7 +61,7 @@ class UserConfigActivity : ComponentActivity() {
 }
 
 @Composable
-fun GlobalUserConfig(context: Context, idUser: Int, isVetUser: Boolean) {
+fun GlobalUserConfig(context: Context, idUser: Int, isVetUser: Boolean, tokenId: String) {
 	Column(
 		modifier = Modifier
 			.fillMaxSize()
@@ -68,13 +72,27 @@ fun GlobalUserConfig(context: Context, idUser: Int, isVetUser: Boolean) {
 			context,
 			icon = Icons.Filled.Settings
 		)
-		UserProfile()
-		UserPreferences(idUser, isVetUser)
+		UserProfile(idUser)
+		UserPreferences(idUser, isVetUser, tokenId)
 	}
 }
 
 @Composable
-fun UserProfile() {
+fun UserProfile(idUser: Int) {
+	var profilePhotoStateValue by rememberSaveable() {
+		mutableStateOf("")
+	}
+	var nameStateValue by rememberSaveable() {
+		mutableStateOf("")
+	}
+	var emailStateValue by rememberSaveable() {
+		mutableStateOf("")
+	}
+	getUserInfosById(idUser) {
+		profilePhotoStateValue = it.response.user.profileBannerPhoto.toString()
+		nameStateValue = it.response.user.personName
+		emailStateValue = it.response.user.biography.toString()
+	}
 	Row(
 		modifier = Modifier
 			.fillMaxWidth()
@@ -89,6 +107,14 @@ fun UserProfile() {
 			elevation = 2.dp
 		) {
 			//---------- COLOCAR IMAGEM DE PERFIL DO USUARIO ----------//
+			AsyncImage(
+				//---------- COLOCAR FOTO DO PET ----------//
+				model = profilePhotoStateValue,
+				contentDescription = "Image Card",
+				modifier = Modifier
+					.fillMaxWidth(),
+				contentScale = ContentScale.FillWidth
+			)
 		}
 		Spacer(modifier = Modifier.width(16.dp))
 		Column(
@@ -97,25 +123,23 @@ fun UserProfile() {
 		) {
 			Text(
 				//---------- COLOCAR NOME DE PERFIL DO USUARIO ----------//
-				text = "Hayley Williams",
+				text = nameStateValue,
 				fontSize = 22.sp,
 				fontWeight = FontWeight.W400
 			)
 			Text(
-
 				//---------- COLOCAR EMAIL DE CADASTRO DO USUARIO ----------//
-
-				text = "hayley.williams@useremail.com",
-					color = Color(169, 169, 169),
-					fontSize = 12.sp,
-					fontWeight = FontWeight.W400
+				text = emailStateValue,
+				color = Color(169, 169, 169),
+				fontSize = 12.sp,
+				fontWeight = FontWeight.W400
 			)
 		}
 	}
 }
 
 @Composable
-fun UserPreferences(idUser: Int, isVetUser: Boolean) {
+fun UserPreferences(idUser: Int, isVetUser: Boolean, tokenId: String) {
 	val context = LocalContext.current
 	Column(
 		modifier = Modifier.fillMaxSize()
@@ -278,8 +302,8 @@ fun UserPreferences(idUser: Int, isVetUser: Boolean) {
 		Spacer(modifier = Modifier.height(4.dp))
 		Button(
 			onClick = {
-//				val openPetsActivity = Intent(context, CreatePetActivity::class.java)
-//				ContextCompat.startActivity(context, openPetsActivity, null)
+//				val openQueriesActivity = Intent(context, QueriesActivity::class.java)
+//				ContextCompat.startActivity(context, openQueriesActivity, null)
 			},
 			modifier = Modifier
 				.fillMaxWidth()
@@ -328,12 +352,13 @@ fun UserPreferences(idUser: Int, isVetUser: Boolean) {
 			onClick = {
 				if (isVetUser) {
 					val openProfessionalActivity = Intent(context, UserProfessionalActivity::class.java)
+					openProfessionalActivity.putExtra("isVetUser", isVetUser)
 					ContextCompat.startActivity(context, openProfessionalActivity, null)
 				} else {
 					val openMyPetsActivity = Intent(context, MyPetsActivity::class.java)
 					Log.i("RESPONSE SUCCESS - ****userid**** CONFIG", idUser.toString())
 					openMyPetsActivity.putExtra("userId", idUser)
-					Log.i("RESPONSE SUCCESS - ****userid**** CONFIG", idUser.toString())
+					openMyPetsActivity.putExtra("tokenUserID", tokenId)
 					ContextCompat.startActivity(context, openMyPetsActivity, null)
 				}
 			},
@@ -443,11 +468,3 @@ fun UserPreferences(idUser: Int, isVetUser: Boolean) {
 		}
 	}
 }
-
-//@Preview(showBackground = true)
-//@Composable
-//fun DefaultPreview6() {
-//	PetSaudeAppTheme {
-//		GlobalUserConfig(LocalContext.current)
-//	}
-//}
